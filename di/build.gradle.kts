@@ -1,23 +1,20 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.devtools.ksp")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
-
 }
 
 android {
-    namespace = "com.example.movieku"
+    namespace = "com.example.di"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.movieku"
         minSdk = 26
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -40,41 +37,32 @@ android {
 
 dependencies {
     implementation(project(":domain"))
-    implementation(project(":di"))
+    implementation(project(":data"))
+
 
     //hilt
     implementation(libs.hilt.dagger)
     kapt(libs.hilt.compiler)
 
-    //paging
-    implementation(libs.androidx.paging)
+    //Room
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.ksp)
 
-    //Jetpack nav
-    implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.androidx.navigation.fragment.ktx)
+    //DataStore
+    implementation(libs.androidx.datastore.preferences)
 
-    //lifecycle
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    //Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.gson.converter)
 
-    //view pager 2
-    implementation(libs.androidx.viewpager2)
-
-    //swipe refresh layout
-    implementation(libs.androidx.swiperefreshlayout)
-
-    //Glide
-    implementation(libs.glide)
-
-    //shimmer
-    implementation(libs.shimmer)
-
+    //okhttp
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
