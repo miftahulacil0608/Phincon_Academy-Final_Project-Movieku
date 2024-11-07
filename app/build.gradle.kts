@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
-
 }
 
 android {
@@ -36,6 +35,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -44,6 +46,8 @@ dependencies {
 
     //hilt
     implementation(libs.hilt.dagger)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.fragment.ktx)
     kapt(libs.hilt.compiler)
 
     //paging
@@ -69,6 +73,9 @@ dependencies {
     //shimmer
     implementation(libs.shimmer)
 
+    //circle indicator
+    implementation(libs.circle.indicator)
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -78,7 +85,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-}
-kapt{
-    correctErrorTypes = true
 }

@@ -72,6 +72,3 @@ dependencies {
     //mock
     implementation(libs.mocK)
 }
-kapt{
-    correctErrorTypes = true
-}

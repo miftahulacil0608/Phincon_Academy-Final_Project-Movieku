@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -14,7 +16,14 @@
         android:theme="@style/Theme.Movieku"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.authentication.AuthenticationActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Movieku" />
+        <activity
+            android:name=".ui.onboarding.OnBoardingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.splashscreen.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +31,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.dashboard.MainFeaturesActivity"
+            android:exported="true"
+            android:label="@string/title_activity_main_features">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
