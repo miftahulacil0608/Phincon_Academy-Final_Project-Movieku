@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<!--TODO BUAT UKURAN LAYAR YG KECIL JADI PAS RUN BISA AMAN-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/iv_bg_authentication">
@@ -16,7 +14,7 @@
             android:id="@+id/tv_label_welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="65dp"
             android:text="Welcome To Flixt"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -224,4 +222,3 @@
             app:layout_constraintTop_toTopOf="@id/tv_title_have_account" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.core.widget.NestedScrollView>
