@@ -1,52 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.authentication.AuthenticationActivity">
-    <com.google.android.material.imageview.ShapeableImageView
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/iv_bg_authentication"
-        android:scaleType="centerCrop"
-        />
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Welcome To Flixt"
-        android:textColor="@color/white"
-        android:layout_marginTop="35dp"
-        android:id="@+id/tv_label_welcome"
-        />
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Let's Sign You In!"
-        android:id="@+id/tv_sub_label"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toStartOf="@id/iv_pop_corn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintTop_toBottomOf="@id/tv_label_welcome"
-        />
-    <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="18dp"
-        android:layout_height="0dp"
-        android:src="@drawable/iv_popcorn"
-        android:id="@+id/iv_pop_corn"
-        android:layout_marginStart="4dp"
-        app:layout_constraintStart_toEndOf="@id/tv_sub_label"
-        app:layout_constraintTop_toTopOf="@id/tv_sub_label"
-        app:layout_constraintBottom_toBottomOf="@id/tv_sub_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        android:background="@drawable/iv_bg_authentication">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_label_welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="Welcome To Flixt"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_sub_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Let's Sign You In!"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@id/iv_pop_corn"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_label_welcome" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_pop_corn"
+            android:layout_width="18dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/iv_popcorn"
+            app:layout_constraintBottom_toBottomOf="@id/tv_sub_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_sub_label"
+            app:layout_constraintTop_toTopOf="@id/tv_sub_label" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_flexit_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:src="@drawable/ic_flexit_app"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_sub_label" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_label_to_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="66dp"
+            android:text="Login to Your Account"
+            android:textColor="@color/white"
+            android:textSize="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_flexit_app" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="20dp"
+            app:boxBackgroundColor="#26FFFFFF"
+            app:boxStrokeColor="@android:color/transparent"
+            app:boxStrokeWidth="0dp"
+            app:hintEnabled="false"
+            app:layout_constraintTop_toBottomOf="@id/tv_label_to_login"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge"
+            app:startIconDrawable="@drawable/ic_padlock">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tie_email"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="1"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:paddingVertical="18dp" android:textColor="#95989D"
+                android:textColorHint="#95989D"
+
+                android:textSize="13sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
+            app:boxBackgroundColor="#26FFFFFF"
+            app:boxStrokeColor="@android:color/transparent"
+            app:boxStrokeWidth="0dp"
+            app:hintEnabled="false"
+            app:layout_constraintTop_toBottomOf="@id/til_email"
+            app:passwordToggleEnabled="true"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge"
+            app:startIconDrawable="@drawable/ic_padlock">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tie_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="password"
+                android:inputType="textPassword"
+                android:paddingVertical="18dp"
+                android:textColor="#95989D"
+                android:textColorHint="#95989D"
+                android:textSize="13sp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_sign_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="#FCC434"
+            android:paddingVertical="18dp"
+            android:text="Sign in"
+            android:textColor="#21242C"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/til_password"
+            tools:layout_editor_absoluteX="24dp" />
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_line_left"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:src="@drawable/bg_dotted_line"
+            app:layout_constraintEnd_toStartOf="@id/tv_or"
+            app:layout_constraintStart_toStartOf="@id/btn_sign_in"
+            app:layout_constraintTop_toTopOf="@id/tv_or" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_or"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="20dp"
+            android:text="or"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@id/iv_line_right"
+            app:layout_constraintStart_toEndOf="@id/iv_line_left"
+            app:layout_constraintTop_toBottomOf="@id/btn_sign_in" />
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_line_right"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:src="@drawable/bg_dotted_line"
+            app:layout_constraintEnd_toEndOf="@id/btn_sign_in"
+            app:layout_constraintStart_toEndOf="@id/tv_or"
+            app:layout_constraintTop_toTopOf="@id/tv_or" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_google_sign_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="22dp"
+            android:backgroundTint="#FFFFFF"
+            android:paddingVertical="18dp"
+            android:text="Continue With Google"
+            android:textAlignment="center"
+            android:textColor="#706B6B"
+            android:textSize="16sp"
+            app:icon="@drawable/ic_google"
+            app:iconGravity="textStart"
+            app:iconTintMode="multiply"
+            app:layout_constraintTop_toBottomOf="@id/iv_line_left"
+            tools:layout_editor_absoluteX="24dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_title_have_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="40dp"
+            android:text="Don't have an account?"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_register"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_google_sign_in" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/btn_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="Register"
+            android:textColor="#F6B027"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title_have_account"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_title_have_account"
+            app:layout_constraintTop_toTopOf="@id/tv_title_have_account" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
