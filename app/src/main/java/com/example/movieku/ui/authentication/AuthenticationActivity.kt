@@ -1,6 +1,8 @@
 package com.example.movieku.ui.authentication
 
+import android.content.Context
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -9,7 +11,9 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.movieku.R
 import com.example.movieku.databinding.ActivityAuthenticationBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AuthenticationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthenticationBinding
@@ -25,4 +29,5 @@ class AuthenticationActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_authentication)
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
+
 }

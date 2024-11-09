@@ -1,4 +1,4 @@
-package com.example.data.source.remote
+package com.example.data.source.remote.network
 
 import com.example.data.model.dto.CreditsMovieDto
 import com.example.data.model.dto.DetailMovieDto
@@ -7,10 +7,13 @@ import com.example.data.model.dto.NowPlayingMovieDto
 import com.example.data.model.dto.PopularMovieDto
 import com.example.data.model.dto.UpComingMovieDto
 import com.example.data.model.dto.VideosMovieDto
-import com.example.data.source.remote.network.TMDBApiService
 import javax.inject.Inject
 
-class RemoteDataSourceImpl @Inject constructor(private val apiService: TMDBApiService):RemoteDataSourceRepository {
+//TODO anterin hasil dari repo ini ke repo domain dan pisahin datanya
+class NetworkRemoteDataSourceImpl @Inject constructor(
+    private val apiService: TMDBApiService
+) : NetworkRemoteDataSourceRepository {
+
     override suspend fun fetchPopularMovie(): PopularMovieDto {
         return apiService.fetchPopularMovie()
     }

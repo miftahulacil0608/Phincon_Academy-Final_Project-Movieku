@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "106896436402",
+    "project_id": "flexit-f8d94",
+    "storage_bucket": "flexit-f8d94.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106896436402:android:932712475e3e93c76a2dab",
+        "android_client_info": {
+          "package_name": "com.example.movieku"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "106896436402-618j6u1boj10tqq6iji0ocgsd110tff4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.movieku",
+            "certificate_hash": "06489be345da1c7124941c749489dbd9c137026a"
+          }
+        },
+        {
+          "client_id": "106896436402-dv2otep226vee0f7ie7871eo43qc7ghg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMbICRYhlOAM6LJotZt496n35pzIjxegw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "106896436402-dv2otep226vee0f7ie7871eo43qc7ghg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

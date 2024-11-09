@@ -1,5 +1,6 @@
 package com.example.data.utils
 
+import com.example.data.model.SettingData
 import com.example.data.model.dto.DetailMovieDto
 import com.example.data.model.dto.NowPlayingMovieDto
 import com.example.data.model.dto.PopularMovieDto
@@ -9,6 +10,7 @@ import com.example.domain.model.DetailMovie
 import com.example.domain.model.Movie
 import com.example.domain.model.NowPlayingMovie
 import com.example.domain.model.PopularMovie
+import com.example.domain.model.SettingDataUI
 import com.example.domain.model.UpComingMovie
 
 object MapperToDomainData {
@@ -64,4 +66,9 @@ object MapperToDomainData {
             overview = detailMovieDto.overview
         )
     }
+
+    fun SettingData.toSettingDataUI(): SettingDataUI {
+        return SettingDataUI(this.isOnBoarding, this.isUserAuthentication)
+    }
+
 }

@@ -4,6 +4,8 @@ plugins {
     id("com.google.devtools.ksp")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
+
 }
 
 android {
@@ -40,8 +42,10 @@ dependencies {
     implementation(project(":data"))
 
 
+
     //hilt
     implementation(libs.hilt.dagger)
+    implementation(libs.googleid)
     kapt(libs.hilt.compiler)
 
     //Room
@@ -59,6 +63,13 @@ dependencies {
     //okhttp
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
+
+    //firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

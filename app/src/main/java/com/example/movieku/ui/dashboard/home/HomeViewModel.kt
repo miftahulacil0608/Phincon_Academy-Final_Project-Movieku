@@ -33,7 +33,7 @@ class HomeViewModel @Inject constructor(private val movieUseCase: MovieUseCase) 
             try {
                 _popularMovieData.value = ResultState.Success(movieUseCase.getPopularMovie())
             } catch (e: Exception) {
-                _popularMovieData.value = ResultState.Error(e.localizedMessage)
+                _popularMovieData.value = ResultState.Error(e)
             }
         }
     }
@@ -44,7 +44,7 @@ class HomeViewModel @Inject constructor(private val movieUseCase: MovieUseCase) 
             try {
                 _nowPlayingMovie.value = ResultState.Success(movieUseCase.getNowPlayingMovie())
             } catch (e: Exception) {
-                _nowPlayingMovie.value = ResultState.Error(e.localizedMessage)
+                _nowPlayingMovie.value = ResultState.Error(e)
             }
         }
     }
@@ -55,7 +55,7 @@ class HomeViewModel @Inject constructor(private val movieUseCase: MovieUseCase) 
             try {
                 _upComingMovie.value = ResultState.Success(movieUseCase.getUpComingMovie())
             } catch (e: Exception) {
-                _upComingMovie.value = ResultState.Error(e.localizedMessage)
+                _upComingMovie.value = ResultState.Error(e)
             }
         }
     }

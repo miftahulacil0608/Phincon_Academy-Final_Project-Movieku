@@ -23,7 +23,7 @@ class DetailMovieViewModel @Inject constructor(private val movieUseCase: MovieUs
                 val fetchDetailMovie = movieUseCase.getDetailMovie(movieId)
                 _detailMovieData.value = ResultState.Success(fetchDetailMovie)
             }catch (e:Exception){
-                _detailMovieData.value = ResultState.Error(e.localizedMessage)
+                _detailMovieData.value = ResultState.Error(e)
             }
         }
     }

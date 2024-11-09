@@ -1,4 +1,4 @@
-package com.example.data.source.remote
+package com.example.data.source.remote.network
 
 import com.example.data.model.dto.CreditsMovieDto
 import com.example.data.model.dto.DetailMovieDto
@@ -8,7 +8,7 @@ import com.example.data.model.dto.PopularMovieDto
 import com.example.data.model.dto.UpComingMovieDto
 import com.example.data.model.dto.VideosMovieDto
 
-interface RemoteDataSourceRepository {
+interface NetworkRemoteDataSourceRepository {
     suspend fun fetchPopularMovie():PopularMovieDto
     suspend fun fetchNowPlayingMovie():NowPlayingMovieDto
     suspend fun fetchUpComingMovie():UpComingMovieDto

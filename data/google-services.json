@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1079013364462",
+    "project_id": "flexit-movie",
+    "storage_bucket": "flexit-movie.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079013364462:android:d8c272680ea2e3e2e459ff",
+        "android_client_info": {
+          "package_name": "com.example.data"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz-xWfqsLJDhBHPJYf6e2AXDBWEaIszig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
