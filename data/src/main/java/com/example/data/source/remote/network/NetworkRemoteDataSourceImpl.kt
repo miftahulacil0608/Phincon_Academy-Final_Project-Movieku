@@ -1,12 +1,12 @@
 package com.example.data.source.remote.network
 
-import com.example.data.model.dto.CreditsMovieDto
-import com.example.data.model.dto.DetailMovieDto
-import com.example.data.model.dto.ImagesMovieDto
-import com.example.data.model.dto.NowPlayingMovieDto
-import com.example.data.model.dto.PopularMovieDto
-import com.example.data.model.dto.UpComingMovieDto
-import com.example.data.model.dto.VideosMovieDto
+import com.example.data.model.dto.network.CreditsMovieDto
+import com.example.data.model.dto.network.DetailMovieDto
+import com.example.data.model.dto.network.ImagesMovieDto
+import com.example.data.model.dto.network.NowPlayingMovieDto
+import com.example.data.model.dto.network.PopularMovieDto
+import com.example.data.model.dto.network.UpComingMovieDto
+import com.example.data.model.dto.network.VideosMovieDto
 import javax.inject.Inject
 
 //TODO anterin hasil dari repo ini ke repo domain dan pisahin datanya

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.movieku.databinding.FragmentDashboardBinding
 import com.example.movieku.ui.authentication.AuthenticationActivity
+import com.example.movieku.utils.ResultState
 import kotlinx.coroutines.launch
 
 class DashboardFragment : Fragment() {
@@ -36,6 +38,9 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        dashboardViewModel.getUserSession()
+        setupUserSession()
+
         binding.btnSignOut.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
                 clearCredential()
@@ -44,6 +49,25 @@ class DashboardFragment : Fragment() {
 
                 startActivity(Intent(requireActivity(), AuthenticationActivity::class.java))
                 requireActivity().finish()
+            }
+        }
+    }
+
+    private fun setupUserSession(){
+        viewLifecycleOwner.lifecycleScope.launch {
+            dashboardViewModel.userData.collect{
+                when(it){
+                    ResultState.Loading -> {
+                        //shimmer
+                    }
+                    is ResultState.Success -> {
+                        binding.userInformation.text = "${it.data.displayName}, ${it.data.email}, ${it.data.urlPath}"
+                    }
+                    is ResultState.Error -> {
+                        Toast.makeText(requireActivity(), "${it.message}", Toast.LENGTH_SHORT).show()
+                    }
+
+                }
             }
         }
     }

@@ -1,9 +1,7 @@
 package com.example.data.utils
 
-import com.example.data.model.dto.DetailMovieDto
-import com.example.data.model.dto.GenreMovieDto
-import com.example.data.model.dto.result.ResultCrewMovieDto
-import com.example.data.model.dto.result.ResultGenreMovieDto
+import com.example.data.model.dto.network.result.ResultCrewMovieDto
+import com.example.data.model.dto.network.result.ResultGenreMovieDto
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

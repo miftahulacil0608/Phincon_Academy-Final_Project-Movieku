@@ -1,7 +1,7 @@
-package com.example.data.model.dto
+package com.example.data.model.dto.network
 
 
-import com.example.data.model.dto.result.ResultMovieDto
+import com.example.data.model.dto.network.result.ResultMovieDto
 import com.google.gson.annotations.SerializedName
 
 data class SearchMovieDto(

@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
-//TODO dirapihkan lagi terkait dengan datanya
+//TODO dirapihkan lagi terkait dengan datanya + toast
 class SignInFragment : Fragment() {
 
     private var _binding: FragmentSignInBinding? = null
@@ -46,6 +46,32 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.btnSignIn.setOnClickListener {
+            val email = binding.tieEmail.text.toString()
+            val password = binding.tiePassword.text.toString()
+            viewLifecycleOwner.lifecycleScope.launch {
+                val resultSignIn = authenticationViewModel.signInWithEmailAndPassword(email,password)
+                when(resultSignIn){
+                    ResultState.Loading -> {
+                        //shimmer kalo ada
+                    }
+                    is ResultState.Success ->{
+                        authenticationViewModel.saveUserAuthentication(resultSignIn.data)
+                        startActivity(Intent(requireActivity(), MainFeaturesActivity::class.java))
+                        Toast.makeText(
+                            requireActivity(),
+                            "berhasil login: ${resultSignIn.data}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        requireActivity().finish()
+                    }
+                    is ResultState.Error -> {
+                        Toast.makeText(requireActivity(), "${resultSignIn.message}", Toast.LENGTH_SHORT).show()
+                    }
+
+                }
+            }
+        }
         binding.btnRegister.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }

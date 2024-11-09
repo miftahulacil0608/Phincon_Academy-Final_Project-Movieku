@@ -38,10 +38,7 @@ class SplashScreenActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             delay(3000L)
 
-            //ini di cek juga apakah si onboarding udah di tekan atau belum oke
-
             splashScreenViewModel.isUserAuthentication.observe(this@SplashScreenActivity){
-
                 if (!it.isOnboarding){
                     startActivity(Intent(this@SplashScreenActivity, OnBoardingActivity::class.java))
                     finish()

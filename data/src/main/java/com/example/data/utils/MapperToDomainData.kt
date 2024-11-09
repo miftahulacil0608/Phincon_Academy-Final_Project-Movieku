@@ -1,11 +1,11 @@
 package com.example.data.utils
 
 import com.example.data.model.SettingData
-import com.example.data.model.dto.DetailMovieDto
-import com.example.data.model.dto.NowPlayingMovieDto
-import com.example.data.model.dto.PopularMovieDto
-import com.example.data.model.dto.UpComingMovieDto
-import com.example.data.model.dto.result.ResultMovieDto
+import com.example.data.model.dto.network.DetailMovieDto
+import com.example.data.model.dto.network.NowPlayingMovieDto
+import com.example.data.model.dto.network.PopularMovieDto
+import com.example.data.model.dto.network.UpComingMovieDto
+import com.example.data.model.dto.network.result.ResultMovieDto
 import com.example.domain.model.DetailMovie
 import com.example.domain.model.Movie
 import com.example.domain.model.NowPlayingMovie

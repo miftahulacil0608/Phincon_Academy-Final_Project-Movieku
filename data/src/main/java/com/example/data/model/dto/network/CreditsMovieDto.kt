@@ -1,8 +1,8 @@
-package com.example.data.model.dto
+package com.example.data.model.dto.network
 
 
-import com.example.data.model.dto.result.ResultCastMovieDto
-import com.example.data.model.dto.result.ResultCrewMovieDto
+import com.example.data.model.dto.network.result.ResultCastMovieDto
+import com.example.data.model.dto.network.result.ResultCrewMovieDto
 import com.google.gson.annotations.SerializedName
 
 class CreditsMovieDto(

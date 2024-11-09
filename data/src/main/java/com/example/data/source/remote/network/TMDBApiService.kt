@@ -1,15 +1,13 @@
 package com.example.data.source.remote.network
 
-import com.example.data.model.dto.CollectionMovieDto
-import com.example.data.model.dto.CreditsMovieDto
-import com.example.data.model.dto.DetailMovieDto
-import com.example.data.model.dto.GenreMovieDto
-import com.example.data.model.dto.ImagesMovieDto
-import com.example.data.model.dto.NowPlayingMovieDto
-import com.example.data.model.dto.PopularMovieDto
-import com.example.data.model.dto.SearchMovieDto
-import com.example.data.model.dto.UpComingMovieDto
-import com.example.data.model.dto.VideosMovieDto
+import com.example.data.model.dto.network.CreditsMovieDto
+import com.example.data.model.dto.network.DetailMovieDto
+import com.example.data.model.dto.network.ImagesMovieDto
+import com.example.data.model.dto.network.NowPlayingMovieDto
+import com.example.data.model.dto.network.PopularMovieDto
+import com.example.data.model.dto.network.SearchMovieDto
+import com.example.data.model.dto.network.UpComingMovieDto
+import com.example.data.model.dto.network.VideosMovieDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

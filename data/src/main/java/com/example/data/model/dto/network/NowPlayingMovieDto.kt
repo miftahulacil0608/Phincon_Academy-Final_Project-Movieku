@@ -1,11 +1,11 @@
-package com.example.data.model.dto
+package com.example.data.model.dto.network
 
 
-import com.example.data.model.dto.result.ResultDatesMovieDto
-import com.example.data.model.dto.result.ResultMovieDto
+import com.example.data.model.dto.network.result.ResultDatesMovieDto
+import com.example.data.model.dto.network.result.ResultMovieDto
 import com.google.gson.annotations.SerializedName
 
-class UpComingMovieDto(
+data class NowPlayingMovieDto(
     @SerializedName("dates")
     val dates: ResultDatesMovieDto,
     @SerializedName("page")
