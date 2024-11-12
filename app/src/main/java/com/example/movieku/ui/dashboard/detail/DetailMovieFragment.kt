@@ -51,7 +51,7 @@ class DetailMovieFragment : Fragment() {
                     }
                     is ResultState.Success -> {
                         //shimmer off
-                        setupDataUI(it.data)
+                        //setupDataUI(it.data)
                     }
                     is ResultState.Error -> {
                         Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
@@ -67,9 +67,9 @@ class DetailMovieFragment : Fragment() {
             tvTitleMovie.text = item.originalTitle
             tvGenre.text = resources.getString(R.string.label_genre, item.genre)
             tvDuration.text = resources.getString(R.string.label_duration, item.duration)
-            tvDirector.text = resources.getString(R.string.label_director, item.director)
-            setupGlideImages(item.posterPath, ivPoster)
-            tvOverview.text = item.overview
+            //tvDirector.text = resources.getString(R.string.label_director, item.director)
+            //setupGlideImages(item.posterPath, ivPoster)
+            //tvOverview.text = item.overview
         }
     }
 

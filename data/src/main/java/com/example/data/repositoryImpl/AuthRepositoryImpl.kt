@@ -44,19 +44,15 @@ class AuthRepositoryImpl @Inject constructor(
         return fireBaseRemoteDataSourceRepository.isUserAuthentication()
     }
 
+    //TODO lakukan perubahan biar lebih efektif
     override suspend fun fetchUserSession(): UserData {
         val firebaseUser = fireBaseRemoteDataSourceRepository.fetchFirebaseUser()
         return UserData(
             displayName = firebaseUser?.displayName ?: "",
             email = firebaseUser?.email ?: "",
-            urlPath = firebaseUser?.photoUrl.toString() ?:""
         )
-
     }
-
     override fun signOut() {
         fireBaseRemoteDataSourceRepository.signOut()
     }
-
-
 }

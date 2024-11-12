@@ -50,4 +50,6 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="your_web_client_id">106896436402-dv2otep226vee0f7ie7871eo43qc7ghg.apps.googleusercontent.com</string>
+    <string name="label_duration_and_genre">%s • %s</string>
+    <string name="label_rating_count_vote">⭐ %s (%s)</string>
 </resources>

@@ -34,7 +34,7 @@ class FireBaseRemoteDataSourceImpl @Inject constructor(
                     Result.failure(IllegalArgumentException("Unknow Error"))
                 }
             } catch (e: Exception) {
-                Result.failure(IllegalStateException("SignUp Failed: Account exist"))
+                Result.failure(e)
             }
         }
     }

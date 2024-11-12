@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.example.movieku.R
 import com.example.movieku.databinding.ActivitySplashScreenBinding
 import com.example.movieku.ui.authentication.AuthenticationActivity
@@ -33,6 +34,7 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
 
         //TODO logic in here
         CoroutineScope(Dispatchers.Main).launch {

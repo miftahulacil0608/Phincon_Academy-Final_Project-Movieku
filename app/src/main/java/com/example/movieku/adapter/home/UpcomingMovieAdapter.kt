@@ -18,10 +18,9 @@ class UpcomingMovieAdapter(private var listItem: List<Movie> = emptyList()) :
                 val numberPosition = bindingAdapterPosition+1
                 Glide.with(root)
                     .load(item.posterPath)
-                    .into(ivUpComingMovie)
-                tvNumberMovie.text = numberPosition.toString()
-                root.setOnClickListener {
-                }
+                    //.into(ivUpComingMovie)
+                //tvNumberMovie.text = numberPosition.toString()
+                //root.setOnClickListener {}
             }
         }
     }

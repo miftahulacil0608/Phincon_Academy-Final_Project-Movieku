@@ -2,18 +2,25 @@ package com.example.movieku.adapter.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.domain.model.Movie
+import com.example.movieku.R
 import com.example.movieku.adapter.home.contract.PopularMovieListener
 import com.example.movieku.databinding.ItemMoviePopularBinding
 
-class PopularMovieAdapter(private var listItem:List<Movie> = emptyList()):RecyclerView.Adapter<PopularMovieAdapter.MyViewHolder>() {
+class PopularMovieAdapter():RecyclerView.Adapter<PopularMovieAdapter.MyViewHolder>() {
     inner class MyViewHolder(private val binding: ItemMoviePopularBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(item:Movie){
             Glide.with(binding.root)
                 .load(item.backdropPath)
                 .into(binding.ivPopularMovie)
+            binding.movieTitle.text = item.title
+            binding.tvDurationAndGenreMovie.text = item.releaseDate
+            binding.movieRating.text = binding.root.resources.getString(R.string.label_rating_count_vote,item.voteRange.toString(), item.voteRange.toString())
+
             binding.root.setOnClickListener {
             }
         }
@@ -24,16 +31,22 @@ class PopularMovieAdapter(private var listItem:List<Movie> = emptyList()):Recycl
         return MyViewHolder(binding)
     }
 
-    override fun getItemCount() = listItem.size
+    override fun getItemCount() = asyncDiffer.currentList.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val item = listItem[position]
-
-        holder.bind(item)
+        holder.bind(asyncDiffer.currentList[position])
+        holder.setIsRecyclable(false)
     }
 
-    fun addNewListData(newListItem:List<Movie>){
-        listItem = newListItem
-        notifyDataSetChanged()
+    private val differCallback = object : DiffUtil.ItemCallback<Movie>(){
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem == newItem
+        }
     }
+    val asyncDiffer = AsyncListDiffer(this@PopularMovieAdapter, differCallback)
+
 }

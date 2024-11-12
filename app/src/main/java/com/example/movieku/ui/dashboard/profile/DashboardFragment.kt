@@ -61,7 +61,7 @@ class DashboardFragment : Fragment() {
                         //shimmer
                     }
                     is ResultState.Success -> {
-                        binding.userInformation.text = "${it.data.displayName}, ${it.data.email}, ${it.data.urlPath}"
+                        binding.userInformation.text = "${it.data.displayName}, ${it.data.email}"
                     }
                     is ResultState.Error -> {
                         Toast.makeText(requireActivity(), "${it.message}", Toast.LENGTH_SHORT).show()

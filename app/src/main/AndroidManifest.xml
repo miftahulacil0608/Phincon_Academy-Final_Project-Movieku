@@ -18,16 +18,16 @@
         <activity
             android:name=".ui.authentication.AuthenticationActivity"
             android:exported="false"
-            android:theme="@style/Theme.Movieku.NoSystemBarStatus" />
+            android:theme="@style/NoSystemBarStatus.Authentication" />
         <activity
             android:name=".ui.onboarding.OnBoardingActivity"
             android:exported="false"
-            android:theme="@style/Theme.Movieku.NoSystemBarStatus"
+            android:theme="@style/NoSystemBarStatus.OnBoarding"
             />
         <activity
             android:name=".ui.splashscreen.SplashScreenActivity"
             android:exported="true"
-            android:theme="@style/Theme.Movieku.NoSystemBarStatus"
+            android:theme="@style/NoSystemBarStatus.SplashScreen"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

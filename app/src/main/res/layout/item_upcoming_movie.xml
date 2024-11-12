@@ -1,76 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_upcoming_movie"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="12dp"
+    android:layout_marginStart="20dp"
     app:cardCornerRadius="24dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardview_poster"
+        android:layout_width="158dp"
+        android:layout_height="223dp"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/iv_up_coming_movie"
-            android:layout_width="180dp"
-            android:layout_height="250dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:scaleType="fitXY"
-            tools:src="@drawable/iv_sample_poster" />
+            android:id="@+id/iv_poster_movie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/iv_sample_poster" />
+    </com.google.android.material.card.MaterialCardView>
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_title_movie"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="Venom: The Last Dance"
+        app:layout_constraintEnd_toEndOf="@id/cardview_poster"
+        app:layout_constraintStart_toStartOf="@id/cardview_poster"
+        app:layout_constraintTop_toBottomOf="@id/cardview_poster" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_number_movie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_number_item_recycler_view"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="4dp"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="1" />
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_presale"
-            app:layout_constraintTop_toTopOf="@id/tv_number_movie"
-            app:layout_constraintBottom_toBottomOf="@id/tv_number_movie"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="18dp"
-            android:text="Presale"
-            android:paddingVertical="4dp"
-            android:paddingHorizontal="10dp"
-            android:textSize="14sp"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:background="#E0AA0A"
-            />
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_genre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_video"
+        app:layout_constraintStart_toStartOf="@id/tv_title_movie"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_movie" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_buy_ticket"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="#020828"
-            android:paddingVertical="8dp"
-            android:text="Buy Ticket"
-            android:textAlignment="center"
-            android:textColor="#FFC107"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Science Fiction/Thriller"
+        android:textSize="11sp"
+        android:layout_marginStart="4dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:id="@+id/tv_genre"
+        app:layout_constraintBottom_toBottomOf="@id/iv_genre"
+        app:layout_constraintEnd_toEndOf="@id/tv_title_movie"
+        app:layout_constraintStart_toEndOf="@id/iv_genre"
+        app:layout_constraintTop_toTopOf="@id/iv_genre" />
 
-            />
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_release_movie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/ic_calendar"
+        app:layout_constraintStart_toStartOf="@id/iv_genre"
+        app:layout_constraintTop_toBottomOf="@id/iv_genre" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="22-10-2024"
+        android:textSize="11sp"
+        android:layout_marginStart="4dp"
+        android:id="@+id/tv_release_movie"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintBottom_toBottomOf="@id/iv_release_movie"
+        app:layout_constraintEnd_toEndOf="@id/tv_genre"
+        app:layout_constraintStart_toEndOf="@id/iv_release_movie"
+        app:layout_constraintTop_toTopOf="@id/iv_release_movie" />
+</androidx.constraintlayout.widget.ConstraintLayout>

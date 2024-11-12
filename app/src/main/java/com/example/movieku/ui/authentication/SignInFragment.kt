@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
@@ -16,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.movieku.R
 import com.example.movieku.databinding.FragmentSignInBinding
 import com.example.movieku.ui.dashboard.MainFeaturesActivity
+import com.example.movieku.utils.Helper
 import com.example.movieku.utils.ResultState
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +26,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-@AndroidEntryPoint
 //TODO dirapihkan lagi terkait dengan datanya + toast
 class SignInFragment : Fragment() {
 
@@ -46,6 +47,8 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        validateInputEmailAndPassword()
+
         binding.btnSignIn.setOnClickListener {
             val email = binding.tieEmail.text.toString()
             val password = binding.tiePassword.text.toString()
@@ -58,15 +61,11 @@ class SignInFragment : Fragment() {
                     is ResultState.Success ->{
                         authenticationViewModel.saveUserAuthentication(resultSignIn.data)
                         startActivity(Intent(requireActivity(), MainFeaturesActivity::class.java))
-                        Toast.makeText(
-                            requireActivity(),
-                            "berhasil login: ${resultSignIn.data}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+
                         requireActivity().finish()
                     }
                     is ResultState.Error -> {
-                        Toast.makeText(requireActivity(), "${resultSignIn.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireActivity(), "Account not registered", Toast.LENGTH_SHORT).show()
                     }
 
                 }
@@ -76,13 +75,14 @@ class SignInFragment : Fragment() {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
 
+        //Sign in with google account
         binding.btnGoogleSignIn.setOnClickListener {
-            lifecycleScope.launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 val credential = getCredentialRequest()
                 credential.onSuccess {
                     isSignInWithGoogle(it)
                 }.onFailure {
-                    Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
+                    //do nothing (if user cancel sign in with google)
                 }
             }
         }
@@ -120,22 +120,38 @@ class SignInFragment : Fragment() {
             }
 
             is ResultState.Success -> {
-                //matikan progressbar
                 authenticationViewModel.saveUserAuthentication(result.data)
                 startActivity(Intent(requireActivity(), MainFeaturesActivity::class.java))
-                Toast.makeText(
-                    requireActivity(),
-                    "berhasil login: ${result.data}",
-                    Toast.LENGTH_SHORT
-                ).show()
                 requireActivity().finish()
             }
 
             is ResultState.Error -> {
                 //muncul dialog error / salah
-                Toast.makeText(requireActivity(), "${result.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), "Not Valid", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun validateInputEmailAndPassword() {
+        var emailvalid = false
+        var passwordvalid = false
+        binding.tieEmail.addTextChangedListener {
+            val email = it.toString()
+            emailvalid = Helper.emailValidator(email)
+            Helper.updateInputLayout(binding.tilEmail, emailvalid.not(), "Wrong format email", requireContext())
+            updateSubmitState(emailvalid, passwordvalid)
+        }
+        binding.tiePassword.addTextChangedListener {
+            val password = it.toString()
+            passwordvalid= Helper.passwordValidator(password)
+            Helper.updateInputLayout(binding.tilPassword, passwordvalid.not(), "Wrong format password", requireContext())
+            updateSubmitState(emailvalid, passwordvalid)
+        }
+        updateSubmitState(emailvalid, passwordvalid)
+    }
+
+    private fun updateSubmitState(isEmail:Boolean, isPassword:Boolean){
+        binding.btnSignIn.isEnabled = isEmail && isPassword
     }
 
 
