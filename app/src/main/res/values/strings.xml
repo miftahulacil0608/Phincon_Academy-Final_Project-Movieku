@@ -4,8 +4,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="label_genre">Genre\t\t\t\t\t\t\t %s</string>
-    <string name="label_duration">Duration\t\t\t\t\t %s</string>
+    <string name="label_genre">Genre</string>
+    <string name="label_duration">Duration</string>
     <string name="label_director">Director\t\t\t\t\t\t %s</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -50,6 +50,16 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="your_web_client_id">106896436402-dv2otep226vee0f7ie7871eo43qc7ghg.apps.googleusercontent.com</string>
-    <string name="label_duration_and_genre">%s • %s</string>
-    <string name="label_rating_count_vote">⭐ %s (%s)</string>
+    <string name="label_release_and_genre">%1$s • %2$s</string>
+    <string name="label_rating_count_vote">⭐ %1$.1f (%2$d)</string>
+    <string name="label_title_movie">%s</string>
+    <string name="label_rating_movie">%.1f</string>
+    <string name="label_total_vote">(%d)</string>
+    <string name="label_number_rating">%.1f</string>
+    <string name="label_buy_ticket">IDR %dK</string>
+    <string name="label_price">Rp%d</string>
+    <string name="label_total_price">Total Price: Rp%d</string>
+    <string name="label_total_items">%d Items</string>
+
+
 </resources>

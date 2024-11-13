@@ -18,7 +18,7 @@
         <activity
             android:name=".ui.authentication.AuthenticationActivity"
             android:exported="false"
-            android:theme="@style/NoSystemBarStatus.Authentication" />
+            android:theme="@style/NoSystemBarStatus" />
         <activity
             android:name=".ui.onboarding.OnBoardingActivity"
             android:exported="false"
@@ -27,7 +27,7 @@
         <activity
             android:name=".ui.splashscreen.SplashScreenActivity"
             android:exported="true"
-            android:theme="@style/NoSystemBarStatus.SplashScreen"
+            android:theme="@style/NoSystemBarStatus"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,6 +37,7 @@
         <activity
             android:name=".ui.dashboard.MainFeaturesActivity"
             android:exported="true"
+            android:theme="@style/NoSystemBarStatus"
             android:label="@string/title_activity_main_features">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,72 +1,87 @@
 package com.example.data.utils
 
 import com.example.data.model.SettingData
+import com.example.data.model.dto.network.CreditsMovieDto
 import com.example.data.model.dto.network.DetailMovieDto
+import com.example.data.model.dto.network.ImagesMovieDto
+import com.example.data.model.dto.network.LanguageMovieDto
 import com.example.data.model.dto.network.NowPlayingMovieDto
-import com.example.data.model.dto.network.PopularMovieDto
 import com.example.data.model.dto.network.UpComingMovieDto
-import com.example.data.model.dto.network.result.ResultMovieDto
+import com.example.data.model.dto.network.VideosMovieDto
+import com.example.data.model.dto.network.result.GenreMovieDtoItem
+import com.example.data.model.dto.network.result.MovieDtoItem
 import com.example.domain.model.DetailMovie
 import com.example.domain.model.Movie
 import com.example.domain.model.NowPlayingMovie
-import com.example.domain.model.PopularMovie
 import com.example.domain.model.SettingDataUI
 import com.example.domain.model.UpComingMovie
 
 object MapperToDomainData {
-    private fun movieDtoToMovie(resultMovieDto: ResultMovieDto): Movie {
-        return Movie(
-            id = resultMovieDto.id,
-            title = resultMovieDto.originalTitle,
-            overview = resultMovieDto.overview,
-            releaseDate = resultMovieDto.releaseDate,
-            posterPath = "https://image.tmdb.org/t/p/original/${resultMovieDto.posterPath}",
-            backdropPath = "https://image.tmdb.org/t/p/original/${resultMovieDto.backdropPath}",
-            voteRange = resultMovieDto.voteAverage,
-            originalLanguage = resultMovieDto.originalLanguage,
-            priceMovie = MovieHelper.calculatePriceMovie(resultMovieDto.releaseDate)
-        )
-    }
 
-    fun popularMovieDtoToPopularMovie(popularMovieDto: PopularMovieDto): PopularMovie {
-        val dataMovie = popularMovieDto.results.map {
-            movieDtoToMovie(it)
-        }
-        return PopularMovie(popularMovieDto.page, dataMovie, popularMovieDto.totalPages, popularMovieDto.totalResults)
-    }
-
-     fun nowPlayingMovieDtoToNowPlayingMovie(nowPlayingMovieDto: NowPlayingMovieDto): NowPlayingMovie {
+    //now playing
+     fun nowPlayingMovieDtoToNowPlayingMovie(nowPlayingMovieDto: NowPlayingMovieDto, listGenreMovieDto: List<GenreMovieDtoItem>): NowPlayingMovie {
         val dataMovie = nowPlayingMovieDto.results.map {
-            movieDtoToMovie(it)
+            movieDtoToMovie(it, listGenreMovieDto)
         }
         return NowPlayingMovie(nowPlayingMovieDto.page, dataMovie, nowPlayingMovieDto.totalPages, nowPlayingMovieDto.totalResults)
     }
 
-     fun upComingMovieDtoToUpComingMovie(upComingMovieDto: UpComingMovieDto): UpComingMovie {
+    //upcoming movie
+     fun upComingMovieDtoToUpComingMovie(upComingMovieDto: UpComingMovieDto, listGenreMovieDto: List<GenreMovieDtoItem>): UpComingMovie {
         val dataMovie = upComingMovieDto.results.map {
-            movieDtoToMovie(it)
+            movieDtoToMovie(it, listGenreMovieDto)
         }
         return UpComingMovie(upComingMovieDto.page, dataMovie, upComingMovieDto.totalPages, upComingMovieDto.totalResults)
     }
 
-    fun detailMovieDtoToDetailMovie(detailMovieDto: DetailMovieDto, director:String?): DetailMovie {
-        return DetailMovie(
-            id = detailMovieDto.id,
-            adult = detailMovieDto.adult,
-            backdropPath = "https://image.tmdb.org/t/p/original/${detailMovieDto.backdropPath}",
-            originalTitle = detailMovieDto.originalTitle,
-            posterPath = "https://image.tmdb.org/t/p/original/${detailMovieDto.posterPath}",
-            genre = MovieHelper.getGenre(detailMovieDto.genres),
-            director = director?:"No Director",
-            duration = MovieHelper.calculateDuration(detailMovieDto.runtime),
-            releaseDate = detailMovieDto.releaseDate,
-            voteAverage = detailMovieDto.voteAverage,
-            voteCount = detailMovieDto.voteCount,
-            status = detailMovieDto.status,
-            overview = detailMovieDto.overview
+    //convert movieDto to MovieUI (list movie)
+    private fun movieDtoToMovie(movieDtoItem: MovieDtoItem, listGenreMovieDto: List<GenreMovieDtoItem>): Movie {
+
+        //genre convert using movieHelper
+        val genres = MovieHelper.filterGenre(movieDtoItem.genreIds,listGenreMovieDto )
+        val resultGenres = MovieHelper.getGenre(genres)
+
+        return Movie(
+            id = movieDtoItem.id,
+            title = movieDtoItem.originalTitle,
+            posterPath = "https://image.tmdb.org/t/p/original/${movieDtoItem.posterPath}",
+            genre = resultGenres,
+            releaseDate = movieDtoItem.releaseDate,
+            voteCount=movieDtoItem.voteCount,
+            voteRange = movieDtoItem.voteAverage
         )
     }
 
+    //convert detail movieDto to detail movie UI
+    fun detailMovieDtoToDetailMovie(detailMovieDto: DetailMovieDto, credits: CreditsMovieDto, videoMovieDto:VideosMovieDto, languageDto:List<LanguageMovieDto>, imagesMovieDto:ImagesMovieDto): DetailMovie {
+        return DetailMovie(
+            id = detailMovieDto.id,
+            adult = if (detailMovieDto.adult) "Yes" else "No",
+            pgAge = if (detailMovieDto.adult) "+17" else "+13",
+            backdropPath = "https://image.tmdb.org/t/p/original/${detailMovieDto.backdropPath}",
+            originalTitle = detailMovieDto.originalTitle,
+            posterPath = "https://image.tmdb.org/t/p/original/${detailMovieDto.posterPath}",
+            releaseDate = detailMovieDto.releaseDate,
+            rating = (detailMovieDto.voteAverage/2).toFloat(),
+            totalVote = detailMovieDto.voteCount,
+            status = detailMovieDto.status,
+            overview = detailMovieDto.overview,
+            codeLanguage = detailMovieDto.originalLanguage.uppercase(),
+
+            //using movieHelper
+            imageMovie = MovieHelper.getImages(imagesMovieDto.backdrops),
+            priceMovie = MovieHelper.calculatePriceMovie(detailMovieDto.releaseDate),
+            priceFee = MovieHelper.calculatePriceMovie(detailMovieDto.releaseDate)*10/100,
+            duration = MovieHelper.calculateDuration(detailMovieDto.runtime),
+            genre = MovieHelper.getGenre(detailMovieDto.genres),
+            language = MovieHelper.getOriginalLanguage(detailMovieDto.originalLanguage, languageDto),
+            videoUrl = MovieHelper.getVideoTrailer(videoMovieDto.resultsVideos),
+            director = MovieHelper.getDirector(listCrew = credits.crew),
+            actors = MovieHelper.getActors(listActors = credits.cast),
+        )
+    }
+
+    //onboarding convert data
     fun SettingData.toSettingDataUI(): SettingDataUI {
         return SettingDataUI(this.isOnBoarding, this.isUserAuthentication)
     }

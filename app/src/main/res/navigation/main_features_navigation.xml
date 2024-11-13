@@ -28,7 +28,17 @@
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/detailMovieFragment"
-        android:name="com.example.movieku.ui.dashboard.detail.DetailMovieFragment"
+        android:name="com.example.movieku.ui.dashboard.detail.DetailNowPlayingMovieFragment"
         android:label="fragment_detail_movie"
-        tools:layout="@layout/fragment_detail_movie" />
+        tools:layout="@layout/fragment_detail_movie" >
+        <action
+            android:id="@+id/action_detailMovieFragment_to_orderDetailsFragment"
+            app:destination="@id/orderDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.example.movieku.ui.dashboard.booking.OrderDetailsFragment"
+        android:label="OrderDetailsFragment"
+        tools:layout="@layout/fragment_order_details"
+        />
 </navigation>

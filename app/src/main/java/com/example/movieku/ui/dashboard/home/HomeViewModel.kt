@@ -18,32 +18,11 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val movieUseCase: MovieUseCase) : ViewModel() {
 
-    private val _popularMovieData = MutableStateFlow<ResultState<PopularMovie>>(ResultState.Loading)
-    val popularMovie = _popularMovieData.asStateFlow()
-
     private val _nowPlayingMovie = MutableStateFlow<ResultState<NowPlayingMovie>>(ResultState.Loading)
     val nowPlayingMovie = _nowPlayingMovie.asStateFlow()
 
     private val _upComingMovie = MutableStateFlow<ResultState<UpComingMovie>>(ResultState.Loading)
     val upComingMovie = _upComingMovie.asStateFlow()
-
-    private val _currentItem = MutableLiveData<Int>()
-    val currentItem:LiveData<Int> = _currentItem
-
-    fun setCurrentItem(item:Int){
-        _currentItem.value = item
-    }
-
-    fun getPopularMovie() {
-        viewModelScope.launch {
-            _popularMovieData.value = ResultState.Loading
-            try {
-                _popularMovieData.value = ResultState.Success(movieUseCase.getPopularMovie())
-            } catch (e: Exception) {
-                _popularMovieData.value = ResultState.Error(e)
-            }
-        }
-    }
 
     fun getNowPlayingMovie() {
         viewModelScope.launch {

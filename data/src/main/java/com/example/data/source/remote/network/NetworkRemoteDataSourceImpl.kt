@@ -2,21 +2,18 @@ package com.example.data.source.remote.network
 
 import com.example.data.model.dto.network.CreditsMovieDto
 import com.example.data.model.dto.network.DetailMovieDto
+import com.example.data.model.dto.network.GenreMovieDto
 import com.example.data.model.dto.network.ImagesMovieDto
+import com.example.data.model.dto.network.LanguageMovieDto
 import com.example.data.model.dto.network.NowPlayingMovieDto
 import com.example.data.model.dto.network.PopularMovieDto
 import com.example.data.model.dto.network.UpComingMovieDto
 import com.example.data.model.dto.network.VideosMovieDto
 import javax.inject.Inject
 
-//TODO anterin hasil dari repo ini ke repo domain dan pisahin datanya
 class NetworkRemoteDataSourceImpl @Inject constructor(
     private val apiService: TMDBApiService
 ) : NetworkRemoteDataSourceRepository {
-
-    override suspend fun fetchPopularMovie(): PopularMovieDto {
-        return apiService.fetchPopularMovie()
-    }
 
     override suspend fun fetchNowPlayingMovie(): NowPlayingMovieDto {
         return apiService.fetchNowPlayingMovie()
@@ -24,6 +21,14 @@ class NetworkRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun fetchUpComingMovie(): UpComingMovieDto {
         return apiService.fetchUpComingMovie()
+    }
+
+    override suspend fun fetchGenreMovie(): GenreMovieDto {
+        return apiService.fetchGenre()
+    }
+
+    override suspend fun fetchLanguageMovie(): List<LanguageMovieDto> {
+        return apiService.fetchLanguage()
     }
 
     override suspend fun fetchDetailMovie(movieId: Int): DetailMovieDto {
@@ -38,7 +43,7 @@ class NetworkRemoteDataSourceImpl @Inject constructor(
         return apiService.fetchCreditsMovie(movieId)
     }
 
-    override suspend fun fetchPhotosMovie(movieId: Int): ImagesMovieDto {
+    override suspend fun fetchImagesMovie(movieId: Int): ImagesMovieDto {
         return apiService.fetchImagesMovie(movieId)
     }
 }

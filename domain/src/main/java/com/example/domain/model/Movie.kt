@@ -3,11 +3,9 @@ package com.example.domain.model
 data class Movie(
     val id: Int,
     val title: String,
-    val overview:String,
+    val genre:String,
     val releaseDate:String,
     val posterPath: String,
-    val backdropPath: String,
+    val voteCount:Int,
     val voteRange: Double,
-    val originalLanguage: String,
-    val priceMovie:Int
 )

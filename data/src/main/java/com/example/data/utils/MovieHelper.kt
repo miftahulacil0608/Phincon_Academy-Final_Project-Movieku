@@ -1,7 +1,12 @@
 package com.example.data.utils
 
-import com.example.data.model.dto.network.result.ResultCrewMovieDto
-import com.example.data.model.dto.network.result.ResultGenreMovieDto
+import com.example.data.model.dto.network.ImagesMovieDto
+import com.example.data.model.dto.network.LanguageMovieDto
+import com.example.data.model.dto.network.result.CastMovieDtoItem
+import com.example.data.model.dto.network.result.CrewMovieDtoItem
+import com.example.data.model.dto.network.result.GenreMovieDtoItem
+import com.example.data.model.dto.network.result.VideoMovieDtoItem
+import com.example.domain.model.DirectorOrActorItem
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -35,8 +40,22 @@ object MovieHelper {
         }
     }
 
+    //filterGenre for NowPlaying
+    fun filterGenre(listGenreId:List<Int>, listGenre:List<GenreMovieDtoItem>):List<GenreMovieDtoItem>{
+        val result = mutableListOf<GenreMovieDtoItem>()
+        for (genre in listGenre){
+            for (genreId in listGenreId){
+                if (genreId == genre.id){
+                    result.add(genre)
+                    break
+                }
+            }
+        }
+        return result
+    }
+
     //Get Genre
-    fun getGenre(listGenre:List<ResultGenreMovieDto>):String{
+    fun getGenre(listGenre:List<GenreMovieDtoItem>):String{
         val listGenreName = listGenre.map {
             it.name
         }
@@ -57,13 +76,54 @@ object MovieHelper {
         return "$hours hour$textHours $minutes minute$textMinutes"
     }
 
-    //Get 1 Director
-    fun getDirector(listCrew:List<ResultCrewMovieDto>):String?{
-        //use firstOrNull because I want get 1 data only
-        val director = listCrew.firstOrNull {
-            it.job == "Director"
-        }?.name
+    fun getImages(listImages:List<ImagesMovieDto.Backdrop>?):List<String>{
+        return listImages?.filter {
+            it.width < 2160
+        }?.map {
+          "https://image.tmdb.org/t/p/original/${it.filePath}"
+        } ?: emptyList()
+    }
 
+    //Get list Director
+    fun getDirector(listCrew:List<CrewMovieDtoItem>?):List<DirectorOrActorItem>{
+        //use filter to filter item from resultCewMovieDto to DirectorOrActorItem
+        val director = listCrew?.filter {
+            it.job.contains("director",true)
+        }?.map{
+            DirectorOrActorItem(it.id, it.name, "https://image.tmdb.org/t/p/original/${it.profilePath}")
+        }?: emptyList()
         return director
     }
+
+    fun getActors(listActors:List<CastMovieDtoItem>?):List<DirectorOrActorItem>{
+        val actors = listActors?.filter {
+            it.order in 1..5
+        }?.map {
+            DirectorOrActorItem(it.id, it.name, "https://image.tmdb.org/t/p/original/${it.profilePath}")
+        }?: emptyList()
+        return actors
+    }
+
+    fun getVideoTrailer(listVideos:List<VideoMovieDtoItem>?):String{
+        val videoTrailer = listVideos?.filter {
+            it.official && it.type.contains("Trailer",true)
+        }?.map{
+            it.key
+        }?.first()?:"nothing"
+        return videoTrailer
+    }
+
+    fun getOriginalLanguage(isoLanguage:String,listLanguageMovieDto: List<LanguageMovieDto>):String{
+        val originalLanguage = listLanguageMovieDto.filter {
+            it.iso6391.contains(isoLanguage, true)
+        }.map {
+            it.englishName
+        }.first()
+
+        return originalLanguage
+    }
+
+
+
+
 }

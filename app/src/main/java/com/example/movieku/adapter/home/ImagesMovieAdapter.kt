@@ -1,33 +1,29 @@
 package com.example.movieku.adapter.home
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.domain.model.Movie
+import com.example.movieku.databinding.ItemMovieAdapterBinding
 import com.example.movieku.databinding.ItemUpcomingMovieBinding
 
-//TODO ganti makek diffutilcallback saja
-class UpcomingMovieAdapter(private var listItem: List<Movie> = emptyList()) :
-    RecyclerView.Adapter<UpcomingMovieAdapter.MyViewHolder>() {
-    inner class MyViewHolder(private val binding: ItemUpcomingMovieBinding) :
+class ImagesMovieAdapter(private var listItem: List<String> = emptyList()) :
+    RecyclerView.Adapter<ImagesMovieAdapter.MyViewHolder>() {
+    inner class MyViewHolder(private val binding: ItemMovieAdapterBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Movie) {
+        fun bind(item: String) {
             with(binding) {
-                val numberPosition = bindingAdapterPosition+1
                 Glide.with(root)
-                    .load(item.posterPath)
-                    //.into(ivUpComingMovie)
-                //tvNumberMovie.text = numberPosition.toString()
-                //root.setOnClickListener {}
+                    .load(item)
+                    .into(ivBackdrop)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding =
-            ItemUpcomingMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemMovieAdapterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
 
@@ -38,7 +34,7 @@ class UpcomingMovieAdapter(private var listItem: List<Movie> = emptyList()) :
         holder.bind(item)
     }
 
-    fun addNewListData(newListItem: List<Movie>) {
+    fun addNewListData(newListItem: List<String>) {
         listItem = newListItem
         notifyDataSetChanged()
     }

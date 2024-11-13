@@ -9,10 +9,6 @@ import javax.inject.Inject
 
 class MovieUseCase @Inject constructor(private val movieRepository: MovieRepository) {
 
-    suspend fun getPopularMovie():PopularMovie{
-        return movieRepository.getPopularMovie()
-    }
-
     suspend fun getNowPlayingMovie():NowPlayingMovie{
         return movieRepository.getNowPlayingMovie()
     }

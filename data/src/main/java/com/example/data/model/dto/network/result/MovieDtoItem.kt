@@ -2,7 +2,7 @@ package com.example.data.model.dto.network.result
 
 import com.google.gson.annotations.SerializedName
 
-data class ResultMovieDto(
+data class MovieDtoItem(
     @SerializedName("adult")
     val adult: Boolean,
     @SerializedName("backdrop_path")

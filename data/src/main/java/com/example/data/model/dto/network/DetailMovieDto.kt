@@ -1,7 +1,7 @@
 package com.example.data.model.dto.network
 
 
-import com.example.data.model.dto.network.result.ResultGenreMovieDto
+import com.example.data.model.dto.network.result.GenreMovieDtoItem
 import com.google.gson.annotations.SerializedName
 
 data class DetailMovieDto(
@@ -14,7 +14,7 @@ data class DetailMovieDto(
     @SerializedName("budget")
     val budget: Int,
     @SerializedName("genres")
-    val genres: List<ResultGenreMovieDto>,
+    val genres: List<GenreMovieDtoItem>,
     @SerializedName("homepage")
     val homepage: String,
     @SerializedName("id")

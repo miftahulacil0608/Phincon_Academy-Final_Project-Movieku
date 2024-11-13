@@ -6,7 +6,6 @@ import com.example.domain.model.PopularMovie
 import com.example.domain.model.UpComingMovie
 
 interface MovieRepository {
-    suspend fun getPopularMovie():PopularMovie
     suspend fun getNowPlayingMovie():NowPlayingMovie
     suspend fun getUpComingMovie():UpComingMovie
     suspend fun getDetailMovie(movieId:Int):DetailMovie

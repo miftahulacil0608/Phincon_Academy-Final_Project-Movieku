@@ -12,24 +12,24 @@ import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(private val networkRemoteDataSourceRepository: NetworkRemoteDataSourceRepository) :
     MovieRepository {
-    override suspend fun getPopularMovie(): PopularMovie {
-        return MapperToDomainData.popularMovieDtoToPopularMovie(networkRemoteDataSourceRepository.fetchPopularMovie())
-    }
 
     override suspend fun getNowPlayingMovie(): NowPlayingMovie {
-        return MapperToDomainData.nowPlayingMovieDtoToNowPlayingMovie(networkRemoteDataSourceRepository.fetchNowPlayingMovie())
+        val listGenre = networkRemoteDataSourceRepository.fetchGenreMovie().genres
+        return MapperToDomainData.nowPlayingMovieDtoToNowPlayingMovie(networkRemoteDataSourceRepository.fetchNowPlayingMovie(), listGenre)
     }
 
     override suspend fun getUpComingMovie(): UpComingMovie {
-        return MapperToDomainData.upComingMovieDtoToUpComingMovie(networkRemoteDataSourceRepository.fetchUpComingMovie())
+        val listGenre = networkRemoteDataSourceRepository.fetchGenreMovie().genres
+        return MapperToDomainData.upComingMovieDtoToUpComingMovie(networkRemoteDataSourceRepository.fetchUpComingMovie(), listGenre)
     }
 
     override suspend fun getDetailMovie(movieId:Int): DetailMovie {
-        val listCrew = networkRemoteDataSourceRepository.fetchCreditsMovie(movieId).crew
+        val credits = networkRemoteDataSourceRepository.fetchCreditsMovie(movieId)
+        val videos = networkRemoteDataSourceRepository.fetchMovieVideos(movieId)
+        val language = networkRemoteDataSourceRepository.fetchLanguageMovie()
         val detailMovieDto = networkRemoteDataSourceRepository.fetchDetailMovie(movieId)
-        return MapperToDomainData.detailMovieDtoToDetailMovie(detailMovieDto,MovieHelper.getDirector(listCrew))
+        val images = networkRemoteDataSourceRepository.fetchImagesMovie(movieId)
+        return MapperToDomainData.detailMovieDtoToDetailMovie(detailMovieDto, credits, videos, language, images)
     }
-
-    //TODO we need videos ID, needs, credits , and image
 
 }

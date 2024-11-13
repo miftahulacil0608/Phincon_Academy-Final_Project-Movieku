@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName
 
 data class ImagesMovieDto(
     @SerializedName("backdrops")
-    val backdrops: List<Backdrop>,
+    val backdrops: List<Backdrop>?,
     @SerializedName("id")
     val id: Int,
     @SerializedName("logos")
-    val logos: List<Logo>,
+    val logos: List<Logo>?,
     @SerializedName("posters")
-    val posters: List<Poster>
+    val posters: List<Poster>?
 ) {
     data class Backdrop(
         @SerializedName("aspect_ratio")
@@ -21,7 +21,7 @@ data class ImagesMovieDto(
         @SerializedName("height")
         val height: Int,
         @SerializedName("iso_639_1")
-        val iso6391: String,
+        val iso6391: String?,
         @SerializedName("vote_average")
         val voteAverage: Double,
         @SerializedName("vote_count")
@@ -38,7 +38,7 @@ data class ImagesMovieDto(
         @SerializedName("height")
         val height: Int,
         @SerializedName("iso_639_1")
-        val iso6391: String,
+        val iso6391: String?,
         @SerializedName("vote_average")
         val voteAverage: Double,
         @SerializedName("vote_count")
@@ -55,7 +55,7 @@ data class ImagesMovieDto(
         @SerializedName("height")
         val height: Int,
         @SerializedName("iso_639_1")
-        val iso6391: String,
+        val iso6391: String?,
         @SerializedName("vote_average")
         val voteAverage: Double,
         @SerializedName("vote_count")

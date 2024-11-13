@@ -7,6 +7,9 @@
     <color name="md_text_secondary">#707070</color>
     <color name="md_theme_scrim">#000000</color>
     <color name="md_box_stroke_primary">#707070</color>
+    <color name="md_text_cat">#C21807</color>
+    <color name="md_theme_primary_secondary">#FFC107</color>
+    <color name="md_divider">#E5E5E5</color>
 
 
 

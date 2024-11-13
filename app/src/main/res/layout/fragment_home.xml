@@ -16,7 +16,7 @@
             android:id="@+id/btn_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="54dp"
             android:layout_marginEnd="20dp"
             android:background="@null"
             android:src="@drawable/ic_profile_ligth_mode"
@@ -44,9 +44,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/sf_pro_text_bold"
+            android:textColor="@color/md_theme_primary"
             android:text="Now Playing"
-            android:textSize="20sp"
+            android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_search_view" />
 
@@ -66,19 +68,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="See All"
-                android:textSize="16sp" />
+                android:textSize="13sp"
+                android:fontFamily="@font/sf_pro_text_regular"
+                android:textColor="@color/md_text_cat"
+                />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_navigate_next" />
+                android:src="@drawable/ic_arrow_right"/>
         </LinearLayout>
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager_popular_movie"
+            android:id="@+id/view_pager_now_playing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_see_all_now_playing" />
@@ -93,7 +98,7 @@
             android:paddingHorizontal="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_pager_popular_movie"
+            app:layout_constraintTop_toBottomOf="@id/view_pager_now_playing"
             app:tabIndicator="@drawable/ic_indicator"
             app:tabIndicatorColor="#FFC107"
             app:tabIndicatorFullWidth="false"
@@ -105,10 +110,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="20dp"
             android:text="Coming Soon Playing"
             android:textSize="22sp"
-            android:textStyle="bold"
+            android:fontFamily="@font/sf_pro_text_bold"
+            android:textColor="@color/md_theme_primary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tab_layout_indicator"
             app:layout_goneMarginTop="24dp" />
@@ -129,7 +135,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="See All"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textColor="@color/md_text_cat"
+                android:fontFamily="@font/sf_pro_text_regular"
+                />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="wrap_content"
@@ -141,7 +150,7 @@
             android:id="@+id/rv_upcoming_movie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="24dp"
             android:orientation="horizontal"
             android:scrollIndicators="none"

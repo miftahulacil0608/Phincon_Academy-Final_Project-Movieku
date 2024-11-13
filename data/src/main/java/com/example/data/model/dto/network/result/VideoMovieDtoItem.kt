@@ -2,7 +2,7 @@ package com.example.data.model.dto.network.result
 
 import com.google.gson.annotations.SerializedName
 
-data class ResultVideoMovieDto(
+data class VideoMovieDtoItem(
     @SerializedName("id")
     val id: String,
     @SerializedName("iso_3166_1")
