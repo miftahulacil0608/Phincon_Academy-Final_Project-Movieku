@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import com.example.data.model.SettingData
 import com.example.data.repositoryImpl.AuthRepositoryImpl
 import com.example.data.repositoryImpl.MovieRepositoryImpl
 import com.example.data.repositoryImpl.UserSettingRepositoryImpl
@@ -15,7 +14,8 @@ import com.example.data.source.remote.network.NetworkRemoteDataSourceImpl
 import com.example.data.source.remote.network.NetworkRemoteDataSourceRepository
 import com.example.data.source.remote.firebase.FireBaseRemoteDataSourceImpl
 import com.example.data.source.remote.firebase.FireBaseRemoteDataSourceRepository
-import com.example.data.source.remote.network.TMDBApiService
+import com.example.data.source.remote.network.apiorder.ApiOrderService
+import com.example.data.source.remote.network.tmdb.TMDBApiService
 import com.example.domain.repository.AuthRepository
 import com.example.domain.repository.MovieRepository
 import com.example.domain.repository.UserSettingRepository
@@ -80,54 +80,59 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesInterceptor(settingsDataStore: SettingsDataStore): Interceptor {
-        return Interceptor {
-            val chain = it.request()
-            val bearerTokenTheMovieDb =
-                "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkN2I5ZTc0ZjE0ZjJkMjIwYmIzMjFkNjk5MTBhMzc1YSIsIm5iZiI6MTczMDYyOTA1NS4yOTUzNzA2LCJzdWIiOiI2NzI0NDFjZGMxYzc0MzNlYmJjNDE2NGYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.52KNw2IWGEEr2dDVZXF_SKMMErAk01t3Fww6Th4DDhc"
-            val requestHeaders = chain.newBuilder()
-                .addHeader("accept", "application/json")
-                .addHeader("Authorization", "Bearer $bearerTokenTheMovieDb")
-                .build()
-            it.proceed(requestHeaders)
-        }
+    fun providesTMDBInterceptor():TMDBInterceptor{
+        return TMDBInterceptor()
     }
 
     @Provides
     @Singleton
-    fun providesClientOkHttp(
+    fun providesOrderInterceptor(): OrderInterceptor {
+        return OrderInterceptor()
+    }
+
+    @Provides
+    @Singleton
+    fun providesTMDBClientOkHttp(
         loggingInterceptor: HttpLoggingInterceptor,
-        interceptor: Interceptor
-    ): OkHttpClient {
+        tmdbInterceptor: TMDBInterceptor,
+        orderInterceptor: OrderInterceptor
+    ):OkHttpClient{
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
-            .addInterceptor(interceptor)
+            .addInterceptor(tmdbInterceptor)
+            .addInterceptor(orderInterceptor)
             .connectTimeout(0, TimeUnit.SECONDS)
             .readTimeout(0, TimeUnit.SECONDS)
             .writeTimeout(0, TimeUnit.SECONDS)
             .build()
     }
 
+
     @Provides
     @Singleton
-    fun providesNetwork(okHttpClient: OkHttpClient): Retrofit {
+    fun providesTMDBAPI(tmdbOkHttpClient: OkHttpClient): TMDBApiService {
         return Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org/3/")
-            .client(okHttpClient)
+            .client(tmdbOkHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
-            .build()
+            .build().create(TMDBApiService::class.java)
     }
 
     @Provides
     @Singleton
-    fun providesApiService(retrofit: Retrofit): TMDBApiService {
-        return retrofit.create(TMDBApiService::class.java)
+    fun providesOrderAPI(orderOkhttpClient:OkHttpClient):ApiOrderService{
+        return Retrofit.Builder()
+            .baseUrl("https://phincon-academy-api.onrender.com/")
+            .client(orderOkhttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build().create(ApiOrderService::class.java)
     }
+
 
     @Provides
     @Singleton
-    fun provideRemoteDataSourceRepository(tmdbApiService: TMDBApiService): NetworkRemoteDataSourceRepository {
-        return NetworkRemoteDataSourceImpl(tmdbApiService)
+    fun provideRemoteDataSourceRepository(tmdbApiService: TMDBApiService, orderApiOrderService: ApiOrderService): NetworkRemoteDataSourceRepository {
+        return NetworkRemoteDataSourceImpl(tmdbApiService, orderApiOrderService)
     }
 
     @Provides

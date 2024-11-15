@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.dashboard.booking.OrderDetailsFragment">
 
     <androidx.appcompat.widget.AppCompatImageButton
@@ -11,11 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
         android:background="@null"
         android:src="@drawable/ic_back_light"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_label_search"
@@ -78,11 +78,11 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_label_ticket"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sf_pro_text_semibold"
                 android:text="1"
-                android:id="@+id/tv_label_ticket"
                 android:textColor="@color/md_theme_primary"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -318,12 +318,12 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/sf_pro_text_regular"
-        tools:text="2"
         android:textColor="@color/md_text_secondary"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_label_type_seat"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_label_type_seat" />
+        app:layout_constraintTop_toTopOf="@id/tv_label_type_seat"
+        tools:text="2" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_multiply"
@@ -369,12 +369,12 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/sf_pro_text_regular"
-        tools:text="2"
         android:textColor="@color/md_text_secondary"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_label_platform_fee"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_label_platform_fee" />
+        app:layout_constraintTop_toTopOf="@id/tv_label_platform_fee"
+        tools:text="2" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_multiply_fee"
@@ -442,25 +442,27 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginTop="16dp"
-        android:background="@color/md_divider"
-        app:layout_constraintBottom_toTopOf="@id/btn_payment"
         android:layout_marginBottom="15dp"
-        />
+        android:background="@color/md_divider"
+        app:layout_constraintBottom_toTopOf="@id/btn_payment" />
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="25dp"
-        app:cardCornerRadius="100dp"
-        android:id="@+id/btn_payment"
+        android:clickable="true"
         app:cardBackgroundColor="@color/md_theme_primary"
+        app:cardCornerRadius="100dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_payment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clickable="true"
             android:paddingVertical="11dp"
+
             >
 
             <com.google.android.material.textview.MaterialTextView
@@ -480,14 +482,14 @@
                 android:id="@+id/tv_total_ticket"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/sf_pro_text_regular"
                 android:text="@string/label_total_items"
-                android:layout_marginTop="4dp"
                 android:textColor="@color/md_theme_onPrimary"
-                app:layout_constraintHorizontal_chainStyle="packed"
                 android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tv_divider_payment"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="@id/tv_label_payment"
                 app:layout_constraintTop_toBottomOf="@id/tv_label_payment" />
 
@@ -496,8 +498,8 @@
                 android:id="@+id/tv_divider_payment"
                 android:layout_width="2dp"
                 android:layout_height="0dp"
-                android:background="#FAFAFA"
                 android:layout_marginHorizontal="6dp"
+                android:background="#FAFAFA"
                 app:layout_constraintBottom_toBottomOf="@id/tv_total_ticket"
                 app:layout_constraintEnd_toStartOf="@id/tv_total_price_to_pay"
                 app:layout_constraintStart_toEndOf="@id/tv_total_ticket"
@@ -511,14 +513,21 @@
                 android:text="@string/label_total_price"
                 android:textColor="@color/md_theme_onPrimary"
                 android:textSize="10sp"
-                app:layout_constraintStart_toEndOf="@id/tv_divider_payment"
                 app:layout_constraintBottom_toBottomOf="@id/tv_divider_payment"
                 app:layout_constraintEnd_toEndOf="@id/tv_label_payment"
-                app:layout_constraintTop_toTopOf="@id/tv_divider_payment"
-                />
+                app:layout_constraintStart_toEndOf="@id/tv_divider_payment"
+                app:layout_constraintTop_toTopOf="@id/tv_divider_payment" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_theme_onPrimary"
+        android:visibility="gone"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

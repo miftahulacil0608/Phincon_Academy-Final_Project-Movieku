@@ -1,15 +1,14 @@
-package com.example.data.source.remote.network
+package com.example.data.source.remote.network.tmdb
 
-import com.example.data.model.dto.network.CreditsMovieDto
-import com.example.data.model.dto.network.DetailMovieDto
-import com.example.data.model.dto.network.GenreMovieDto
-import com.example.data.model.dto.network.ImagesMovieDto
-import com.example.data.model.dto.network.LanguageMovieDto
-import com.example.data.model.dto.network.NowPlayingMovieDto
-import com.example.data.model.dto.network.PopularMovieDto
-import com.example.data.model.dto.network.SearchMovieDto
-import com.example.data.model.dto.network.UpComingMovieDto
-import com.example.data.model.dto.network.VideosMovieDto
+import com.example.data.model.dto.network.tmdb.CreditsMovieDto
+import com.example.data.model.dto.network.tmdb.DetailMovieDto
+import com.example.data.model.dto.network.tmdb.GenreMovieDto
+import com.example.data.model.dto.network.tmdb.ImagesMovieDto
+import com.example.data.model.dto.network.tmdb.LanguageMovieDto
+import com.example.data.model.dto.network.tmdb.NowPlayingMovieDto
+import com.example.data.model.dto.network.tmdb.SearchMovieDto
+import com.example.data.model.dto.network.tmdb.UpComingMovieDto
+import com.example.data.model.dto.network.tmdb.VideosMovieDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

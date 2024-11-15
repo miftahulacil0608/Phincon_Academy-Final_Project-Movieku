@@ -40,5 +40,20 @@
         android:name="com.example.movieku.ui.dashboard.booking.OrderDetailsFragment"
         android:label="OrderDetailsFragment"
         tools:layout="@layout/fragment_order_details"
-        />
+        >
+        <action
+            android:id="@+id/action_orderDetailsFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.example.movieku.ui.dashboard.payment.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" >
+        <action
+            android:id="@+id/action_paymentFragment_to_navigation_notifications"
+            app:destination="@id/navigation_notifications"
+            app:popUpTo="@id/detailMovieFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

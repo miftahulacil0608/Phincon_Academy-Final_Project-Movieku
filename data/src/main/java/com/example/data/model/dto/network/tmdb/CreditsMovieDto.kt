@@ -1,8 +1,8 @@
-package com.example.data.model.dto.network
+package com.example.data.model.dto.network.tmdb
 
 
-import com.example.data.model.dto.network.result.CastMovieDtoItem
-import com.example.data.model.dto.network.result.CrewMovieDtoItem
+import com.example.data.model.dto.network.tmdb.result.CastMovieDtoItem
+import com.example.data.model.dto.network.tmdb.result.CrewMovieDtoItem
 import com.google.gson.annotations.SerializedName
 
 class CreditsMovieDto(

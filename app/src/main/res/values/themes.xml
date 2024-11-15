@@ -70,6 +70,12 @@
         <item name="android:statusBarColor">@color/md_theme_onPrimary</item>
     </style>
 
+    <style name="NoSystemBarStatus.MainFeaturesActivity">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+    </style>
+
 
     <!--  Style Item  -->
     <style name="GoldButton">

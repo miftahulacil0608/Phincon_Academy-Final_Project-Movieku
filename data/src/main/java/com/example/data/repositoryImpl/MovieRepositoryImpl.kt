@@ -1,11 +1,14 @@
 package com.example.data.repositoryImpl
 
+import com.example.data.model.dto.network.apiorder.ItemsRequest
+import com.example.data.model.dto.network.apiorder.OrderRequest
 import com.example.data.source.remote.network.NetworkRemoteDataSourceRepository
 import com.example.data.utils.MapperToDomainData
-import com.example.data.utils.MovieHelper
 import com.example.domain.model.DetailMovie
+import com.example.domain.model.ItemsRequestFromUser
 import com.example.domain.model.NowPlayingMovie
-import com.example.domain.model.PopularMovie
+import com.example.domain.model.OrderRequestFromUser
+import com.example.domain.model.OrderResponseUI
 import com.example.domain.model.UpComingMovie
 import com.example.domain.repository.MovieRepository
 import javax.inject.Inject
@@ -30,6 +33,19 @@ class MovieRepositoryImpl @Inject constructor(private val networkRemoteDataSourc
         val detailMovieDto = networkRemoteDataSourceRepository.fetchDetailMovie(movieId)
         val images = networkRemoteDataSourceRepository.fetchImagesMovie(movieId)
         return MapperToDomainData.detailMovieDtoToDetailMovie(detailMovieDto, credits, videos, language, images)
+    }
+
+    override suspend fun orderMovie(orderRequestFromUser: OrderRequestFromUser): OrderResponseUI {
+        val convertItemRequestUserToItemRequest = orderRequestFromUser.itemsRequest.map { it.toItemsRequest() }
+        val orderRequesting = OrderRequest(orderRequestFromUser.amount, orderRequestFromUser.email, convertItemRequestUserToItemRequest)
+        return MapperToDomainData.mapperOrderDtoToOrderResponse(networkRemoteDataSourceRepository.postOrderMovie(orderRequesting))
+    }
+
+    companion object{
+        fun ItemsRequestFromUser.toItemsRequest():ItemsRequest{
+           return ItemsRequest(this.id, this.name, this.price, this.quantity)
+
+        }
     }
 
 }

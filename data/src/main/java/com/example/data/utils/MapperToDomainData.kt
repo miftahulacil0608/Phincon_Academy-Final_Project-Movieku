@@ -1,22 +1,28 @@
 package com.example.data.utils
 
 import com.example.data.model.SettingData
-import com.example.data.model.dto.network.CreditsMovieDto
-import com.example.data.model.dto.network.DetailMovieDto
-import com.example.data.model.dto.network.ImagesMovieDto
-import com.example.data.model.dto.network.LanguageMovieDto
-import com.example.data.model.dto.network.NowPlayingMovieDto
-import com.example.data.model.dto.network.UpComingMovieDto
-import com.example.data.model.dto.network.VideosMovieDto
-import com.example.data.model.dto.network.result.GenreMovieDtoItem
-import com.example.data.model.dto.network.result.MovieDtoItem
+import com.example.data.model.dto.network.apiorder.OrderDto
+import com.example.data.model.dto.network.tmdb.CreditsMovieDto
+import com.example.data.model.dto.network.tmdb.DetailMovieDto
+import com.example.data.model.dto.network.tmdb.ImagesMovieDto
+import com.example.data.model.dto.network.tmdb.LanguageMovieDto
+import com.example.data.model.dto.network.tmdb.NowPlayingMovieDto
+import com.example.data.model.dto.network.tmdb.UpComingMovieDto
+import com.example.data.model.dto.network.tmdb.VideosMovieDto
+import com.example.data.model.dto.network.tmdb.result.GenreMovieDtoItem
+import com.example.data.model.dto.network.tmdb.result.MovieDtoItem
 import com.example.domain.model.DetailMovie
 import com.example.domain.model.Movie
 import com.example.domain.model.NowPlayingMovie
+import com.example.domain.model.OrderResponseUI
 import com.example.domain.model.SettingDataUI
 import com.example.domain.model.UpComingMovie
 
 object MapperToDomainData {
+    //onboarding convert data
+    fun SettingData.toSettingDataUI(): SettingDataUI {
+        return SettingDataUI(this.isOnBoarding, this.isUserAuthentication)
+    }
 
     //now playing
      fun nowPlayingMovieDtoToNowPlayingMovie(nowPlayingMovieDto: NowPlayingMovieDto, listGenreMovieDto: List<GenreMovieDtoItem>): NowPlayingMovie {
@@ -53,7 +59,7 @@ object MapperToDomainData {
     }
 
     //convert detail movieDto to detail movie UI
-    fun detailMovieDtoToDetailMovie(detailMovieDto: DetailMovieDto, credits: CreditsMovieDto, videoMovieDto:VideosMovieDto, languageDto:List<LanguageMovieDto>, imagesMovieDto:ImagesMovieDto): DetailMovie {
+    fun detailMovieDtoToDetailMovie(detailMovieDto: DetailMovieDto, credits: CreditsMovieDto, videoMovieDto: VideosMovieDto, languageDto:List<LanguageMovieDto>, imagesMovieDto: ImagesMovieDto): DetailMovie {
         return DetailMovie(
             id = detailMovieDto.id,
             adult = if (detailMovieDto.adult) "Yes" else "No",
@@ -81,9 +87,12 @@ object MapperToDomainData {
         )
     }
 
-    //onboarding convert data
-    fun SettingData.toSettingDataUI(): SettingDataUI {
-        return SettingDataUI(this.isOnBoarding, this.isUserAuthentication)
+
+
+    //mapper order dto to order response
+    fun mapperOrderDtoToOrderResponse(orderDto: OrderDto):OrderResponseUI{
+        val dataOrder = orderDto.data
+        return OrderResponseUI(dataOrder.orId, dataOrder.orCreatedOn, dataOrder.transaction.redirectUrl)
     }
 
 }

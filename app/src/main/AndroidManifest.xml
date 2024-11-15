@@ -37,7 +37,7 @@
         <activity
             android:name=".ui.dashboard.MainFeaturesActivity"
             android:exported="true"
-            android:theme="@style/NoSystemBarStatus"
+            android:theme="@style/NoSystemBarStatus.MainFeaturesActivity"
             android:label="@string/title_activity_main_features">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

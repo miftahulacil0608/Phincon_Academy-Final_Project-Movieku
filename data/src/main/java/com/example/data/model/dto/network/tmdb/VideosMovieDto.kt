@@ -1,7 +1,7 @@
-package com.example.data.model.dto.network
+package com.example.data.model.dto.network.tmdb
 
 
-import com.example.data.model.dto.network.result.VideoMovieDtoItem
+import com.example.data.model.dto.network.tmdb.result.VideoMovieDtoItem
 import com.google.gson.annotations.SerializedName
 
 data class VideosMovieDto(

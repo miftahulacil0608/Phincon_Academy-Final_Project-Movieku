@@ -1,11 +1,11 @@
 package com.example.data.utils
 
-import com.example.data.model.dto.network.ImagesMovieDto
-import com.example.data.model.dto.network.LanguageMovieDto
-import com.example.data.model.dto.network.result.CastMovieDtoItem
-import com.example.data.model.dto.network.result.CrewMovieDtoItem
-import com.example.data.model.dto.network.result.GenreMovieDtoItem
-import com.example.data.model.dto.network.result.VideoMovieDtoItem
+import com.example.data.model.dto.network.tmdb.ImagesMovieDto
+import com.example.data.model.dto.network.tmdb.LanguageMovieDto
+import com.example.data.model.dto.network.tmdb.result.CastMovieDtoItem
+import com.example.data.model.dto.network.tmdb.result.CrewMovieDtoItem
+import com.example.data.model.dto.network.tmdb.result.GenreMovieDtoItem
+import com.example.data.model.dto.network.tmdb.result.VideoMovieDtoItem
 import com.example.domain.model.DirectorOrActorItem
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
