@@ -54,7 +54,7 @@ object MapperToDomainData {
             title = movieDtoItem.originalTitle,
             posterPath = "https://image.tmdb.org/t/p/original/${movieDtoItem.posterPath}",
             genre = resultGenres,
-            releaseDate = movieDtoItem.releaseDate,
+            releaseDate = MovieHelper.formatDateUI(movieDtoItem.releaseDate),
             voteCount=movieDtoItem.voteCount,
             voteRange = movieDtoItem.voteAverage
         )
@@ -69,7 +69,6 @@ object MapperToDomainData {
             backdropPath = "https://image.tmdb.org/t/p/original/${detailMovieDto.backdropPath}",
             originalTitle = detailMovieDto.originalTitle,
             posterPath = "https://image.tmdb.org/t/p/original/${detailMovieDto.posterPath}",
-            releaseDate = detailMovieDto.releaseDate,
             rating = (detailMovieDto.voteAverage/2).toFloat(),
             totalVote = detailMovieDto.voteCount,
             status = detailMovieDto.status,
@@ -77,6 +76,7 @@ object MapperToDomainData {
             codeLanguage = detailMovieDto.originalLanguage.uppercase(),
 
             //using movieHelper
+            releaseDate = MovieHelper.formatDateUI(detailMovieDto.releaseDate),
             imageMovie = MovieHelper.getImages(imagesMovieDto.backdrops),
             priceMovie = MovieHelper.calculatePriceMovie(detailMovieDto.releaseDate),
             priceFee = MovieHelper.calculatePriceMovie(detailMovieDto.releaseDate)*10/100,

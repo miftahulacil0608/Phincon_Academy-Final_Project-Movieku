@@ -48,6 +48,7 @@
     <string name="label_time_watch">Time:</string>
     <string name="label_date">Date:</string>
     <string name="label_cinema">Cinema:</string>
+    <string name="label_month_year_date_selection">%1$s-%2$s</string>
 
 
 </resources>

@@ -16,6 +16,7 @@ data class OrderMovie(
     val originalLanguage:String,
     val rating:String,
     val genre:String,
+    val dateWatch:String,
     val cinema:String,
     val timeWatch:String,
     val studio:String,

@@ -40,6 +40,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+
+
 }
 
 dependencies {
@@ -76,15 +79,16 @@ dependencies {
     //shimmer
     implementation(libs.shimmer)
 
-    //circle indicator
-    implementation(libs.circle.indicator)
-
     //firebase
     implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
     implementation("com.google.firebase:firebase-analytics")
     implementation(libs.firebase.auth)
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
+
+    //single row calendar
+    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
+    implementation(files("../single-row-calendar-release.aar"))
 
 
 

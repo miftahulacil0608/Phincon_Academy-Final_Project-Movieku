@@ -8,6 +8,10 @@ import com.bumptech.glide.Glide
 import com.example.domain.model.Cinema
 import com.example.movieku.R
 import com.example.movieku.databinding.ItemCinemaLayoutBinding
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Locale
 
 //TODO ganti makek diffutilcallback saja
 class CinemaMovieAdapter(private var listItem: List<Cinema> = emptyList(), private val listener:ScheduleMovieListener) :
@@ -24,8 +28,11 @@ class CinemaMovieAdapter(private var listItem: List<Cinema> = emptyList(), priva
                 tvCinema.text = item.name
                 tvCinemaAddress.text = item.address
 
-                val scheduleMovieAdapter = ScheduleMovieAdapter(item.scheduleCinema){
-                    listener.onItemScheduleClick(item.name, it.timeWatch, it.studio)
+                val dateFormatter = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+                val dateFormats = dateFormatter.format(item.date)
+
+                val scheduleMovieAdapter = ScheduleMovieAdapter(item.date,item.scheduleCinema){
+                    listener.onItemScheduleClick(item.name, dateFormats ,it.timeWatch, it.studio)
                 }
 
                 val gridLayoutManager = GridLayoutManager(binding.root.context, 3, GridLayoutManager.VERTICAL,false)

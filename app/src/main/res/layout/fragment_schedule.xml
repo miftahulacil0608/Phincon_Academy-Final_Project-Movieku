@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.dashboard.schedule.ScheduleFragment">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -193,16 +193,42 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardview_detail_movie" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_month_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/sf_pro_text_semibold"
+            android:paddingVertical="8dp"
+            android:textAlignment="center"
+            android:textColor="@color/md_text_primary"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/divider_one"
+            tools:text="@string/label_month_year_date_selection" />
+
+        <com.michalsvec.singlerowcalendar.calendar.SingleRowCalendar
+            android:id="@+id/date_selection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingHorizontal="10dp"
+            app:deselection="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_month_year"
+            app:longPress="false"
+            app:multiSelection="false" />
+
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_cinema"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:layout_marginBottom="20dp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/divider_one"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/rv_cinema"
-            android:layout_marginBottom="20dp"
+            app:layout_constraintTop_toBottomOf="@id/date_selection"
             tools:listitem="@layout/item_cinema_layout" />
 
 

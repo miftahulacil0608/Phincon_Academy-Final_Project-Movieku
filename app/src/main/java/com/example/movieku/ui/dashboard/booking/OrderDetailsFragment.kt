@@ -69,6 +69,7 @@ class OrderDetailsFragment : Fragment() {
             tvLabelTitleMovie.text = item.title
             tvRateAge.text = item.pgAge
             tvLocationCinema.text = resources.getString(R.string.label_location_cinema, item.cinema, item.studio)
+            tvDateWatch.text = item.dateWatch
             tvTimeWatch.text = item.timeWatch
             tvPrice.text = resources.getString(R.string.label_price, priceOneMovie)
             tvPriceFee.text = resources.getString(R.string.label_price, feeOneMovie)

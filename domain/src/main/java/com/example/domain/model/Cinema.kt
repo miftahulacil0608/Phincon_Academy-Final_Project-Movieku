@@ -2,10 +2,12 @@ package com.example.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.util.Date
 
 @Parcelize
 data class Cinema(
     val id: Int,
+    val date: Date,
     val iconCinema: Int,
     val name: String,
     val address: String,

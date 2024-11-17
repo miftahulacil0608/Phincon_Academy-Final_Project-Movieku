@@ -13,9 +13,15 @@ import java.time.format.DateTimeFormatter
 object MovieHelper {
     private const val DEFAULT_PRICE: Int = 50000
 
+    fun formatDateUI(releaseDateMovie: String):String{
+        val releaseDate = LocalDate.parse(releaseDateMovie, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy")
+        val releaseDateMovieUI = formatter.format(releaseDate)
+        return releaseDateMovieUI
+    }
+
     private fun yearReleaseMovie(releaseDateMovie: String): Int {
-        val releaseDate =
-            LocalDate.parse(releaseDateMovie, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        val releaseDate = LocalDate.parse(releaseDateMovie, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         val formatter = DateTimeFormatter.ofPattern("yyyy")
         val yearReleaseMovie = formatter.format(releaseDate)
         return yearReleaseMovie.toInt()

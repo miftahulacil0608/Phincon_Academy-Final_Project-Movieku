@@ -10,9 +10,11 @@ import com.example.movieku.databinding.ItemScheduleWatchBinding
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Date
 
 //TODO ganti makek diffutilcallback saja
-class ScheduleMovieAdapter(private var listItem: List<ScheduleCinema> = emptyList(), private val onClick:(ScheduleCinema)->Unit) :
+class ScheduleMovieAdapter(private val date: Date, private var listItem: List<ScheduleCinema> = emptyList(), private val onClick:(ScheduleCinema)->Unit) :
     RecyclerView.Adapter<ScheduleMovieAdapter.MyViewHolder>() {
     inner class MyViewHolder(private val binding: ItemScheduleWatchBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -21,13 +23,11 @@ class ScheduleMovieAdapter(private var listItem: List<ScheduleCinema> = emptyLis
                 tvHours.text = item.timeWatch
                 tvStudio.text = item.studio
 
-                val givenTime = item.timeWatch
-                val formatter = DateTimeFormatter.ofPattern("HH:mm")
-                val givenLocalTime = LocalTime.parse(givenTime, formatter)
+                val givenDate = date
 
-                val currentTime = LocalTime.now()
+                val currentTime = Calendar.getInstance().time
 
-                if (currentTime.isAfter(givenLocalTime)){
+                if (currentTime.after(givenDate)){
                     root.isEnabled = false
                     root.alpha = 0.5f
                     tvHours.setTextColor(ContextCompat.getColor(root.context,R.color.md_text_secondary))
