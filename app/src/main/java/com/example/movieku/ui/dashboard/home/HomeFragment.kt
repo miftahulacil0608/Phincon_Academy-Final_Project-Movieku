@@ -1,11 +1,12 @@
 package com.example.movieku.ui.dashboard.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +18,7 @@ import com.example.movieku.adapter.HorizontalMarginItemDecoration
 import com.example.movieku.adapter.home.NowPlayingMoviesAdapter
 import com.example.movieku.adapter.home.UpcomingMovieAdapter
 import com.example.movieku.adapter.home.contract.NowPlayingMovieListener
+import com.example.movieku.adapter.home.contract.UpComingMovieListener
 import com.example.movieku.databinding.FragmentHomeBinding
 import com.example.movieku.ui.dashboard.detail.DetailNowPlayingMovieFragment
 import com.example.movieku.utils.ResultState
@@ -35,7 +37,7 @@ class HomeFragment : Fragment(), NowPlayingMovieListener {
     }
 
     private val upcomingMovieAdapter by lazy {
-        UpcomingMovieAdapter()
+        UpcomingMovieAdapter(listener = this@HomeFragment)
     }
 
     private val homeViewModel by activityViewModels<HomeViewModel>()
@@ -53,14 +55,22 @@ class HomeFragment : Fragment(), NowPlayingMovieListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        nowPlayingMovie()
-        upcomingMovie()
+        nowPlayingMovieViewPagerAdapter()
+        upcomingMovieAdapter()
 
         fetchNoPlayingMovie()
         fetchUpcomingMovie()
+
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            homeViewModel.getNowPlayingMovie()
+            homeViewModel.getUpComingMovie()
+            fetchNoPlayingMovie()
+            fetchUpcomingMovie()
+        }
     }
 
-    private fun nowPlayingMovie() {
+    private fun nowPlayingMovieViewPagerAdapter() {
         binding.viewPagerNowPlaying.offscreenPageLimit = 1
         val nextItemVisiblePx = resources.getDimension(R.dimen.viewpager_next_item_visible)
         val currentItemHorizontalMarginPx = resources.getDimension(R.dimen.viewpager_current_item_horizontal_margin)
@@ -85,37 +95,63 @@ class HomeFragment : Fragment(), NowPlayingMovieListener {
             override fun onConfigureTab(tab: TabLayout.Tab, position: Int) {
                 //TODO nothing to do it
             }
-
         }).attach()
-
-
     }
 
 
-    private fun upcomingMovie() {
+    private fun upcomingMovieAdapter() {
         binding.rvUpcomingMovie.adapter = upcomingMovieAdapter
         binding.rvUpcomingMovie.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun fetchNoPlayingMovie() {
-        homeViewModel.getNowPlayingMovie()
         viewLifecycleOwner.lifecycleScope.launch {
             homeViewModel.nowPlayingMovie.collect {
                 when (it) {
                     ResultState.Loading -> {
                         //shimmer on
+                        binding.swipeRefreshLayout.isRefreshing = false
+                        showShimmer()
                     }
 
                     is ResultState.Success -> {
                         //shimmer off
+                        binding.swipeRefreshLayout.isRefreshing = false
                         nowPlayingAdapter.asyncDiffer.submitList(it.data.dataMovie)
+                        hideShimmer()
+                    }
+
+                    is ResultState.Error -> {
+                        binding.swipeRefreshLayout.isRefreshing = false
+                        //show dialog atau layar berubah dan minta untuk retry
+                        hideShimmer()
+                        Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun fetchUpcomingMovie() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            homeViewModel.upComingMovie.collect {
+                when (it) {
+                    ResultState.Loading -> {
+                        binding.swipeRefreshLayout.isRefreshing = false
+                        showShimmer()
+                    }
+
+                    is ResultState.Success -> {
+                        //shimmer off
+                        upcomingMovieAdapter.addNewListData(it.data.dataMovie)
+                        hideShimmer()
                     }
 
                     is ResultState.Error -> {
                         //shimmer off
-                        //show dialog atau layar berubah dan minta untuk retry
-                        Log.d("Error", "fetchNoPlayingMovie: ${it.message}")
+                        binding.swipeRefreshLayout.isRefreshing = false
+                        hideShimmer()
                     }
 
                 }
@@ -123,31 +159,32 @@ class HomeFragment : Fragment(), NowPlayingMovieListener {
         }
     }
 
-    private fun fetchUpcomingMovie() {
-        homeViewModel.getUpComingMovie()
-        viewLifecycleOwner.lifecycleScope.launch {
-            homeViewModel.upComingMovie.collect {
-                when (it) {
-                    ResultState.Loading -> {
-                        //shimmer on
-                    }
+    private fun showShimmer(){
+        with(binding.shimmerLayout){
+            startShimmer()
+            isVisible = true
+            showUI(false)
+        }
 
-                    is ResultState.Success -> {
-                        //shimmer off
-                        upcomingMovieAdapter.addNewListData(it.data.dataMovie)
-                        Log.d("DataUpcoming", "UpComing: ${it.data.dataMovie}")
+    }
 
-                    }
+    private fun hideShimmer(){
+        with(binding.shimmerLayout){
+            stopShimmer()
+            isVisible = false
+            showUI(true)
+        }
+    }
 
-                    is ResultState.Error -> {
-                        //shimmer off
-                        //show dialog atau layar berubah dan minta untuk retry
-                        Log.d("Error", "UpComing: ${it.message}")
-
-                    }
-
-                }
-            }
+    private fun showUI(isVisible:Boolean){
+        with(binding){
+            tvNowPlayingMovie.isVisible = isVisible
+            btnSeeAllNowPlaying.isVisible = isVisible
+            viewPagerNowPlaying.isVisible = isVisible
+            tabLayoutIndicator.isVisible = isVisible
+            tvUpcoming.isVisible = isVisible
+            btnSeeAllUpcomingMovie.isVisible = isVisible
+            rvUpcomingMovie.isVisible = isVisible
         }
     }
 
@@ -160,4 +197,5 @@ class HomeFragment : Fragment(), NowPlayingMovieListener {
         val bundle = bundleOf(DetailNowPlayingMovieFragment.KEY_NOW_PLAYING_MOVIE_ID to item)
         findNavController().navigate(R.id.action_navigation_home_to_detailMovieFragment, bundle)
     }
+
 }

@@ -13,5 +13,10 @@ data class ItemsRequestFromUser(
     val id: Int,
     val name: String,
     val price: Int,
-    val quantity: Int = 1, /*val date:String, val rating:Double,*/
-):Parcelable
+    val quantity: Int,
+    val rating:String,
+    val imageUrl:String,
+    val genreMovie:String,
+    val dateWatch:String,
+    /*val numberSeat:List<String>*/
+    ):Parcelable

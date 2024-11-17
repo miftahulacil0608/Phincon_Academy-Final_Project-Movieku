@@ -17,6 +17,8 @@ class NowPlayingMoviesAdapter(private val listener: NowPlayingMovieListener):Rec
             with(binding){
                 Glide.with(root)
                     .load(item.posterPath)
+                    .placeholder(R.drawable.iv_placeholder)
+                    .centerCrop()
                     .into(ivPosterNowPlaying)
                 movieTitle.text = item.title
                 //TODO tvduratioongenre
@@ -42,7 +44,7 @@ class NowPlayingMoviesAdapter(private val listener: NowPlayingMovieListener):Rec
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(asyncDiffer.currentList[position])
-        holder.setIsRecyclable(false)
+        //holder.setIsRecyclable(false)
     }
 
     private val differCallback = object : DiffUtil.ItemCallback<Movie>(){

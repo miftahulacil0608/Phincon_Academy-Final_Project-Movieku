@@ -1,10 +1,11 @@
 package com.example.data.model.dto.network.apiorder
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 data class OrderRequest(
-    val amount: Int = 100000, val email: String,
+    val amount: Int, val email: String,
     val items: List<ItemsRequest>
 )
 
@@ -13,5 +14,14 @@ data class ItemsRequest(
     val id: Int,
     val name: String,
     val price: Int,
-    val quantity: Int = 1, /*val date:String, val rating:Double,*/
+    val quantity: Int,
+    val rating:String,
+    @SerializedName("image_url")
+    val imageUrl:String,
+    @SerializedName("genre_movie")
+    val genreMovie:String,
+    @SerializedName("date_watch")
+    val dateWatch:String,
+    /*@SerializedName("number_seat")
+    val numberSeat:List<String>*/
 ):Parcelable

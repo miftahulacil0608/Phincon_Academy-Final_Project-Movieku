@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="center"
     app:cardCornerRadius="12dp"
     android:layout_marginVertical="4dp"
@@ -21,7 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/iv_profile_example"
+            tools:src="@drawable/iv_profile_example"
             android:scaleType="centerCrop"
             />
         <com.google.android.material.textview.MaterialTextView
@@ -36,7 +37,7 @@
             android:textSize="14sp"
             android:maxLines="2"
             android:ellipsize="end"
-            android:text="Tom Hardfafay"
+            tools:text="@string/label_directors"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

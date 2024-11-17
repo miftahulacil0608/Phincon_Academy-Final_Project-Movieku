@@ -1,15 +1,12 @@
-package com.example.movieku.adapter.home
+package com.example.movieku.adapter.detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.domain.model.DirectorOrActorItem
-import com.example.domain.model.Movie
 import com.example.movieku.R
 import com.example.movieku.databinding.ItemCastAndDirectorsRecyclerViewLayoutBinding
-import com.example.movieku.databinding.ItemMovieAdapterBinding
-import com.example.movieku.databinding.ItemUpcomingMovieBinding
 
 class DirectorsAndActorsMovieAdapter(private var listItem: List<DirectorOrActorItem> = emptyList()) :
     RecyclerView.Adapter<DirectorsAndActorsMovieAdapter.MyViewHolder>() {

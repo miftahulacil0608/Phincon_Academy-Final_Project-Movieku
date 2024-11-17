@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailComingSoonMovieViewModel @Inject constructor(private val movieUseCase: MovieUseCase) : ViewModel() {
+class DetailUpComingMovieViewModel @Inject constructor(private val movieUseCase: MovieUseCase) : ViewModel() {
     private val _detailMovieData = MutableStateFlow<ResultState<DetailMovie>>(ResultState.Loading)
     val detailMovieData = _detailMovieData.asStateFlow()
 

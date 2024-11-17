@@ -6,21 +6,30 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.domain.model.Movie
+import com.example.movieku.R
+import com.example.movieku.adapter.home.contract.NowPlayingMovieListener
+import com.example.movieku.adapter.home.contract.UpComingMovieListener
 import com.example.movieku.databinding.ItemUpcomingMovieBinding
 
 //TODO ganti makek diffutilcallback saja
-class UpcomingMovieAdapter(private var listItem: List<Movie> = emptyList()) :
+class UpcomingMovieAdapter(private var listItem: List<Movie> = emptyList(), private val listener:NowPlayingMovieListener) :
     RecyclerView.Adapter<UpcomingMovieAdapter.MyViewHolder>() {
     inner class MyViewHolder(private val binding: ItemUpcomingMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Movie) {
             with(binding) {
-                val numberPosition = bindingAdapterPosition+1
                 Glide.with(root)
                     .load(item.posterPath)
-                    //.into(ivUpComingMovie)
-                //tvNumberMovie.text = numberPosition.toString()
-                //root.setOnClickListener {}
+                    .placeholder(R.drawable.iv_placeholder)
+                    .centerCrop()
+                    .into(ivPosterMovie)
+                tvTitleMovie.text = item.title
+                tvGenre.text = item.genre
+                tvReleaseMovie.text = item.releaseDate
+
+                root.setOnClickListener {
+                    listener.onItemNowPlayingClick(item.id)
+                }
             }
         }
     }

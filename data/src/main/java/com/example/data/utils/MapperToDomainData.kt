@@ -1,6 +1,7 @@
 package com.example.data.utils
 
 import com.example.data.model.SettingData
+import com.example.data.model.dto.network.apiorder.ItemsRequest
 import com.example.data.model.dto.network.apiorder.OrderDto
 import com.example.data.model.dto.network.tmdb.CreditsMovieDto
 import com.example.data.model.dto.network.tmdb.DetailMovieDto
@@ -12,6 +13,7 @@ import com.example.data.model.dto.network.tmdb.VideosMovieDto
 import com.example.data.model.dto.network.tmdb.result.GenreMovieDtoItem
 import com.example.data.model.dto.network.tmdb.result.MovieDtoItem
 import com.example.domain.model.DetailMovie
+import com.example.domain.model.ItemsRequestFromUser
 import com.example.domain.model.Movie
 import com.example.domain.model.NowPlayingMovie
 import com.example.domain.model.OrderResponseUI
@@ -88,6 +90,10 @@ object MapperToDomainData {
     }
 
 
+    //mapper request from user to item request
+    fun ItemsRequestFromUser.toItemsRequest(): ItemsRequest {
+        return ItemsRequest(this.id, this.name, this.price, this.quantity, this.rating, this.imageUrl, this.genreMovie, this.dateWatch)
+    }
 
     //mapper order dto to order response
     fun mapperOrderDtoToOrderResponse(orderDto: OrderDto):OrderResponseUI{

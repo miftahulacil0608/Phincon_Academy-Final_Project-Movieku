@@ -53,6 +53,7 @@
         <item name="cornerSize">5%</item>
     </style>
 
+
     <style name="Theme.Movieku" parent="Base.Theme.Movieku" />
 
     <style name="NoSystemBarStatus" parent="Theme.Movieku">

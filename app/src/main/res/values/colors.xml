@@ -2,7 +2,7 @@
     <color name="white">#FFFFFF</color>
     <color name="md_theme_primary">#1C1C3D</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
-    <color name="md_theme_background">#FCF8FF</color>
+    <color name="md_theme_background">#FFFFFF</color>
     <color name="md_text_primary">#333333</color>
     <color name="md_text_secondary">#707070</color>
     <color name="md_theme_scrim">#000000</color>
@@ -10,12 +10,13 @@
     <color name="md_text_cat">#C21807</color>
     <color name="md_theme_primary_secondary">#FFC107</color>
     <color name="md_divider">#E5E5E5</color>
+    <color name="md_theme_secondary">#5D5C71</color>
+
 
 
 
     <color name="md_theme_primaryContainer">#E2DFFF</color>
     <color name="md_theme_onPrimaryContainer">#14134A</color>
-    <color name="md_theme_secondary">#5D5C71</color>
     <color name="md_theme_onSecondary">#FFFFFF</color>
     <color name="md_theme_secondaryContainer">#E2E0F9</color>
     <color name="md_theme_onSecondaryContainer">#1A1A2C</color>

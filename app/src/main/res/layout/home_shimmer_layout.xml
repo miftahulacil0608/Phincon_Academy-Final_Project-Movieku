@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.dashboard.home.HomeFragment">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/tv_now_playing_movie_shimmer"
+            android:layout_width="140dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="20dp"
+            android:background="@color/md_theme_secondary"
+            android:layout_marginTop="80dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+
+        <View
+            android:id="@+id/btn_see_all_now_playing_shimmer_layout"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:background="@color/md_theme_secondary"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_now_playing_movie_shimmer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_now_playing_movie_shimmer">
+        </View>
+
+        <View
+            android:id="@+id/view_pager_now_playing_shimmer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="390dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/md_theme_secondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_see_all_now_playing_shimmer_layout" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout_indicator"
+            android:layout_width="200dp"
+            android:layout_height="15dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_corner_indicator"
+            android:paddingHorizontal="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_pager_now_playing_shimmer_layout"
+            app:tabIndicator="@drawable/ic_indicator"
+            app:tabIndicatorColor="#FFC107"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorGravity="center"
+            app:tabPadding="5dp" />
+
+        <View
+            android:background="@color/md_theme_secondary"
+            android:id="@+id/tv_upcoming_shimmer_layout"
+            android:layout_width="240dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tab_layout_indicator"
+            app:layout_goneMarginTop="24dp" />
+
+
+        <View
+            android:id="@+id/btn_see_all_upcoming_movie_shimmer_layout"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:background="@color/md_theme_secondary"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_upcoming_shimmer_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_upcoming_shimmer_layout"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/btn_see_all_upcoming_movie_shimmer_layout"
+            android:layout_marginTop="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="24dp"
+            android:paddingTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include layout="@layout/item_upcoming_movie_shimmer_layout"/>
+            <include layout="@layout/item_upcoming_movie_shimmer_layout"/>
+            <include layout="@layout/item_upcoming_movie_shimmer_layout"/>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
+

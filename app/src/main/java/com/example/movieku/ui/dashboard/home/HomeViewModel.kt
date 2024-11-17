@@ -24,6 +24,11 @@ class HomeViewModel @Inject constructor(private val movieUseCase: MovieUseCase) 
     private val _upComingMovie = MutableStateFlow<ResultState<UpComingMovie>>(ResultState.Loading)
     val upComingMovie = _upComingMovie.asStateFlow()
 
+    init {
+        getNowPlayingMovie()
+        getUpComingMovie()
+    }
+
     fun getNowPlayingMovie() {
         viewModelScope.launch {
             _nowPlayingMovie.value = ResultState.Loading

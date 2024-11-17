@@ -4,6 +4,7 @@ import com.example.data.model.dto.network.apiorder.ItemsRequest
 import com.example.data.model.dto.network.apiorder.OrderRequest
 import com.example.data.source.remote.network.NetworkRemoteDataSourceRepository
 import com.example.data.utils.MapperToDomainData
+import com.example.data.utils.MapperToDomainData.toItemsRequest
 import com.example.domain.model.DetailMovie
 import com.example.domain.model.ItemsRequestFromUser
 import com.example.domain.model.NowPlayingMovie
@@ -37,15 +38,7 @@ class MovieRepositoryImpl @Inject constructor(private val networkRemoteDataSourc
 
     override suspend fun orderMovie(orderRequestFromUser: OrderRequestFromUser): OrderResponseUI {
         val convertItemRequestUserToItemRequest = orderRequestFromUser.itemsRequest.map { it.toItemsRequest() }
-        val orderRequesting = OrderRequest(orderRequestFromUser.amount, orderRequestFromUser.email, convertItemRequestUserToItemRequest)
-        return MapperToDomainData.mapperOrderDtoToOrderResponse(networkRemoteDataSourceRepository.postOrderMovie(orderRequesting))
+        val orderRequest = OrderRequest(orderRequestFromUser.amount, orderRequestFromUser.email, convertItemRequestUserToItemRequest)
+        return MapperToDomainData.mapperOrderDtoToOrderResponse(networkRemoteDataSourceRepository.postOrderMovie(orderRequest))
     }
-
-    companion object{
-        fun ItemsRequestFromUser.toItemsRequest():ItemsRequest{
-           return ItemsRequest(this.id, this.name, this.price, this.quantity)
-
-        }
-    }
-
 }

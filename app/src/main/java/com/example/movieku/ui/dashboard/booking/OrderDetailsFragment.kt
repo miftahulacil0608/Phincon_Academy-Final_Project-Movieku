@@ -12,9 +12,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.example.domain.model.DetailMovie
 import com.example.domain.model.ItemsRequestFromUser
-import com.example.domain.model.OrderDetailMovie
+import com.example.domain.model.OrderMovie
 import com.example.domain.model.OrderRequestFromUser
 import com.example.movieku.R
 import com.example.movieku.databinding.FragmentOrderDetailsBinding
@@ -26,7 +25,12 @@ class OrderDetailsFragment : Fragment() {
     private var _binding: FragmentOrderDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private var totalPriceMovie:Int=0
+    private var priceOneMovie: Int = 0
+    private var feeOneMovie: Int = 0
+    private var totalPrice: Int = 0
+    private var totalToPay: Int = 0
+    private var totalTicket = 0
+
 
     private val orderDetailsViewModel by activityViewModels<OrderDetailsViewModel>()
 
@@ -41,97 +45,124 @@ class OrderDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val arguments = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable(KEY_ORDER_DETAILS, OrderDetailMovie::class.java)
+            arguments?.getParcelable(KEY_ORDER_DETAILS, OrderMovie::class.java)
         } else {
             arguments?.getParcelable(KEY_ORDER_DETAILS)
         }
 
-        arguments?.let {orderDetailMovie->
+        arguments?.let { orderDetailMovie ->
             setupOrderDetail(orderDetailMovie)
             amountTicket(orderDetailMovie)
-            totalPriceMovie = orderDetailMovie.price
-
-                binding.btnPayment.setOnClickListener {
-                    val itemRequestFromUser = listOf(
-                        ItemsRequestFromUser(id = orderDetailMovie.id, name = orderDetailMovie.title, 100000)
-                    )
-                    val orderRequestFromUser = OrderRequestFromUser(
-                        amount = 100000,
-                        email = "ahmadmiftahulazisz@gmail.com",
-                        itemsRequest = itemRequestFromUser,
-                    )
-                    viewLifecycleOwner.lifecycleScope.launch {
-                    val resultOrder = orderDetailsViewModel.orderMovie(orderRequestFromUser)
-                        resultOrder.collect{result->
-                            when(result){
-                                ResultState.Loading -> {
-                                    binding.progressbar.visibility = View.VISIBLE
-                                }
-                                is ResultState.Success -> {
-                                    binding.progressbar.visibility = View.GONE
-                                    val bundle = bundleOf(PaymentFragment.KEY_URL_PAYMENT_TO_PAYMENT_FRAGMENT to result.data.redirectUrl)
-                                    Toast.makeText(requireContext(), "pindah ke halaman payment", Toast.LENGTH_SHORT).show()
-                                    findNavController().navigate(R.id.action_orderDetailsFragment_to_paymentFragment, bundle)
-                                }
-                                is ResultState.Error -> {
-                                    binding.progressbar.visibility = View.GONE
-                                    Toast.makeText(requireContext(), "${result.message}", Toast.LENGTH_SHORT).show()
-                                }
-
-                            }
-                        }
-
-
-                }
-            }
+            priceOneMovie = orderDetailMovie.price
+            payTheTicketMovie(orderDetailMovie)
         }
-
-
-
     }
 
-    private fun setupOrderDetail(item: OrderDetailMovie) {
+    private fun setupOrderDetail(item: OrderMovie) {
+        priceOneMovie = item.price
+        feeOneMovie = item.priceFee
+
         with(binding) {
             Glide.with(requireContext())
                 .load(item.poster)
                 .into(ivPosterMovie)
             tvLabelTitleMovie.text = item.title
             tvRateAge.text = item.pgAge
-            tvPrice.text = resources.getString(R.string.label_price, item.price)
-            tvPriceFee.text = resources.getString(R.string.label_price, item.priceFee)
-
-            calculateTicket(item.price, item.priceFee, 1)
-
+            tvLocationCinema.text = resources.getString(R.string.label_location_cinema, item.cinema, item.studio)
+            tvTimeWatch.text = item.timeWatch
+            tvPrice.text = resources.getString(R.string.label_price, priceOneMovie)
+            tvPriceFee.text = resources.getString(R.string.label_price, feeOneMovie)
+            calculateTicket(item.price, item.priceFee)
         }
     }
 
-    private fun amountTicket(item: OrderDetailMovie) {
-        var totalTicket = 1
+    private fun amountTicket(item: OrderMovie) {
         binding.btnIncrement.setOnClickListener {
             totalTicket++
-            calculateTicket(item.price, item.priceFee, totalTicket)
+            calculateTicket(item.price, item.priceFee)
         }
 
         binding.btnDecrement.setOnClickListener {
             if (totalTicket > 0) {
                 totalTicket--
-                calculateTicket(item.price, item.priceFee, totalTicket)
+                calculateTicket(item.price, item.priceFee)
+
             }
         }
     }
 
-    private fun calculateTicket(priceMovie: Int, feeMovie: Int, totalTicket: Int) {
+    private fun calculateTicket(priceMovie: Int, feeMovie: Int) {
+        priceOneMovie = priceMovie
+        feeOneMovie = feeMovie
+        totalPrice = priceMovie + feeOneMovie
+        totalToPay = totalPrice * totalTicket
+
         binding.tvLabelTicket.text = totalTicket.toString()
         binding.tvQuantityTicketFee.text = totalTicket.toString()
         binding.tvQuatityTicket.text = totalTicket.toString()
-        val totalPriceTicket = priceMovie * binding.tvLabelTicket.text.toString().toInt()
-        val totalFeeTicket = feeMovie * binding.tvLabelTicket.text.toString().toInt()
-        val totalToPay = totalPriceTicket + totalFeeTicket
         binding.tvTotalPrice.text = resources.getString(R.string.label_price, totalToPay)
         binding.tvTotalPriceToPay.text = resources.getString(R.string.label_price, totalToPay)
         binding.tvTotalTicket.text = resources.getString(R.string.label_total_items, totalTicket)
-        binding.btnPayment.isEnabled = if (totalTicket > 0) true else false
+        binding.btnPayment.isEnabled = totalTicket > 0
+    }
 
+    private fun payTheTicketMovie(item: OrderMovie) {
+        binding.btnPayment.setOnClickListener {
+            val itemRequestFromUser = listOf(
+                //TODO datewatch ambil dari tanggal di halaman sebelume (masih proses)
+                ItemsRequestFromUser(
+                    id = item.id,
+                    name = item.title,
+                    price = totalPrice,
+                    quantity = totalTicket,
+                    rating = item.rating,
+                    imageUrl = item.poster,
+                    genreMovie = item.genre,
+                    dateWatch = "2024-10-1"
+                )
+            )
+            val orderRequestFromUser = OrderRequestFromUser(
+                amount = totalToPay,
+                //TODO email ambil dari email yang ada di firebase Auth
+                email = "ahmadmiftahulazisz@gmail.com",
+                itemsRequest = itemRequestFromUser,
+            )
+            viewLifecycleOwner.lifecycleScope.launch {
+                val resultOrder = orderDetailsViewModel.orderMovie(orderRequestFromUser)
+                resultOrder.collect { result ->
+                    when (result) {
+                        ResultState.Loading -> {
+                            binding.progressbar.visibility = View.VISIBLE
+                        }
+
+                        is ResultState.Success -> {
+                            binding.progressbar.visibility = View.GONE
+                            val bundle =
+                                bundleOf(PaymentFragment.KEY_URL_PAYMENT_TO_PAYMENT_FRAGMENT to result.data.redirectUrl)
+                            Toast.makeText(
+                                requireContext(),
+                                "pindah ke halaman payment",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            findNavController().navigate(
+                                R.id.action_orderDetailsFragment_to_paymentFragment,
+                                bundle
+                            )
+                        }
+
+                        is ResultState.Error -> {
+                            binding.progressbar.visibility = View.GONE
+                            Toast.makeText(
+                                requireContext(),
+                                "${result.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    }
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
