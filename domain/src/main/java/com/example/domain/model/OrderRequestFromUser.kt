@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 data class OrderRequestFromUser(
-    val amount: Int = 100000, val email: String,
+    val amount: Int, val email: String,
     val itemsRequest: List<ItemsRequestFromUser>
 )
 
@@ -18,5 +18,9 @@ data class ItemsRequestFromUser(
     val imageUrl:String,
     val genreMovie:String,
     val dateWatch:String,
+    val cinema:String,
+    val timeWatch:String,
+    val studio:String,
+    //TODO generate random numberseat
     /*val numberSeat:List<String>*/
     ):Parcelable

@@ -113,7 +113,7 @@ class ScheduleFragment : Fragment(), ScheduleMovieListener {
                 "Araya XXI",
                 "Malang",
                 scheduleCinema = listOf(
-                    ScheduleCinema("10:00", "Studio 1"),
+                    ScheduleCinema("08:00", "Studio 1"),
                     ScheduleCinema("12:00", "Studio 2"),
                     ScheduleCinema("14:00", "Studio 3"),
                     ScheduleCinema("20:00", "Studio 4")

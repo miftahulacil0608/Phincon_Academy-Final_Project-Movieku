@@ -92,7 +92,7 @@ object MapperToDomainData {
 
     //mapper request from user to item request
     fun ItemsRequestFromUser.toItemsRequest(): ItemsRequest {
-        return ItemsRequest(this.id, this.name, this.price, this.quantity, this.rating, this.imageUrl, this.genreMovie, this.dateWatch)
+        return ItemsRequest(this.id, this.name, this.price, this.quantity, this.rating, this.imageUrl, this.genreMovie, this.dateWatch, this.cinema, this.timeWatch, this.studio)
     }
 
     //mapper order dto to order response

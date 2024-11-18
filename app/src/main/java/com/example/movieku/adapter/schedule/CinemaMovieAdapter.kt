@@ -28,7 +28,7 @@ class CinemaMovieAdapter(private var listItem: List<Cinema> = emptyList(), priva
                 tvCinema.text = item.name
                 tvCinemaAddress.text = item.address
 
-                val dateFormatter = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+                val dateFormatter = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
                 val dateFormats = dateFormatter.format(item.date)
 
                 val scheduleMovieAdapter = ScheduleMovieAdapter(item.date,item.scheduleCinema){

@@ -119,7 +119,10 @@ class OrderDetailsFragment : Fragment() {
                     rating = item.rating,
                     imageUrl = item.poster,
                     genreMovie = item.genre,
-                    dateWatch = "2024-10-1"
+                    dateWatch = item.dateWatch,
+                    cinema = item.cinema,
+                    timeWatch = item.timeWatch,
+                    studio = item.studio
                 )
             )
             val orderRequestFromUser = OrderRequestFromUser(
@@ -138,8 +141,7 @@ class OrderDetailsFragment : Fragment() {
 
                         is ResultState.Success -> {
                             binding.progressbar.visibility = View.GONE
-                            val bundle =
-                                bundleOf(PaymentFragment.KEY_URL_PAYMENT_TO_PAYMENT_FRAGMENT to result.data.redirectUrl)
+                            val bundle = bundleOf(PaymentFragment.KEY_URL_PAYMENT_TO_PAYMENT_FRAGMENT to result.data.redirectUrl)
                             Toast.makeText(
                                 requireContext(),
                                 "pindah ke halaman payment",

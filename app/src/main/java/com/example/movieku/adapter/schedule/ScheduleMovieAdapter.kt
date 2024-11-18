@@ -7,11 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.model.ScheduleCinema
 import com.example.movieku.R
 import com.example.movieku.databinding.ItemScheduleWatchBinding
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 
 //TODO ganti makek diffutilcallback saja
 class ScheduleMovieAdapter(private val date: Date, private var listItem: List<ScheduleCinema> = emptyList(), private val onClick:(ScheduleCinema)->Unit) :
@@ -23,18 +25,48 @@ class ScheduleMovieAdapter(private val date: Date, private var listItem: List<Sc
                 tvHours.text = item.timeWatch
                 tvStudio.text = item.studio
 
+                //format tanggal
+                val dayFormatter = SimpleDateFormat("dd", Locale.getDefault())
+                //format waktu
+                val timeFormatter = SimpleDateFormat("HH:mm", Locale.getDefault())
+
                 val givenDate = date
 
-                val currentTime = Calendar.getInstance().time
+                //pisahin datenya aja
+                val dayGiven = dayFormatter.format(givenDate)
+                val dayGivenResult = dayFormatter.parse(dayGiven)
+                //pisahin waktunya
+                val timeGiven = timeFormatter.format(givenDate)
+                val timeGivenResult = timeFormatter.parse(timeGiven)
 
-                if (currentTime.after(givenDate)){
-                    root.isEnabled = false
-                    root.alpha = 0.5f
-                    tvHours.setTextColor(ContextCompat.getColor(root.context,R.color.md_text_secondary))
-                    tvStudio.setTextColor(ContextCompat.getColor(root.context,R.color.md_text_secondary))
-                }else{
-                    root.isEnabled = true
-                    root.alpha = 1.0f
+                val currentDateTime = Calendar.getInstance().time
+                // ambil date sekarang
+                val currentDay = dayFormatter.format(currentDateTime)
+                val currentDayResult = dayFormatter.parse(currentDay)
+                // ambil waktu dari time cinema
+                val cinemaTimeResult = timeFormatter.parse(item.timeWatch)
+
+                if (currentDayResult != null && timeGivenResult != null){
+                    when{
+                        currentDayResult == dayGivenResult && timeGivenResult.after(cinemaTimeResult) ->{
+                            //disable
+                            root.isEnabled = false
+                            root.alpha = 0.5f
+                            tvHours.setTextColor(ContextCompat.getColor(root.context,R.color.md_text_secondary))
+                            tvStudio.setTextColor(ContextCompat.getColor(root.context,R.color.md_text_secondary))
+
+                        }
+                        currentDayResult == dayGivenResult && timeGivenResult.before(cinemaTimeResult) -> {
+                            //enable
+                            root.isEnabled = true
+                            root.alpha = 1.0f
+                        }
+                        else->{
+                            root.isEnabled = true
+                            root.alpha = 1.0f
+                            //tampilin
+                        }
+                    }
                 }
 
                 root.setOnClickListener {

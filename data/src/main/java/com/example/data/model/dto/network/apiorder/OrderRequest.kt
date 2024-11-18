@@ -22,6 +22,12 @@ data class ItemsRequest(
     val genreMovie:String,
     @SerializedName("date_watch")
     val dateWatch:String,
+    @SerializedName("cinema")
+    val cinema:String,
+    @SerializedName("time_watch")
+    val timeWatch:String,
+    @SerializedName("studio")
+    val studio:String,
     /*@SerializedName("number_seat")
     val numberSeat:List<String>*/
 ):Parcelable
