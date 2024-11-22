@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navigation_home_to_searchMovieFragment"
             app:destination="@id/searchMovieFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_cinemaMovieFragment"
+            app:destination="@id/cinemaMovieFragment" />
     </fragment>
 
     <fragment
@@ -96,6 +99,24 @@
         tools:layout="@layout/fragment_search_movie" >
         <action
             android:id="@+id/action_searchMovieFragment_to_detailMovieFragment"
+            app:destination="@id/detailMovieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cinemaMovieFragment"
+        android:name="com.example.movieku.ui.dashboard.movie.CinemaMovieFragment"
+        android:label="fragment_cinema_movie"
+        tools:layout="@layout/fragment_cinema_movie" >
+        <action
+            android:id="@+id/action_cinemaMovieFragment_to_detailMovieFragment"
+            app:destination="@id/detailMovieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nowPlayingMovieFragment"
+        android:name="com.example.movieku.ui.dashboard.movie.nowplaying.NowPlayingMovieFragment"
+        android:label="fragment_now_playing_movie"
+        tools:layout="@layout/fragment_now_playing_movie" >
+        <action
+            android:id="@+id/action_nowPlayingMovieFragment_to_detailMovieFragment"
             app:destination="@id/detailMovieFragment" />
     </fragment>
 

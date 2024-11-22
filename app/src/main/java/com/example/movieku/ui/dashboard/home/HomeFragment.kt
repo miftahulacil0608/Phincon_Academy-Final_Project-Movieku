@@ -20,6 +20,7 @@ import com.example.movieku.adapter.home.UpcomingMovieAdapter
 import com.example.movieku.adapter.home.contract.NowPlayingMovieListener
 import com.example.movieku.databinding.FragmentHomeBinding
 import com.example.movieku.ui.dashboard.detail.DetailMovieFragment
+import com.example.movieku.ui.dashboard.movie.CinemaMovieFragment
 import com.example.movieku.utils.HelperDateConvert
 import com.example.movieku.utils.ResultState
 import com.google.android.material.tabs.TabLayout
@@ -84,6 +85,18 @@ class HomeFragment : Fragment(), NowPlayingMovieListener {
                 )
             )
         }
+
+        binding.btnSeeAllNowPlaying.setOnClickListener {
+            val bundle = bundleOf(CinemaMovieFragment.KEY_CINEMA_MOVIE_TAB_SELECTION to 0)
+            findNavController().navigate(R.id.action_navigation_home_to_cinemaMovieFragment, bundle)
+        }
+
+        binding.btnSeeAllUpcomingMovie.setOnClickListener {
+            val bundle = bundleOf(CinemaMovieFragment.KEY_CINEMA_MOVIE_TAB_SELECTION to 1)
+            findNavController().navigate(R.id.action_navigation_home_to_cinemaMovieFragment,bundle)
+        }
+
+
 
         //now playing movie collect
         viewLifecycleOwner.lifecycleScope.launch {

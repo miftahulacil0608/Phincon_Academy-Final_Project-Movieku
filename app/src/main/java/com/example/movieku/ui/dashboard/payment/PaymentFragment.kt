@@ -51,7 +51,6 @@ class PaymentFragment : Fragment() {
                 ): Boolean {
                     request?.url?.getQueryParameter("transaction_status").let {value->
                         if(value == "settlement"){
-                            Toast.makeText(requireContext(), "Berhasil", Toast.LENGTH_SHORT).show()
                             findNavController().navigate(R.id.action_paymentFragment_to_navigation_home)
                             return false
                         }

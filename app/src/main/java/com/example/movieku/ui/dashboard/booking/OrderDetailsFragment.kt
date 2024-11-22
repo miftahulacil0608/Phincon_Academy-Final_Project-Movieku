@@ -1,11 +1,14 @@
 package com.example.movieku.ui.dashboard.booking
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -17,6 +20,7 @@ import com.example.domain.model.movie.order.OrderMovie
 import com.example.domain.model.movie.order.OrderRequestFromUser
 import com.example.movieku.R
 import com.example.movieku.databinding.FragmentOrderDetailsBinding
+import com.example.movieku.databinding.LoadingCustomBinding
 import com.example.movieku.ui.dashboard.payment.PaymentFragment
 import com.example.movieku.utils.ResultState
 import kotlinx.coroutines.launch
@@ -56,6 +60,12 @@ class OrderDetailsFragment : Fragment() {
             priceOneMovie = orderDetailMovie.price
             payTheTicketMovie(orderDetailMovie)
         }
+
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+
     }
 
     private fun setupOrderDetail(item: OrderMovie) {
@@ -139,25 +149,23 @@ class OrderDetailsFragment : Fragment() {
                 //Email get from datastore
                 itemsRequest = itemRequestFromUser,
             )
-            Toast.makeText(requireContext(), "${itemRequestFromUser[0].imageUrl}", Toast.LENGTH_SHORT).show()
 
             //order movienya
             viewLifecycleOwner.lifecycleScope.launch {
+
+                val dialog = alertDialog()
+                dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
                 val resultOrder = orderDetailsViewModel.orderMovie(orderRequestFromUser)
                 resultOrder.collect { result ->
                     when (result) {
                         ResultState.Loading -> {
-                            binding.progressbar.visibility = View.VISIBLE
+                           dialog.show()
                         }
 
                         is ResultState.Success -> {
-                            binding.progressbar.visibility = View.GONE
+                            dialog.dismiss()
                             val bundle = bundleOf(PaymentFragment.KEY_URL_PAYMENT_TO_PAYMENT_FRAGMENT to result.data.redirectUrl)
-                            Toast.makeText(
-                                requireContext(),
-                                "pindah ke halaman payment",
-                                Toast.LENGTH_SHORT
-                            ).show()
                             findNavController().navigate(
                                 R.id.action_orderDetailsFragment_to_paymentFragment,
                                 bundle
@@ -165,14 +173,13 @@ class OrderDetailsFragment : Fragment() {
                         }
 
                         is ResultState.Error -> {
-                            binding.progressbar.visibility = View.GONE
+                            dialog.dismiss()
                             Toast.makeText(
                                 requireContext(),
-                                "${result.message}",
+                                "Can't Access API",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-
                     }
                 }
             }
@@ -195,6 +202,15 @@ class OrderDetailsFragment : Fragment() {
     }
     private fun numberOfSeat(totalTicket:Int):List<Int>{
         return (1..totalTicket).toList()
+    }
+
+    private fun alertDialog():AlertDialog{
+        val customAlertDialog = LoadingCustomBinding.inflate(layoutInflater)
+        return AlertDialog.Builder(requireContext())
+            .setView(customAlertDialog.root)
+            .setCancelable(false)
+            .create()
+
     }
 
     override fun onDestroyView() {

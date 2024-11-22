@@ -61,6 +61,7 @@
     <string name="label_cinema_and_studio">%1$s, %2$s</string>
     <string name="label_row_and_number_seats">Row %1$s (%2$s)</string>
     <string name="label_cancel">Cancel</string>
+    <string name="label_cinema_movie">Cinema Movie</string>
 
 
 </resources>
