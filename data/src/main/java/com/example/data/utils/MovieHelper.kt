@@ -6,7 +6,7 @@ import com.example.data.model.dto.network.tmdb.result.CastMovieDtoItem
 import com.example.data.model.dto.network.tmdb.result.CrewMovieDtoItem
 import com.example.data.model.dto.network.tmdb.result.GenreMovieDtoItem
 import com.example.data.model.dto.network.tmdb.result.VideoMovieDtoItem
-import com.example.domain.model.DirectorOrActorItem
+import com.example.domain.model.movie.DirectorOrActorItem
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -76,10 +76,8 @@ object MovieHelper {
     fun calculateDuration(runtime: Int): String {
         val hours: Int = runtime / 60
         val minutes: Int = runtime % 60
-        val textHours = if (hours >= 1) "s" else ""
-        val textMinutes = if (minutes >= 1) "s" else ""
 
-        return "$hours hour$textHours $minutes minute$textMinutes"
+        return "${hours}h ${minutes}m"
     }
 
     fun getImages(listImages:List<ImagesMovieDto.Backdrop>?):List<String>{
@@ -115,7 +113,8 @@ object MovieHelper {
             it.official && it.type.contains("Trailer",true)
         }?.map{
             it.key
-        }?.first()?:"nothing"
+            //TODO jika hasilnya Nothing maka dia munculin toast ga ada trailer gitu aja
+        }?.firstOrNull()?:"Nothing"
         return videoTrailer
     }
 

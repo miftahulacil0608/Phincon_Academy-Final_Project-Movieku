@@ -15,22 +15,26 @@ import retrofit2.http.Query
 
 interface TMDBApiService {
 
-    @GET("movie/now_playing")
-    suspend fun fetchNowPlayingMovie(): NowPlayingMovieDto
+    @GET("discover/movie")
+    suspend fun fetchNowPlayingMovie(
+        @Query("primary_release_date.gte")
+        releaseDateGte: String,
+        @Query("primary_release_date.lte")
+        releaseDateLte: String
+    ): NowPlayingMovieDto
 
-    @GET("movie/upcoming")
-    suspend fun fetchUpComingMovie(): UpComingMovieDto
+    @GET("discover/movie")
+    suspend fun fetchUpComingMovie(@Query("primary_release_date.gte") releaseDateGte: String): UpComingMovieDto
 
     @GET("genre/movie/list")
     suspend fun fetchGenre(): GenreMovieDto
 
     @GET("configuration/languages")
-    suspend fun fetchLanguage():List<LanguageMovieDto>
+    suspend fun fetchLanguage(): List<LanguageMovieDto>
 
     @GET("search/movie")
-    suspend fun searchMovie(
-        @Query("query") query: String,
-        @Query("include_adult") includeAdult: Boolean = true
+    suspend fun fetchSearchMovie(
+        @Query("query") query: String
     ): SearchMovieDto
 
     @GET("movie/{movie_id}")
@@ -44,7 +48,6 @@ interface TMDBApiService {
 
     @GET("movie/{movie_id}/images")
     suspend fun fetchImagesMovie(@Path("movie_id") movieId: Int): ImagesMovieDto
-
 
 
 }

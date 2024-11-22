@@ -1,13 +1,11 @@
 package com.example.movieku.ui.dashboard.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.model.NowPlayingMovie
-import com.example.domain.model.PopularMovie
-import com.example.domain.model.UpComingMovie
+import com.example.domain.model.movie.NowPlayingMovie
+import com.example.domain.model.movie.UpComingMovie
 import com.example.domain.usecase.MovieUseCase
+import com.example.movieku.utils.HelperDateConvert
 import com.example.movieku.utils.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,26 +23,26 @@ class HomeViewModel @Inject constructor(private val movieUseCase: MovieUseCase) 
     val upComingMovie = _upComingMovie.asStateFlow()
 
     init {
-        getNowPlayingMovie()
-        getUpComingMovie()
+        getNowPlayingMovie(HelperDateConvert.releaseDateGte(-30), HelperDateConvert.releaseDateLte())
+        getUpComingMovie(HelperDateConvert.releaseDateGte(1))
     }
 
-    fun getNowPlayingMovie() {
+    fun getNowPlayingMovie(releaseDateGte:String, releaseDateLte:String) {
         viewModelScope.launch {
             _nowPlayingMovie.value = ResultState.Loading
             try {
-                _nowPlayingMovie.value = ResultState.Success(movieUseCase.getNowPlayingMovie())
+                _nowPlayingMovie.value = ResultState.Success(movieUseCase.getNowPlayingMovie(releaseDateGte, releaseDateLte))
             } catch (e: Exception) {
                 _nowPlayingMovie.value = ResultState.Error(e)
             }
         }
     }
 
-    fun getUpComingMovie() {
+    fun getUpComingMovie(releaseDateGte: String) {
         viewModelScope.launch {
             _upComingMovie.value = ResultState.Loading
             try {
-                _upComingMovie.value = ResultState.Success(movieUseCase.getUpComingMovie())
+                _upComingMovie.value = ResultState.Success(movieUseCase.getUpComingMovie(releaseDateGte))
             } catch (e: Exception) {
                 _upComingMovie.value = ResultState.Error(e)
             }

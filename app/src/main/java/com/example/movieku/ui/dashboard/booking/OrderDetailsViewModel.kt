@@ -1,8 +1,8 @@
 package com.example.movieku.ui.dashboard.booking
 
 import androidx.lifecycle.ViewModel
-import com.example.domain.model.OrderRequestFromUser
-import com.example.domain.model.OrderResponseUI
+import com.example.domain.model.movie.order.OrderRequestFromUser
+import com.example.domain.model.movie.order.OrderResponseUI
 import com.example.domain.usecase.OrderMovieUseCase
 import com.example.movieku.utils.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel

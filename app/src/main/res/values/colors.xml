@@ -2,7 +2,7 @@
     <color name="white">#FFFFFF</color>
     <color name="md_theme_primary">#1C1C3D</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
-    <color name="md_theme_background">#FFFFFF</color>
+    <color name="md_theme_background">#FAFAFA</color>
     <color name="md_text_primary">#333333</color>
     <color name="md_text_secondary">#707070</color>
     <color name="md_theme_scrim">#000000</color>
@@ -11,6 +11,7 @@
     <color name="md_theme_primary_secondary">#FFC107</color>
     <color name="md_divider">#E5E5E5</color>
     <color name="md_theme_secondary">#5D5C71</color>
+    <color name="md_bg_color_search_bar">#F2F2F2</color>
 
 
 

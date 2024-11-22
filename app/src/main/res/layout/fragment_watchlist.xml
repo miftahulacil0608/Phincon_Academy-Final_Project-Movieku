@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.dashboard.watchlist.WatchlistFragment">
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/tv_label_watchlist"
+        android:text="@string/label_watchlist"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/sf_pro_text_semibold"
+        android:textSize="18sp"
+        android:textColor="@color/md_theme_primary"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_label_watchlist"
+        android:background="@color/md_divider"
+        />
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:id="@+id/rv_watchlist"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_label_watchlist"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/item_watchlist_layout"
+        />
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="240dp"
+        android:layout_height="300dp"
+        android:id="@+id/iv_empty_state"
+        android:src="@drawable/iv_empty_watchlist"
+        app:layout_constraintTop_toBottomOf="@id/tv_label_watchlist"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

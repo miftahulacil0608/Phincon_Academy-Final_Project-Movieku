@@ -12,10 +12,12 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.example.movieku.R
 import com.example.movieku.databinding.FragmentOrderDetailsBinding
 import com.example.movieku.databinding.FragmentPaymentBinding
+import com.example.movieku.ui.dashboard.ticket.TicketFragment
 import kotlinx.coroutines.runBlocking
 
 class PaymentFragment : Fragment() {
@@ -50,7 +52,7 @@ class PaymentFragment : Fragment() {
                     request?.url?.getQueryParameter("transaction_status").let {value->
                         if(value == "settlement"){
                             Toast.makeText(requireContext(), "Berhasil", Toast.LENGTH_SHORT).show()
-                            findNavController().navigate(R.id.action_paymentFragment_to_navigation_notifications)
+                            findNavController().navigate(R.id.action_paymentFragment_to_navigation_home)
                             return false
                         }
                     }

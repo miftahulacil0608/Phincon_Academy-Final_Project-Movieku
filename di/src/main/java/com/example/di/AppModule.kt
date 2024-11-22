@@ -4,12 +4,14 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.room.Room
 import com.example.data.repositoryImpl.AuthRepositoryImpl
 import com.example.data.repositoryImpl.MovieRepositoryImpl
 import com.example.data.repositoryImpl.UserSettingRepositoryImpl
 import com.example.data.source.local.LocalDataSourceRepository
 import com.example.data.source.local.LocalDataSourceRepositoryImpl
 import com.example.data.source.local.datastore.SettingsDataStore
+import com.example.data.source.local.room.WatchListDataBase
 import com.example.data.source.remote.network.NetworkRemoteDataSourceImpl
 import com.example.data.source.remote.network.NetworkRemoteDataSourceRepository
 import com.example.data.source.remote.firebase.FireBaseRemoteDataSourceImpl
@@ -20,6 +22,7 @@ import com.example.domain.repository.AuthRepository
 import com.example.domain.repository.MovieRepository
 import com.example.domain.repository.UserSettingRepository
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,9 +44,10 @@ object AppModule {
     @Singleton
     fun providesFireBaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
+
     @Provides
     @Singleton
-    fun providesFireBaseAuthenticationRepository(firebaseAuth: FirebaseAuth):FireBaseRemoteDataSourceRepository{
+    fun providesFireBaseAuthenticationRepository(firebaseAuth: FirebaseAuth): FireBaseRemoteDataSourceRepository {
         return FireBaseRemoteDataSourceImpl(firebaseAuth)
     }
 
@@ -66,8 +70,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideLocalDataSourceRepository(datastore:SettingsDataStore):LocalDataSourceRepository{
-        return LocalDataSourceRepositoryImpl(datastore)
+    fun provideLocalDataSourceRepository(datastore: SettingsDataStore, watchListDataBase: WatchListDataBase): LocalDataSourceRepository {
+        return LocalDataSourceRepositoryImpl(datastore, watchListDataBase)
     }
 
     //end datastore
@@ -80,7 +84,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesTMDBInterceptor():TMDBInterceptor{
+    fun providesTMDBInterceptor(): TMDBInterceptor {
         return TMDBInterceptor()
     }
 
@@ -96,7 +100,7 @@ object AppModule {
         loggingInterceptor: HttpLoggingInterceptor,
         tmdbInterceptor: TMDBInterceptor,
         orderInterceptor: OrderInterceptor
-    ):OkHttpClient{
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(tmdbInterceptor)
@@ -120,7 +124,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesOrderAPI(orderOkhttpClient:OkHttpClient):ApiOrderService{
+    fun providesOrderAPI(orderOkhttpClient: OkHttpClient): ApiOrderService {
         return Retrofit.Builder()
             .baseUrl("https://phincon-academy-api.onrender.com/")
             .client(orderOkhttpClient)
@@ -128,32 +132,48 @@ object AppModule {
             .build().create(ApiOrderService::class.java)
     }
 
+    //room
+    @Provides
+    @Singleton
+    fun providesWatchListDataBase(@ApplicationContext context: Context): WatchListDataBase {
+        return Room.databaseBuilder(
+            context = context.applicationContext,
+            klass = WatchListDataBase::class.java,
+            name = "watchlist_database"
+        ).build()
+    }
+
 
     @Provides
     @Singleton
-    fun provideRemoteDataSourceRepository(tmdbApiService: TMDBApiService, orderApiOrderService: ApiOrderService): NetworkRemoteDataSourceRepository {
+    fun provideRemoteDataSourceRepository(
+        tmdbApiService: TMDBApiService,
+        orderApiOrderService: ApiOrderService
+    ): NetworkRemoteDataSourceRepository {
         return NetworkRemoteDataSourceImpl(tmdbApiService, orderApiOrderService)
     }
 
     @Provides
     @Singleton
-    fun providesMovieRepository(networkRemoteDataSourceRepository: NetworkRemoteDataSourceRepository): MovieRepository {
-        return MovieRepositoryImpl(networkRemoteDataSourceRepository)
+    fun providesMovieRepository(networkRemoteDataSourceRepository: NetworkRemoteDataSourceRepository, localDataSourceRepository: LocalDataSourceRepository): MovieRepository {
+        return MovieRepositoryImpl(networkRemoteDataSourceRepository, localDataSourceRepository)
     }
 
 
     @Provides
     @Singleton
-    fun providesAuthenticationRepository(fireBaseRemoteDataSourceRepository: FireBaseRemoteDataSourceRepository):AuthRepository{
-        return AuthRepositoryImpl(fireBaseRemoteDataSourceRepository)
+    fun providesAuthenticationRepository(
+        fireBaseRemoteDataSourceRepository: FireBaseRemoteDataSourceRepository,
+        localDataSourceRepository: LocalDataSourceRepository
+    ): AuthRepository {
+        return AuthRepositoryImpl(fireBaseRemoteDataSourceRepository, localDataSourceRepository)
     }
 
     @Provides
     @Singleton
-    fun providesUserSettingRepository(localDataSourceRepository: LocalDataSourceRepository):UserSettingRepository{
+    fun providesUserSettingRepository(localDataSourceRepository: LocalDataSourceRepository): UserSettingRepository {
         return UserSettingRepositoryImpl(localDataSourceRepository)
     }
-
 
 
 }

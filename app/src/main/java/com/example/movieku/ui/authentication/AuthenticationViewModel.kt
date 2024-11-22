@@ -63,4 +63,10 @@ class AuthenticationViewModel @Inject constructor(
             ResultState.Error(e)
         }
     }
+
+    fun setUserData(){
+        viewModelScope.launch {
+            authenticationUseCase.setUserData()
+        }
+    }
 }

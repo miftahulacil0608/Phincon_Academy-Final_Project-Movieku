@@ -1,8 +1,7 @@
 package com.example.domain.usecase
 
-import com.example.domain.model.SettingDataUI
+import com.example.domain.model.user.SettingDataUI
 import com.example.domain.repository.UserSettingRepository
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class UserSettingsUseCase @Inject constructor(private val userSettingRepository: UserSettingRepository) {
@@ -12,7 +11,7 @@ class UserSettingsUseCase @Inject constructor(private val userSettingRepository:
     suspend fun saveUserAuthentication(isStatus:Boolean){
         userSettingRepository.saveUserAuthentication(isStatus)
     }
-    suspend fun getSettings(): Flow<SettingDataUI>{
+    suspend fun getSettingsUser(): SettingDataUI {
         return userSettingRepository.getSettings()
     }
     suspend fun clearUserAuthentication(){

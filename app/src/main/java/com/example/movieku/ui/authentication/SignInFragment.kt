@@ -17,10 +17,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.movieku.R
 import com.example.movieku.databinding.FragmentSignInBinding
 import com.example.movieku.ui.dashboard.MainFeaturesActivity
-import com.example.movieku.utils.Helper
+import com.example.movieku.utils.HelperValidation
 import com.example.movieku.utils.ResultState
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -60,6 +59,7 @@ class SignInFragment : Fragment() {
                     }
                     is ResultState.Success ->{
                         authenticationViewModel.saveUserAuthentication(resultSignIn.data)
+                        authenticationViewModel.setUserData()
                         startActivity(Intent(requireActivity(), MainFeaturesActivity::class.java))
 
                         requireActivity().finish()
@@ -121,6 +121,7 @@ class SignInFragment : Fragment() {
 
             is ResultState.Success -> {
                 authenticationViewModel.saveUserAuthentication(result.data)
+                authenticationViewModel.setUserData()
                 startActivity(Intent(requireActivity(), MainFeaturesActivity::class.java))
                 requireActivity().finish()
             }
@@ -137,14 +138,14 @@ class SignInFragment : Fragment() {
         var passwordvalid = false
         binding.tieEmail.addTextChangedListener {
             val email = it.toString()
-            emailvalid = Helper.emailValidator(email)
-            Helper.updateInputLayout(binding.tilEmail, emailvalid.not(), "Wrong format email", requireContext())
+            emailvalid = HelperValidation.emailValidator(email)
+            HelperValidation.updateInputLayout(binding.tilEmail, emailvalid.not(), "Wrong format email", requireContext())
             updateSubmitState(emailvalid, passwordvalid)
         }
         binding.tiePassword.addTextChangedListener {
             val password = it.toString()
-            passwordvalid= Helper.passwordValidator(password)
-            Helper.updateInputLayout(binding.tilPassword, passwordvalid.not(), "Wrong format password", requireContext())
+            passwordvalid= HelperValidation.passwordValidator(password)
+            HelperValidation.updateInputLayout(binding.tilPassword, passwordvalid.not(), "Wrong format password", requireContext())
             updateSubmitState(emailvalid, passwordvalid)
         }
         updateSubmitState(emailvalid, passwordvalid)

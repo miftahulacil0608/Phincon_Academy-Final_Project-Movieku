@@ -3,7 +3,6 @@ package com.example.movieku.ui.dashboard
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -41,11 +40,15 @@ class MainFeaturesActivity : AppCompatActivity() {
                         binding.navView.visibility = View.VISIBLE
                     }
 
-                    R.id.navigation_dashboard -> {
+                    R.id.navigation_ticket -> {
                         binding.navView.visibility = View.VISIBLE
                     }
 
-                    R.id.navigation_notifications -> {
+                    R.id.navigation_watchlist -> {
+                        binding.navView.visibility = View.VISIBLE
+                    }
+
+                    R.id.navigation_profile -> {
                         binding.navView.visibility = View.VISIBLE
                     }
 

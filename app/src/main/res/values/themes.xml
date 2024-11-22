@@ -52,6 +52,12 @@
     <style name="RoundedSquare">
         <item name="cornerSize">5%</item>
     </style>
+    <style name="RoundedSquare2">
+        <item name="cornerSize">12dp</item>
+    </style>
+    <style name="RoundedSquare3">
+        <item name="cornerSize">8dp</item>
+    </style>
 
 
     <style name="Theme.Movieku" parent="Base.Theme.Movieku" />

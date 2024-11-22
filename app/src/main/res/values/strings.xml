@@ -3,7 +3,7 @@
     <string name="title_activity_main_features">MainFeaturesActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_watchlist">Watchlist</string>
     <string name="label_genre">Genre</string>
     <string name="label_duration">Duration</string>
     <!-- Strings used for fragments for navigation -->
@@ -30,7 +30,7 @@
     <string name="label_coming_soon_playing">Coming Soon Playing</string>
     <string name="label_indicator">Indicator</string>
     <string name="label_icon_profile">Icon Profile</string>
-    <string name="label_release_date">label_release_date</string>
+    <string name="label_release_date">Release</string>
     <string name="label_age">+17</string>
     <string name="label_code_language">EN</string>
     <string name="label_review">Review</string>
@@ -49,6 +49,18 @@
     <string name="label_date">Date:</string>
     <string name="label_cinema">Cinema:</string>
     <string name="label_month_year_date_selection">%1$s-%2$s</string>
+    <string name="label_watchlist">Wathclist</string>
+    <string name="label_delete_confirmation">Delete Confirmation</string>
+    <string name="label_message_confirmation_delete">Are you sure you want to delete this data? This action cannot be undone.</string>
+    <string name="label_yes">Yes</string>
+    <string name="label_no">No</string>
+    <string name="label_show_or_scan_code">Show or Scan this code</string>
+    <string name="label_ticket">My Tickets</string>
+    <string name="label_date_and_time_watch_movie">%1$s, %2$s</string>
+    <string name="label_amount_have_ticket">%d, Tickets</string>
+    <string name="label_cinema_and_studio">%1$s, %2$s</string>
+    <string name="label_row_and_number_seats">Row %1$s (%2$s)</string>
+    <string name="label_cancel">Cancel</string>
 
 
 </resources>

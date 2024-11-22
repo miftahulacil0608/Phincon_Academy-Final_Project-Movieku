@@ -18,9 +18,9 @@ import com.example.movieku.adapter.HorizontalMarginItemDecoration
 import com.example.movieku.adapter.home.NowPlayingMoviesAdapter
 import com.example.movieku.adapter.home.UpcomingMovieAdapter
 import com.example.movieku.adapter.home.contract.NowPlayingMovieListener
-import com.example.movieku.adapter.home.contract.UpComingMovieListener
 import com.example.movieku.databinding.FragmentHomeBinding
-import com.example.movieku.ui.dashboard.detail.DetailNowPlayingMovieFragment
+import com.example.movieku.ui.dashboard.detail.DetailMovieFragment
+import com.example.movieku.utils.HelperDateConvert
 import com.example.movieku.utils.ResultState
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -58,65 +58,43 @@ class HomeFragment : Fragment(), NowPlayingMovieListener {
         nowPlayingMovieViewPagerAdapter()
         upcomingMovieAdapter()
 
-        fetchNoPlayingMovie()
-        fetchUpcomingMovie()
-
-
+        //swipe refresh
         binding.swipeRefreshLayout.setOnRefreshListener {
-            homeViewModel.getNowPlayingMovie()
-            homeViewModel.getUpComingMovie()
-            fetchNoPlayingMovie()
-            fetchUpcomingMovie()
+            homeViewModel.getNowPlayingMovie(
+                HelperDateConvert.releaseDateGte(-30),
+                HelperDateConvert.releaseDateLte()
+            )
+            homeViewModel.getUpComingMovie(releaseDateGte = HelperDateConvert.releaseDateGte(1))
         }
-    }
 
-    private fun nowPlayingMovieViewPagerAdapter() {
-        binding.viewPagerNowPlaying.offscreenPageLimit = 1
-        val nextItemVisiblePx = resources.getDimension(R.dimen.viewpager_next_item_visible)
-        val currentItemHorizontalMarginPx = resources.getDimension(R.dimen.viewpager_current_item_horizontal_margin)
-        val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
-        val pageTransformer = ViewPager2.PageTransformer { page: View, position: Float ->
-            page.translationX = -pageTranslationX * position
-           // Next line scales the item's height. You can remove it if you don't want this effect
-            page.scaleY = 1 - (0.25f * abs(position))
-           // If you want a fading effect uncomment the next line:
-            //page.alpha = 0.25f + (1 - abs(position))
+        //btn search
+        binding.btnSearchView.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_searchMovieFragment)
         }
-        binding.viewPagerNowPlaying.setPageTransformer(pageTransformer)
-        val itemDecoration = HorizontalMarginItemDecoration(
-            requireActivity(),
-            R.dimen.viewpager_current_item_horizontal_margin
-        )
-        binding.viewPagerNowPlaying.addItemDecoration(itemDecoration)
 
-        binding.viewPagerNowPlaying.adapter = nowPlayingAdapter
+        //btn retry
+        binding.btnRetry.setOnClickListener {
+            homeViewModel.getNowPlayingMovie(
+                HelperDateConvert.releaseDateGte(-30),
+                HelperDateConvert.releaseDateLte()
+            )
+            homeViewModel.getUpComingMovie(
+                releaseDateGte = HelperDateConvert.releaseDateGte(
+                    1
+                )
+            )
+        }
 
-        TabLayoutMediator(binding.tabLayoutIndicator, binding.viewPagerNowPlaying,object :TabLayoutMediator.TabConfigurationStrategy{
-            override fun onConfigureTab(tab: TabLayout.Tab, position: Int) {
-                //TODO nothing to do it
-            }
-        }).attach()
-    }
-
-
-    private fun upcomingMovieAdapter() {
-        binding.rvUpcomingMovie.adapter = upcomingMovieAdapter
-        binding.rvUpcomingMovie.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-    }
-
-    private fun fetchNoPlayingMovie() {
+        //now playing movie collect
         viewLifecycleOwner.lifecycleScope.launch {
             homeViewModel.nowPlayingMovie.collect {
                 when (it) {
                     ResultState.Loading -> {
-                        //shimmer on
                         binding.swipeRefreshLayout.isRefreshing = false
                         showShimmer()
                     }
 
                     is ResultState.Success -> {
-                        //shimmer off
                         binding.swipeRefreshLayout.isRefreshing = false
                         nowPlayingAdapter.asyncDiffer.submitList(it.data.dataMovie)
                         hideShimmer()
@@ -124,16 +102,13 @@ class HomeFragment : Fragment(), NowPlayingMovieListener {
 
                     is ResultState.Error -> {
                         binding.swipeRefreshLayout.isRefreshing = false
-                        //show dialog atau layar berubah dan minta untuk retry
-                        hideShimmer()
-                        Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
+                        showError()
                     }
                 }
             }
         }
-    }
 
-    private fun fetchUpcomingMovie() {
+        //upcoming movie collect
         viewLifecycleOwner.lifecycleScope.launch {
             homeViewModel.upComingMovie.collect {
                 when (it) {
@@ -149,35 +124,89 @@ class HomeFragment : Fragment(), NowPlayingMovieListener {
                     }
 
                     is ResultState.Error -> {
-                        //shimmer off
                         binding.swipeRefreshLayout.isRefreshing = false
-                        hideShimmer()
+                        showError()
                     }
 
                 }
             }
         }
+
     }
 
-    private fun showShimmer(){
-        with(binding.shimmerLayout){
-            startShimmer()
-            isVisible = true
-            showUI(false)
+    private fun nowPlayingMovieViewPagerAdapter() {
+        binding.viewPagerNowPlaying.offscreenPageLimit = 1
+        val nextItemVisiblePx = resources.getDimension(R.dimen.viewpager_next_item_visible)
+        val currentItemHorizontalMarginPx =
+            resources.getDimension(R.dimen.viewpager_current_item_horizontal_margin)
+        val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
+        val pageTransformer = ViewPager2.PageTransformer { page: View, position: Float ->
+            page.translationX = -pageTranslationX * position
+            // Next line scales the item's height. You can remove it if you don't want this effect
+            page.scaleY = 1 - (0.25f * abs(position))
+            // If you want a fading effect uncomment the next line:
+            //page.alpha = 0.25f + (1 - abs(position))
         }
 
+        binding.viewPagerNowPlaying.setPageTransformer(pageTransformer)
+
+        val itemDecoration = HorizontalMarginItemDecoration(
+            requireActivity(),
+            R.dimen.viewpager_current_item_horizontal_margin
+        )
+        binding.viewPagerNowPlaying.addItemDecoration(itemDecoration)
+
+        binding.viewPagerNowPlaying.adapter = nowPlayingAdapter
+
+        TabLayoutMediator(
+            binding.tabLayoutIndicator,
+            binding.viewPagerNowPlaying,
+            object : TabLayoutMediator.TabConfigurationStrategy {
+                override fun onConfigureTab(tab: TabLayout.Tab, position: Int) {
+                    //TODO nothing to do it
+                }
+            }).attach()
     }
 
-    private fun hideShimmer(){
-        with(binding.shimmerLayout){
+
+    private fun upcomingMovieAdapter() {
+        binding.rvUpcomingMovie.adapter = upcomingMovieAdapter
+        binding.rvUpcomingMovie.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    private fun showShimmer() {
+        with(binding.shimmerLayout) {
+            startShimmer()
+            isVisible = true
+            binding.ivErrorState.isVisible = false
+            binding.btnRetry.isVisible = false
+            showUI(false)
+        }
+    }
+
+    private fun hideShimmer() {
+        with(binding.shimmerLayout) {
             stopShimmer()
             isVisible = false
+            binding.ivErrorState.isVisible = false
+            binding.btnRetry.isVisible = false
             showUI(true)
         }
     }
 
-    private fun showUI(isVisible:Boolean){
-        with(binding){
+    private fun showError() {
+        with(binding.shimmerLayout) {
+            stopShimmer()
+            isVisible = false
+            binding.ivErrorState.isVisible = true
+            binding.btnRetry.isVisible = true
+            showUI(false)
+        }
+    }
+
+    private fun showUI(isVisible: Boolean) {
+        with(binding) {
             tvNowPlayingMovie.isVisible = isVisible
             btnSeeAllNowPlaying.isVisible = isVisible
             viewPagerNowPlaying.isVisible = isVisible
@@ -194,7 +223,7 @@ class HomeFragment : Fragment(), NowPlayingMovieListener {
     }
 
     override fun onItemNowPlayingClick(item: Int) {
-        val bundle = bundleOf(DetailNowPlayingMovieFragment.KEY_NOW_PLAYING_MOVIE_ID to item)
+        val bundle = bundleOf(DetailMovieFragment.KEY_DETAIL_FRAGMENT to item)
         findNavController().navigate(R.id.action_navigation_home_to_detailMovieFragment, bundle)
     }
 

@@ -13,27 +13,43 @@
         <action
             android:id="@+id/action_navigation_home_to_detailMovieFragment"
             app:destination="@id/detailMovieFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_searchMovieFragment"
+            app:destination="@id/searchMovieFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.movieku.ui.dashboard.profile.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_profile"
+        android:name="com.example.movieku.ui.dashboard.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/navigation_watchlist"
+        android:name="com.example.movieku.ui.dashboard.watchlist.WatchlistFragment"
+        android:label="fragment_watchlist"
+        tools:layout="@layout/fragment_watchlist" >
+        <action
+            android:id="@+id/action_navigation_watchlist_to_detailMovieFragment"
+            app:destination="@id/detailMovieFragment" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.movieku.ui.dashboard.watchlist.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_ticket"
+        android:name="com.example.movieku.ui.dashboard.ticket.TicketFragment"
+        android:label="fragment_ticket"
+        tools:layout="@layout/fragment_tickets" >
+        <action
+            android:id="@+id/action_navigation_ticket_to_ticketDetailFragment"
+            app:destination="@id/ticketDetailFragment" />
+    </fragment>
+
+
     <fragment
         android:id="@+id/detailMovieFragment"
-        android:name="com.example.movieku.ui.dashboard.detail.DetailNowPlayingMovieFragment"
+        android:name="com.example.movieku.ui.dashboard.detail.DetailMovieFragment"
         android:label="fragment_detail_movie"
         tools:layout="@layout/fragment_detail_movie" >
-        <action
-            android:id="@+id/action_detailMovieFragment_to_orderDetailsFragment"
-            app:destination="@id/orderDetailsFragment" />
+
         <action
             android:id="@+id/action_detailMovieFragment_to_scheduleFragment"
             app:destination="@id/scheduleFragment" />
@@ -54,8 +70,8 @@
         android:label="fragment_payment"
         tools:layout="@layout/fragment_payment" >
         <action
-            android:id="@+id/action_paymentFragment_to_navigation_notifications"
-            app:destination="@id/navigation_notifications"
+            android:id="@+id/action_paymentFragment_to_navigation_home"
+            app:destination="@id/navigation_home"
             app:popUpTo="@id/navigation_home"
             app:popUpToInclusive="true" />
     </fragment>
@@ -68,4 +84,26 @@
             android:id="@+id/action_scheduleFragment_to_orderDetailsFragment"
             app:destination="@id/orderDetailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/ticketDetailFragment"
+        android:name="com.example.movieku.ui.dashboard.ticket.TicketDetailFragment"
+        android:label="fragment_ticket_detail"
+        tools:layout="@layout/fragment_ticket_detail" />
+    <fragment
+        android:id="@+id/searchMovieFragment"
+        android:name="com.example.movieku.ui.dashboard.search.SearchMovieFragment"
+        android:label="fragment_search_movie"
+        tools:layout="@layout/fragment_search_movie" >
+        <action
+            android:id="@+id/action_searchMovieFragment_to_detailMovieFragment"
+            app:destination="@id/detailMovieFragment" />
+    </fragment>
+
+
 </navigation>
+
+    <!-- <action
+                android:id="@+id/action_paymentFragment_to_navigation_notifications"
+                app:destination="@id/navigation_notifications"
+                app:popUpTo="@id/navigation_home"
+                app:popUpToInclusive="true" />-->

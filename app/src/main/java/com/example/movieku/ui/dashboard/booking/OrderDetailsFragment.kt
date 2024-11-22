@@ -12,9 +12,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.example.domain.model.ItemsRequestFromUser
-import com.example.domain.model.OrderMovie
-import com.example.domain.model.OrderRequestFromUser
+import com.example.domain.model.movie.order.ItemsRequestFromUser
+import com.example.domain.model.movie.order.OrderMovie
+import com.example.domain.model.movie.order.OrderRequestFromUser
 import com.example.movieku.R
 import com.example.movieku.databinding.FragmentOrderDetailsBinding
 import com.example.movieku.ui.dashboard.payment.PaymentFragment
@@ -77,6 +77,7 @@ class OrderDetailsFragment : Fragment() {
         }
     }
 
+    //ticket modification
     private fun amountTicket(item: OrderMovie) {
         binding.btnIncrement.setOnClickListener {
             totalTicket++
@@ -92,6 +93,7 @@ class OrderDetailsFragment : Fragment() {
         }
     }
 
+    //calculating ticket
     private fun calculateTicket(priceMovie: Int, feeMovie: Int) {
         priceOneMovie = priceMovie
         feeOneMovie = feeMovie
@@ -107,30 +109,39 @@ class OrderDetailsFragment : Fragment() {
         binding.btnPayment.isEnabled = totalTicket > 0
     }
 
+    //bayar tiket
     private fun payTheTicketMovie(item: OrderMovie) {
         binding.btnPayment.setOnClickListener {
+            //siapin datanya
             val itemRequestFromUser = listOf(
-                //TODO datewatch ambil dari tanggal di halaman sebelume (masih proses)
                 ItemsRequestFromUser(
+                    dateWatch = item.dateWatch,
+                    timeWatch = item.timeWatch,
                     id = item.id,
-                    name = item.title,
                     price = totalPrice,
                     quantity = totalTicket,
-                    rating = item.rating,
+                    name = item.title,
                     imageUrl = item.poster,
-                    genreMovie = item.genre,
-                    dateWatch = item.dateWatch,
+                    genre = item.genre,
+                    duration = item.duration,
+                    pgAge = item.pgAge,
+                    codeLanguage = item.codeLanguage,
                     cinema = item.cinema,
-                    timeWatch = item.timeWatch,
-                    studio = item.studio
+                    studio = item.studio,
+                    seatRow = seatRow(),
+                    seatNumber = numberOfSeat(totalTicket),
+                    codeTicket = randomTicket()
                 )
             )
+            //order request
             val orderRequestFromUser = OrderRequestFromUser(
                 amount = totalToPay,
-                //TODO email ambil dari email yang ada di firebase Auth
-                email = "ahmadmiftahulazisz@gmail.com",
+                //Email get from datastore
                 itemsRequest = itemRequestFromUser,
             )
+            Toast.makeText(requireContext(), "${itemRequestFromUser[0].imageUrl}", Toast.LENGTH_SHORT).show()
+
+            //order movienya
             viewLifecycleOwner.lifecycleScope.launch {
                 val resultOrder = orderDetailsViewModel.orderMovie(orderRequestFromUser)
                 resultOrder.collect { result ->
@@ -166,6 +177,24 @@ class OrderDetailsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    //ticketing order
+    private fun randomTicket():String{
+        val nameApp = "FLIX"
+        val numberList = (0..9).toList()
+        val randomUniqueCode = (0..9).map { numberList.random() }.joinToString("")
+
+        val result = nameApp + randomUniqueCode + "T"
+        return result
+    }
+
+    private fun seatRow():String{
+        val wordList = ('A'..'J').toList()
+        return wordList.random().toString()
+    }
+    private fun numberOfSeat(totalTicket:Int):List<Int>{
+        return (1..totalTicket).toList()
     }
 
     override fun onDestroyView() {

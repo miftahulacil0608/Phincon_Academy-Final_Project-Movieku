@@ -75,12 +75,6 @@ class FireBaseRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun isUserAuthentication(): Flow<Boolean> {
-        return flow {
-            emit(firebaseAuth.currentUser != null)
-        }
-    }
-
     override fun fetchFirebaseUser():FirebaseUser?{
         return firebaseAuth.currentUser
     }

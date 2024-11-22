@@ -5,29 +5,46 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 data class OrderRequest(
-    val amount: Int, val email: String,
+    @SerializedName("amount")
+    val amount: Int,
+    @SerializedName("email")
+    val email: String,
+    @SerializedName("items")
     val items: List<ItemsRequest>
 )
 
 @Parcelize
 data class ItemsRequest(
-    val id: Int,
-    val name: String,
-    val price: Int,
-    val quantity: Int,
-    val rating:String,
-    @SerializedName("image_url")
-    val imageUrl:String,
-    @SerializedName("genre_movie")
-    val genreMovie:String,
     @SerializedName("date_watch")
-    val dateWatch:String,
-    @SerializedName("cinema")
-    val cinema:String,
+    val dateWatch: String,
     @SerializedName("time_watch")
     val timeWatch:String,
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("price")
+    val price: Int,
+    @SerializedName("quantity")
+    val quantity: Int,
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("image_url")
+    val imageUrl:String,
+    @SerializedName("genre")
+    val genre:String,
+    @SerializedName("duration")
+    val duration:String,
+    @SerializedName("rate_age")
+    val pgAge:String,
+    @SerializedName("code_language")
+    val codeLanguage:String,
+    @SerializedName("cinema")
+    val cinema:String,
     @SerializedName("studio")
     val studio:String,
-    /*@SerializedName("number_seat")
-    val numberSeat:List<String>*/
+    @SerializedName("seat_row")
+    val seatRow:String,
+    @SerializedName("seat_number")
+    val seatNumber:List<Int>,
+    @SerializedName("code_ticket")
+    val codeTicket:String
 ):Parcelable

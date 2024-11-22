@@ -1,14 +1,12 @@
 package com.example.movieku.adapter.home
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.domain.model.Movie
+import com.example.domain.model.movie.Movie
 import com.example.movieku.R
 import com.example.movieku.adapter.home.contract.NowPlayingMovieListener
-import com.example.movieku.adapter.home.contract.UpComingMovieListener
 import com.example.movieku.databinding.ItemUpcomingMovieBinding
 
 //TODO ganti makek diffutilcallback saja
@@ -23,6 +21,7 @@ class UpcomingMovieAdapter(private var listItem: List<Movie> = emptyList(), priv
                     .placeholder(R.drawable.iv_placeholder)
                     .centerCrop()
                     .into(ivPosterMovie)
+
                 tvTitleMovie.text = item.title
                 tvGenre.text = item.genre
                 tvReleaseMovie.text = item.releaseDate

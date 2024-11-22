@@ -1,13 +1,10 @@
 package com.example.data.model.dto.network.tmdb
 
 
-import com.example.data.model.dto.network.tmdb.result.DatesMovieDtoItem
 import com.example.data.model.dto.network.tmdb.result.MovieDtoItem
 import com.google.gson.annotations.SerializedName
 
 class UpComingMovieDto(
-    @SerializedName("dates")
-    val dates: DatesMovieDtoItem,
     @SerializedName("page")
     val page: Int,
     @SerializedName("results")

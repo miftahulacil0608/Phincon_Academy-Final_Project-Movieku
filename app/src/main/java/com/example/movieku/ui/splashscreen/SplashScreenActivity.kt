@@ -45,15 +45,14 @@ class SplashScreenActivity : AppCompatActivity() {
                     startActivity(Intent(this@SplashScreenActivity, OnBoardingActivity::class.java))
                     finish()
                 }
-                else if (!it.isUserAuthentication){
+                else if (!it.isUserAuthentication || it.email.isEmpty() || it.displayName.isEmpty()){
                     startActivity(Intent(this@SplashScreenActivity, AuthenticationActivity::class.java))
                     finish()
                 }
-                else{
+                else {
                     startActivity(Intent(this@SplashScreenActivity, MainFeaturesActivity::class.java))
                     finish()
                 }
-
             }
 
         }

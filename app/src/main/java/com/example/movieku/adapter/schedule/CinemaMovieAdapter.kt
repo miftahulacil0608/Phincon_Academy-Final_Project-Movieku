@@ -5,12 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.domain.model.Cinema
+import com.example.domain.model.movie.cinema.Cinema
 import com.example.movieku.R
 import com.example.movieku.databinding.ItemCinemaLayoutBinding
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
-import java.util.Calendar
 import java.util.Locale
 
 //TODO ganti makek diffutilcallback saja

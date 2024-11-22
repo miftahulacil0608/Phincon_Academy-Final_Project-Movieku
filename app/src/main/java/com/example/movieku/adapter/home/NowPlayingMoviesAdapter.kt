@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.domain.model.Movie
+import com.example.domain.model.movie.Movie
 import com.example.movieku.R
 import com.example.movieku.adapter.home.contract.NowPlayingMovieListener
 import com.example.movieku.databinding.ItemNowPlayingMoviesBinding
 
 class NowPlayingMoviesAdapter(private val listener: NowPlayingMovieListener):RecyclerView.Adapter<NowPlayingMoviesAdapter.MyViewHolder>() {
     inner class MyViewHolder(private val binding: ItemNowPlayingMoviesBinding):RecyclerView.ViewHolder(binding.root){
-        fun bind(item:Movie){
+        fun bind(item: Movie){
             with(binding){
                 Glide.with(root)
                     .load(item.posterPath)

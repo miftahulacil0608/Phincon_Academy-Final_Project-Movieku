@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/swipe_refresh_layout"
+    tools:context=".ui.dashboard.search.SearchMovieFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_search_light_mode"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_cancel"
+            android:hint="@string/label_search_any_film"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="8dp"
+            android:paddingVertical="8dp"
+            android:imeOptions="actionSearch"
+            android:maxLines="1"
+            android:inputType="text"
+            android:paddingHorizontal="20dp"
+            android:drawablePadding="12dp"
+            android:id="@+id/btn_search_view"
+            android:background="@drawable/bg_search_view"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="24dp" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:paddingHorizontal="4dp"
+            android:textColor="@color/md_theme_primary"
+            android:textSize="14sp"
+            android:fontFamily="@font/sf_pro_text_semibold"
+            android:paddingVertical="6dp"
+            android:text="@string/label_cancel"
+            app:layout_constraintBottom_toBottomOf="@id/btn_search_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_search_view"
+            app:layout_constraintTop_toTopOf="@id/btn_search_view" />
+        <View
+            android:id="@+id/divider_one"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/md_divider"
+            app:layout_constraintTop_toBottomOf="@id/btn_search_view" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+
+            android:layout_height="0dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_one"
+            tools:listitem="@layout/item_search_layout" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_empty_state"
+            android:layout_width="249dp"
+            android:layout_height="300dp"
+            android:src="@drawable/iv_empty_state_search"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/divider_one" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_error_state"
+            android:layout_width="249dp"
+            android:layout_height="300dp"
+            android:visibility="gone"
+
+            android:src="@drawable/iv_error_state"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/divider_one" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/iv_error_state"
+            android:layout_marginTop="24dp"
+            android:background="@null"
+            android:visibility="gone"
+            android:id="@+id/btn_retry"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_retry"
+            />
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/shimmer_layout"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/divider_one"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <include layout="@layout/search_layout_shimmer"/>
+                <include layout="@layout/search_layout_shimmer"/>
+                <include layout="@layout/search_layout_shimmer"/>
+                <include layout="@layout/search_layout_shimmer"/>
+
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+

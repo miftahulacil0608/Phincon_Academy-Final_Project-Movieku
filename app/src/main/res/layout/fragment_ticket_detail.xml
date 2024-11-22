@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.dashboard.ticket.TicketDetailFragment">
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="@null"
+        android:padding="20dp"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintBottom_toBottomOf="@id/tv_label_tickets_details"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_label_tickets_details" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_label_tickets_details"
+        android:layout_width="0dp"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_marginEnd="64dp"
+        android:fontFamily="@font/sf_pro_text_semibold"
+        android:gravity="center"
+        android:text="Ticket Details"
+        android:textColor="@color/md_theme_primary"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_back"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/md_divider"
+        app:layout_constraintBottom_toBottomOf="@id/tv_label_tickets_details" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="34dp"
+        app:cardBackgroundColor="#FAFAFA"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_label_tickets_details">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_poster"
+                android:layout_width="45dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/RoundedSquare3"
+                tools:src="@drawable/iv_sample_poster" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_label_title_movie"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:maxLines="1"
+                android:textAllCaps="false"
+                android:textColor="@color/md_text_primary"
+                android:textSize="26sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_poster"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_rate_age"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_corner_radius_blue"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:paddingHorizontal="2dp"
+                android:paddingVertical="4dp"
+                android:text="+17"
+                android:textAlignment="center"
+                android:textColor="@color/md_theme_onPrimary"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_poster"
+                app:layout_constraintStart_toStartOf="@id/tv_label_title_movie"
+                app:layout_constraintTop_toBottomOf="@id/tv_label_title_movie" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_label_language"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_corner_radius_white"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:paddingHorizontal="2dp"
+                android:paddingVertical="4dp"
+                android:text="EN"
+                android:textAlignment="center"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_rate_age"
+                app:layout_constraintStart_toEndOf="@id/tv_rate_age"
+                app:layout_constraintTop_toBottomOf="@id/tv_label_title_movie" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/divider_one"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/bg_dotted_detail_ticket"
+                app:layout_constraintTop_toBottomOf="@id/iv_poster" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_cinema"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/iv_cinema"
+                app:layout_constraintEnd_toStartOf="@id/tv_cinema_and_studio"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider_one" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_cinema_and_studio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/label_cinema_and_studio"
+                app:layout_constraintBottom_toBottomOf="@id/iv_cinema"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_cinema"
+                app:layout_constraintTop_toTopOf="@id/iv_cinema" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_label_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:paddingVertical="4dp"
+                android:text="Date"
+                android:textColor="@color/md_text_secondary"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_cinema" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_date_watch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/sf_pro_text_semibold"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_label_date"
+                tools:text="21 Nov 2024" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_label_time_watch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:paddingVertical="4dp"
+                android:text="Time"
+                android:textColor="@color/md_text_secondary"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_date_watch" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_time_watch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/sf_pro_text_semibold"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_label_time_watch"
+                tools:text="21:00" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_label_seats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:paddingVertical="4dp"
+                android:text="Seats"
+                android:textColor="@color/md_text_secondary"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_time_watch" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_seats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/sf_pro_text_semibold"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_label_seats"
+                tools:text="@string/label_row_and_number_seats" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_label_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:paddingVertical="4dp"
+                android:text="Cost"
+                android:textColor="@color/md_text_secondary"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_seats" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/sf_pro_text_semibold"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_label_cost"
+                tools:text="@string/label_price" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/divider_two"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/bg_dotted_detail_ticket"
+                app:layout_constraintTop_toBottomOf="@id/tv_cost" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_code_ticket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/sf_pro_text_bold"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider_two"
+                tools:text="FLIX1234567T" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_code_ticket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/ic_barcode"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_code_ticket" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/sf_pro_text_medium"
+                android:text="@string/label_show_or_scan_code"
+                android:textAlignment="center"
+                android:textColor="@color/md_text_primary"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_code_ticket" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
