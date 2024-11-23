@@ -1,6 +1,8 @@
 package com.example.movieku.ui.authentication
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,12 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.movieku.R
 import com.example.movieku.databinding.FragmentSignUpBinding
+import com.example.movieku.databinding.LoadingCustomBinding
 import com.example.movieku.ui.dashboard.MainFeaturesActivity
 import com.example.movieku.utils.HelperValidation
 import com.example.movieku.utils.ResultState
@@ -41,14 +45,15 @@ class SingUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         validateInputFormSignUp()
-        //TODO inputan yang bener dulu
         binding.btnRegister.setOnClickListener {
 
             val fullName = binding.tieFullName.text.toString()
             val email = binding.tieEmail.text.toString()
             val password = binding.tiePassword.text.toString()
-
+            val loading = alertDialog()
+            loading.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             viewLifecycleOwner.lifecycleScope.launch {
+                loading.show()
                 val signUpResult = authenticationViewModel.signUpWithEmailAndPassword(
                     fullName,
                     email,
@@ -57,8 +62,9 @@ class SingUpFragment : Fragment() {
                 when (signUpResult) {
                     ResultState.Loading -> {}
                     is ResultState.Success -> {
+                        loading.dismiss()
+                        Toast.makeText(requireActivity(), "${signUpResult.data}", Toast.LENGTH_SHORT).show()
                         authenticationViewModel.saveUserAuthentication(signUpResult.data)
-                        authenticationViewModel.setUserData()
                         startActivity(
                             Intent(
                                 requireActivity(),
@@ -69,6 +75,7 @@ class SingUpFragment : Fragment() {
                     }
 
                     is ResultState.Error -> {
+                        loading.dismiss()
                         Toast.makeText(
                             requireActivity(),
                             "Your account has been registered",
@@ -117,6 +124,13 @@ class SingUpFragment : Fragment() {
         updateSubmitState(fullNameValid, emailValid, passwordValid)
     }
 
+    private fun alertDialog(): AlertDialog {
+        val alertDialogBinding = LoadingCustomBinding.inflate(layoutInflater)
+        return AlertDialog.Builder(requireContext())
+            .setView(alertDialogBinding.root)
+            .setCancelable(false)
+            .create()
+    }
     private fun updateSubmitState(isFullName:Boolean,isEmail:Boolean, isPassword:Boolean){
         binding.btnRegister.isEnabled = isFullName && isEmail && isPassword
     }

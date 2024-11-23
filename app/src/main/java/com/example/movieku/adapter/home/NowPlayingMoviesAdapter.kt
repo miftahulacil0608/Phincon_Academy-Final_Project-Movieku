@@ -21,10 +21,7 @@ class NowPlayingMoviesAdapter(private val listener: NowPlayingMovieListener):Rec
                     .centerCrop()
                     .into(ivPosterNowPlaying)
                 movieTitle.text = item.title
-                //TODO tvduratioongenre
                 tvReleaseDateAndGenreMovie.text = root.resources.getString(R.string.label_release_and_genre, item.releaseDate, item.genre)
-
-                //TODO movieRating
                 binding.movieRate.text = binding.root.resources.getString(R.string.label_rating_count_vote,item.voteRange, item.voteCount)
 
             }

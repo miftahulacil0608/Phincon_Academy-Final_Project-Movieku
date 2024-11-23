@@ -7,25 +7,93 @@
     tools:context=".ui.dashboard.ticket.TicketFragment">
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_label_profile"
         android:layout_width="match_parent"
-        android:id="@+id/user_information"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btn_sign_out"
+        android:layout_height="?android:attr/actionBarSize"
+        android:fontFamily="@font/sf_pro_text_semibold"
+        android:gravity="center"
+        android:text="@string/label_profile"
+        android:textColor="@color/md_theme_primary"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        />
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_sign_out"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:text="Sign Out"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="2dp"
+        android:background="@color/md_divider"
+        app:layout_constraintBottom_toBottomOf="@id/tv_label_profile" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_profile_user"
+        android:layout_width="198dp"
+        android:layout_height="198dp"
+        android:layout_marginTop="72dp"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tv_label_profile"
+        tools:src="@drawable/iv_sample_poster" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/sf_pro_text_bold"
+        android:paddingVertical="4dp"
+        android:textAlignment="center"
+        android:textColor="@color/md_theme_primary"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_profile_user"
+        tools:text="Ahmad Miftahul Azisz" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_email"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@id/tv_email"
+        app:layout_constraintStart_toStartOf="@id/tv_username"
+        app:layout_constraintTop_toBottomOf="@id/tv_username" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sf_pro_text_regular"
+        android:textColor="@color/md_text_secondary"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_email"
+        app:layout_constraintEnd_toEndOf="@id/tv_username"
+        app:layout_constraintStart_toEndOf="@id/iv_email"
+        app:layout_constraintTop_toTopOf="@id/iv_email"
+        tools:text="miftahulaxil@gmail.com"
+
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_sign_out"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="34dp"
+        android:text="Log Out"
+        android:textAlignment="center"
+        android:textColor="@color/md_theme_primary_secondary"
+        android:textSize="16sp"
+        app:iconSize="24dp"
+        android:layout_marginBottom="24dp"
+        android:paddingVertical="16dp"
+        app:icon="@drawable/ic_logout"
+        app:iconGravity="textEnd"
+        app:iconTintMode="multiply"
+        android:fontFamily="@font/sf_pro_text_semibold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

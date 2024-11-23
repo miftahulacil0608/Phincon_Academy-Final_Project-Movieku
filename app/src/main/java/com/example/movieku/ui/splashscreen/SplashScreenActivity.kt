@@ -3,6 +3,7 @@ package com.example.movieku.ui.splashscreen
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +24,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 @SuppressLint("CustomSplashScreen")
-//TODO system bar text color to white please
 class SplashScreenActivity : AppCompatActivity() {
     private val binding by lazy{
         ActivitySplashScreenBinding.inflate(layoutInflater)
@@ -36,7 +36,6 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        //TODO logic in here
         CoroutineScope(Dispatchers.Main).launch {
             delay(3000L)
 
@@ -45,7 +44,7 @@ class SplashScreenActivity : AppCompatActivity() {
                     startActivity(Intent(this@SplashScreenActivity, OnBoardingActivity::class.java))
                     finish()
                 }
-                else if (!it.isUserAuthentication || it.email.isEmpty() || it.displayName.isEmpty()){
+                else if (it.isUserAuthentication.not() || it.email.isEmpty() || it.displayName.isEmpty()){
                     startActivity(Intent(this@SplashScreenActivity, AuthenticationActivity::class.java))
                     finish()
                 }

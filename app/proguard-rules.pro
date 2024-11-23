@@ -5,17 +5,135 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+##
+### If your project uses WebView with JS, uncomment the following
+### and specify the fully qualified class name to the JavaScript interface
+### class:
+###-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+###   public *;
+###}
+##
+### Uncomment this to preserve the line number information for
+### debugging stack traces.
+###-keepattributes SourceFile,LineNumberTable
+##
+### If you keep the line number information, uncomment this to
+### hide the original source file name.
+###-renamesourcefileattribute SourceFile
+#
+# Jaga agar semua class Google Sign-In tetap ada
+-keep class com.google.android.gms.** { *; }
+-keep class com.google.firebase.** { *; }
+-keep class com.google.android.libraries.identity.** { *; }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+-keep class com.example.movieku.ui.authentication.**{*;}
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Hindari penghapusan anotasi pada Parcelable atau Hilt
+-keepattributes Annotation
+
+
+#######################
+# Default Android Rules
+#######################
+
+# Android Classes
+-keep public class * extends android.app.Application { *; }
+-keep public class * extends android.app.Activity { *; }
+-keep public class * extends android.app.Service { *; }
+-keep public class * extends android.app.Fragment { *; }
+-keep public class * extends androidx.fragment.app.Fragment { *; }
+-keep public class * extends android.content.BroadcastReceiver { *; }
+-keep public class * extends android.content.ContentProvider { *; }
+
+# Android Views
+-keepclassmembers class * extends android.view.View {
+    public <init>(android.content.Context);
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+    public void set*(*);
+}
+
+# Jaga agar Parcelable tetap utuh
+-keepclassmembers class ** implements android.os.Parcelable {
+    public static final android.os.Parcelable$Creator *;
+}
+
+# Keep Parcelable Classes
+-keepclassmembers class * implements android.os.Parcelable {
+    static ** CREATOR;
+}
+
+# Keep methods called by reflection in native code
+-keepclassmembers class * {
+    native <methods>;
+}
+
+########################
+# Retrofit + Gson Rules
+########################
+
+# Retrofit and Gson
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-dontwarn retrofit2.Platform$Java8
+-keep class retrofit2.** { *; }
+-keep class com.google.gson.** { *; }
+-keepattributes Signature
+-keepattributes *Annotation*
+-keepclassmembers class * {
+    @retrofit2.http.* <methods>;
+}
+
+
+########################
+# Hilt/Dagger Rules
+########################
+
+# Hilt (Dagger) generated code
+-keep class dagger.hilt.** { *; }
+-dontwarn dagger.hilt.internal.**
+-keep class **_Factory { *; }
+-keep class **_MembersInjector { *; }
+
+########################
+# Data Binding Rules
+########################
+
+# Keep DataBinding classes
+-keep class **.databinding.*Binding { *; }
+-keep class **.BR { *; }
+
+########################
+# Glide (Jika Digunakan)
+########################
+-keep class com.bumptech.**{*;}
+
+########################
+# Coroutines Rules
+########################
+
+# Prevent obfuscation of Kotlin coroutine classes
+-dontwarn kotlinx.coroutines.**
+-keep class kotlinx.coroutines.** { *; }
+
+########################
+# Prevent Reflection Issues
+########################
+
+# Keep all annotations
+-keepattributes Annotation
+
+# Prevent issues with reflection in your app
+-keepclassmembers class * {
+    *;
+}
+
+########################
+# General Optimization
+########################
+
+# Optimization settings (optional)
+-optimizations !code/simplification/arithmetic,!field/,!class/merging/
+
+
+

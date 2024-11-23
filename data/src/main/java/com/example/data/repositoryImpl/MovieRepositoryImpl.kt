@@ -71,7 +71,6 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun insertWatchList(watchListUI: WatchListUI) {
         val dataStoreUser = localDataSourceRepository.getSettings()
         val email = dataStoreUser.email
-        Log.d("email", "insertWatchList: $email")
         if (email.isNotEmpty()) {
             localDataSourceRepository.insertWatchList(watchListUI.toWatchListEntity(email))
         }
@@ -90,7 +89,6 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun deleteWatchList(movieId: Int) {
         val dataStoreUser = localDataSourceRepository.getSettings()
         val email = dataStoreUser.email
-        Log.d("emailDelete", "insertWatchList: $email")
         if (email.isNotEmpty()) {
             localDataSourceRepository.deleteWatchList(email, movieId)
         }

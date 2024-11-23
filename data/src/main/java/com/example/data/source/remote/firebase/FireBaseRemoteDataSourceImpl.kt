@@ -1,5 +1,6 @@
 package com.example.data.source.remote.firebase
 
+import android.util.Log
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialResponse
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -98,7 +99,7 @@ class FireBaseRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    private fun updateProfile(fullName: String) {
+    private fun  updateProfile(fullName: String) {
         val userProfileChainRequest = UserProfileChangeRequest.Builder()
             .setDisplayName(fullName)
             .build()

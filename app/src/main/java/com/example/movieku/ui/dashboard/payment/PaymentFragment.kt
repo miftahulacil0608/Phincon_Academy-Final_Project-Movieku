@@ -41,8 +41,6 @@ class PaymentFragment : Fragment() {
         binding.webView.settings.javaScriptEnabled = true
 
         resultUrl?.let {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-
             binding.webView.loadUrl(it)
             binding.webView.webViewClient = object : WebViewClient() {
                 override fun shouldOverrideUrlLoading(
@@ -60,6 +58,9 @@ class PaymentFragment : Fragment() {
             }
         }
 
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {

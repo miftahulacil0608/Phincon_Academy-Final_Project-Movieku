@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -5,6 +7,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("com.google.gms.google-services")
     id("kotlin-parcelize")
+    alias(libs.plugins.google.firebase.crashlytics)
 }
 
 android {
@@ -18,12 +21,25 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        val keystoreFile = project.rootProject.file("apikeys.properties")
+        val properties = Properties()
+        properties.load(keystoreFile.inputStream())
+
+        val secretClient = properties.getProperty("WEB_SECRET_CLIENT")
+
+        buildConfigField(
+            type = "String",
+            name = "WEB_SECRET_CLIENT",
+            value = secretClient
+        )
+
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -39,6 +55,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
 
@@ -54,6 +71,7 @@ dependencies {
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.googleid)
+    implementation(libs.firebase.crashlytics)
     kapt(libs.hilt.compiler)
 
     //paging

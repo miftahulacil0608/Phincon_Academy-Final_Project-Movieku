@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -13,6 +15,24 @@ android {
 
     defaultConfig {
         minSdk = 26
+        val keystoreFile = project.rootProject.file("apikeys.properties")
+        val properties = Properties()
+        properties.load(keystoreFile.inputStream())
+
+        val apiKey = properties.getProperty("THE_MOVIE_DB_API_KEY")?:""
+        val secretKey = properties.getProperty("SECRET_KEY_API_ORDER")?:""
+
+        buildConfigField(
+            type = "String",
+            name= "THE_MOVIE_DB_API_KEY",
+            value = apiKey
+        )
+
+        buildConfigField(
+            type = "String",
+            name= "SECRET_KEY_API_ORDER",
+            value = secretKey
+        )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -26,6 +46,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+    buildFeatures{
+        buildConfig = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8

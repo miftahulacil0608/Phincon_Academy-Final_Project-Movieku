@@ -15,6 +15,11 @@ class AuthenticationUseCase @Inject constructor(private val authRepository: Auth
     suspend fun signInWithGoogle(getCredentialResponse: GetCredentialResponse): Result<Boolean> {
         return authRepository.signInWithGoogle(getCredentialResponse)
     }
+
+    suspend fun setUserDataSignup(fullName: String, email:String){
+        authRepository.setUserDataSignup(fullName, email)
+    }
+
     suspend fun setUserData(){
         authRepository.setUserData()
     }

@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.domain.model.movie.cinema.Cinema
 import com.example.movieku.R
+import com.example.movieku.adapter.schedule.contract.ScheduleMovieListener
 import com.example.movieku.databinding.ItemCinemaLayoutBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-//TODO ganti makek diffutilcallback saja
-class CinemaMovieAdapter(private var listItem: List<Cinema> = emptyList(), private val listener:ScheduleMovieListener) :
+class CinemaMovieAdapter(private var listItem: List<Cinema> = emptyList(), private val listener: ScheduleMovieListener) :
     RecyclerView.Adapter<CinemaMovieAdapter.MyViewHolder>() {
     inner class MyViewHolder(private val binding: ItemCinemaLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {

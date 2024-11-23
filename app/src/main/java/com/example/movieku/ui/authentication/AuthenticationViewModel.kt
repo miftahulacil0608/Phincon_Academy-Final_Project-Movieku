@@ -23,7 +23,6 @@ class AuthenticationViewModel @Inject constructor(
     }
 
     suspend fun signWithGoogle(credentialResponse: GetCredentialResponse): ResultState<Boolean> {
-        ResultState.Loading
         return try {
             val resultSignIn = authenticationUseCase.signInWithGoogle(credentialResponse)
             if (resultSignIn.isSuccess){
@@ -37,7 +36,6 @@ class AuthenticationViewModel @Inject constructor(
     }
 
     suspend fun signInWithEmailAndPassword(email:String, password: String):ResultState<Boolean>{
-        ResultState.Loading
         return try {
             val resultSigIn = authenticationUseCase.signInWithEmailAndPassword(email, password)
             if (resultSigIn.isSuccess){
@@ -51,10 +49,10 @@ class AuthenticationViewModel @Inject constructor(
     }
 
     suspend fun signUpWithEmailAndPassword(fullName:String, email:String,password:String):ResultState<Boolean>{
-        ResultState.Loading
         return try{
             val resultSignUp = authenticationUseCase.signUpWithEmailAndPassword(fullName, email, password)
             if (resultSignUp.isSuccess){
+                authenticationUseCase.setUserDataSignup(fullName, email)
                 ResultState.Success(resultSignUp.getOrDefault(false))
             }else{
                 ResultState.Error(resultSignUp.exceptionOrNull()!!)
@@ -63,6 +61,7 @@ class AuthenticationViewModel @Inject constructor(
             ResultState.Error(e)
         }
     }
+
 
     fun setUserData(){
         viewModelScope.launch {

@@ -19,6 +19,12 @@ class SettingsDataStore(private val dataStore: DataStore<Preferences>) {
             it[IS_ON_BOARDING_KEY] = isStatus
         }
     }
+    suspend fun saveUserDataSignUp(fullName:String, email:String){
+        dataStore.edit {
+            it[KEY_USERNAME] = fullName
+            it[KEY_EMAIL] = email
+        }
+    }
 
     suspend fun saveUserData(firebaseUser: FirebaseUser) {
         dataStore.edit {
@@ -57,6 +63,5 @@ class SettingsDataStore(private val dataStore: DataStore<Preferences>) {
         private val IS_USER_AUTHENTICATION_KEY = booleanPreferencesKey("IS USER AUTHENTICATION KEY")
         private val KEY_EMAIL = stringPreferencesKey("KEY EMAIL")
         private val KEY_USERNAME = stringPreferencesKey("KEY USERNAME")
-        private val IS_DARK_MODE_KEY = booleanPreferencesKey("IS DARK MODE KEY")
     }
 }

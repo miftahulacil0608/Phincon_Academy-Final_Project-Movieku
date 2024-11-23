@@ -437,15 +437,6 @@
         app:layout_constraintEnd_toEndOf="@id/divider_third"
         app:layout_constraintTop_toTopOf="@id/tv_label_total" />
 
-    <View
-        android:id="@+id/divider_fourth"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="15dp"
-        android:background="@color/md_divider"
-        app:layout_constraintBottom_toTopOf="@id/btn_payment" />
-
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -20,6 +20,10 @@ class LocalDataSourceRepositoryImpl @Inject constructor(private val datastore: S
         datastore.saveUserAuthentication(isStatus)
     }
 
+    override suspend fun saveUserDataSignup(fullName: String, email:String) {
+        datastore.saveUserDataSignUp(fullName, email)
+    }
+
     override suspend fun saveUserData(firebaseUser: FirebaseUser) {
         datastore.saveUserData(firebaseUser)
     }

@@ -176,7 +176,7 @@ class HomeFragment : Fragment(), NowPlayingMovieListener {
             binding.viewPagerNowPlaying,
             object : TabLayoutMediator.TabConfigurationStrategy {
                 override fun onConfigureTab(tab: TabLayout.Tab, position: Int) {
-                    //TODO nothing to do it
+                //DO NOTHING
                 }
             }).attach()
     }

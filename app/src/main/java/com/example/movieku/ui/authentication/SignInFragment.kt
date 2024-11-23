@@ -1,11 +1,14 @@
 package com.example.movieku.ui.authentication
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
@@ -14,8 +17,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.movieku.BuildConfig
 import com.example.movieku.R
 import com.example.movieku.databinding.FragmentSignInBinding
+import com.example.movieku.databinding.LoadingCustomBinding
 import com.example.movieku.ui.dashboard.MainFeaturesActivity
 import com.example.movieku.utils.HelperValidation
 import com.example.movieku.utils.ResultState
@@ -25,7 +30,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-//TODO dirapihkan lagi terkait dengan datanya + toast
 class SignInFragment : Fragment() {
 
     private var _binding: FragmentSignInBinding? = null
@@ -51,20 +55,23 @@ class SignInFragment : Fragment() {
         binding.btnSignIn.setOnClickListener {
             val email = binding.tieEmail.text.toString()
             val password = binding.tiePassword.text.toString()
+            val loading = alertDialog()
+            loading.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             viewLifecycleOwner.lifecycleScope.launch {
+                loading.show()
                 val resultSignIn = authenticationViewModel.signInWithEmailAndPassword(email,password)
                 when(resultSignIn){
                     ResultState.Loading -> {
-                        //shimmer kalo ada
                     }
                     is ResultState.Success ->{
+                        loading.dismiss()
                         authenticationViewModel.saveUserAuthentication(resultSignIn.data)
                         authenticationViewModel.setUserData()
                         startActivity(Intent(requireActivity(), MainFeaturesActivity::class.java))
-
                         requireActivity().finish()
                     }
                     is ResultState.Error -> {
+                        loading.dismiss()
                         Toast.makeText(requireActivity(), "Account not registered", Toast.LENGTH_SHORT).show()
                     }
 
@@ -78,24 +85,33 @@ class SignInFragment : Fragment() {
         //Sign in with google account
         binding.btnGoogleSignIn.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
+                //nyalain efect bg warna gelap dikit2
                 val credential = getCredentialRequest()
                 credential.onSuccess {
                     isSignInWithGoogle(it)
                 }.onFailure {
-                    //do nothing (if user cancel sign in with google)
                 }
             }
         }
     }
 
+    private fun alertDialog():AlertDialog{
+        val alertDialogBinding = LoadingCustomBinding.inflate(layoutInflater)
+        return AlertDialog.Builder(requireContext())
+            .setView(alertDialogBinding.root)
+            .setCancelable(false)
+            .create()
+    }
+
      private suspend fun getCredentialRequest(): Result<GetCredentialResponse> {
         return withContext(Dispatchers.IO){
             try {
+                val secretWebClient = BuildConfig.WEB_SECRET_CLIENT
                 val credentialManager = CredentialManager.create(requireContext())
 
                 val googleOptionId = GetGoogleIdOption.Builder()
                     .setFilterByAuthorizedAccounts(false)
-                    .setServerClientId(getString(R.string.your_web_client_id))
+                    .setServerClientId(secretWebClient)
                     .build()
 
                 val request = GetCredentialRequest.Builder()
@@ -105,18 +121,18 @@ class SignInFragment : Fragment() {
                 val resultRequestResponse = credentialManager.getCredential(requireContext(), request)
                 Result.success(resultRequestResponse)
             } catch (e: CancellationException) {
+
                 Result.failure(e)
             } catch (e: Exception) {
                 Result.failure(e)
             }
         }
-
     }
 
     private suspend fun isSignInWithGoogle(credential: GetCredentialResponse) {
         when (val result = authenticationViewModel.signWithGoogle(credential)) {
             ResultState.Loading -> {
-                //bisa ada progressbar
+                // do nothing
             }
 
             is ResultState.Success -> {

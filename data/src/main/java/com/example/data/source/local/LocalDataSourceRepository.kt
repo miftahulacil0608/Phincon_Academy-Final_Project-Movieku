@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface LocalDataSourceRepository {
     suspend fun saveOnBoarding(isStatus: Boolean)
     suspend fun saveUserAuthentication(isStatus: Boolean)
+    suspend fun saveUserDataSignup(fullName:String,email:String)
     suspend fun saveUserData(firebaseUser: FirebaseUser)
     suspend fun getSettings(): SettingData
     suspend fun clearUserAuthentication()

@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,7 @@ import kotlinx.coroutines.launch
 class OrderDetailsFragment : Fragment() {
     private var _binding: FragmentOrderDetailsBinding? = null
     private val binding get() = _binding!!
+
 
     private var priceOneMovie: Int = 0
     private var feeOneMovie: Int = 0

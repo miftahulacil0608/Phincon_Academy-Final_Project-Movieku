@@ -1,10 +1,12 @@
 package com.example.movieku.ui.dashboard.detail
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -20,6 +22,7 @@ import com.example.movieku.R
 import com.example.movieku.adapter.detail.DirectorsAndActorsMovieAdapter
 import com.example.movieku.adapter.detail.ImagesMovieAdapter
 import com.example.movieku.databinding.FragmentDetailMovieBinding
+import com.example.movieku.ui.WatchTrailerActivity
 import com.example.movieku.ui.dashboard.schedule.ScheduleFragment
 import com.example.movieku.utils.ResultState
 import com.google.android.material.imageview.ShapeableImageView
@@ -40,9 +43,6 @@ class DetailMovieFragment : Fragment() {
         DirectorsAndActorsMovieAdapter()
     }
     private lateinit var watchListItem : WatchListUI
-
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -128,6 +128,8 @@ class DetailMovieFragment : Fragment() {
                         }
 
                         setupDataUI(it.data)
+
+                        watchTrailer(it.data.videoUrl)
 
                         watchListItem = WatchListUI(
                             movieId = it.data.id,
@@ -225,6 +227,18 @@ class DetailMovieFragment : Fragment() {
         }
     }
 
+    private fun watchTrailer(linkUrl:String){
+        binding.btnTrailer.setOnClickListener {
+            if (linkUrl == "Nothing"){
+                Toast.makeText(requireContext(), "Can't Play Trailer", Toast.LENGTH_SHORT).show()
+            }else{
+                val intent = Intent(requireActivity(), WatchTrailerActivity::class.java)
+                intent.putExtra(WatchTrailerActivity.KEY_WATCH_TRAILER,linkUrl)
+                requireActivity().startActivity(intent)
+            }
+
+        }
+    }
 
     private fun setupGlideImages(urlPath: String, into: ShapeableImageView) {
         Glide.with(requireContext())
@@ -242,6 +256,8 @@ class DetailMovieFragment : Fragment() {
             binding.btnRetry.isVisible = false
         }
     }
+
+
 
     private fun hideShimmer() {
         with(binding.shimmerLayout) {

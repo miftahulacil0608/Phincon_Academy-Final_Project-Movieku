@@ -35,12 +35,15 @@ class AuthRepositoryImpl @Inject constructor(
         return fireBaseRemoteDataSourceRepository.signInWithGoogle(credentialResponse)
     }
 
-    //TODO lakukan perubahan biar lebih efektif
+    override suspend fun setUserDataSignup(fullName: String, email: String) {
+        localDataSourceRepository.saveUserDataSignup(fullName, email)
+    }
+
     override suspend fun setUserData(){
         val firebaseUser = fireBaseRemoteDataSourceRepository.fetchFirebaseUser()
         if(firebaseUser!=null){
-            Log.d("emailers", "setUserData: ${firebaseUser.email}")
             localDataSourceRepository.saveUserData(firebaseUser = firebaseUser)
+            val image = firebaseUser.photoUrl
         }
     }
     override fun signOut() {

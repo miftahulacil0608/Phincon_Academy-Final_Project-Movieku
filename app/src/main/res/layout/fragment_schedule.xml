@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/md_theme_onPrimary"
     tools:context=".ui.dashboard.schedule.ScheduleFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -204,21 +205,19 @@
             android:textAlignment="center"
             android:textColor="@color/md_text_primary"
             android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@id/divider_one"
-            tools:text="@string/label_month_year_date_selection" />
+            app:layout_constraintTop_toBottomOf="@id/divider_one" />
 
-        <com.michalsvec.singlerowcalendar.calendar.SingleRowCalendar
-            android:id="@+id/date_selection"
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:paddingHorizontal="10dp"
-            app:deselection="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="horizontal"
+            tools:listitem="@layout/calendar_item"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/tv_month_year"
-            app:longPress="false"
-            app:multiSelection="false" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/rv_date_selection"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_cinema"
@@ -229,7 +228,7 @@
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/date_selection"
+            app:layout_constraintTop_toBottomOf="@id/rv_date_selection"
             tools:listitem="@layout/item_cinema_layout" />
 
 

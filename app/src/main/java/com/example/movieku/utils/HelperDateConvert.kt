@@ -22,4 +22,21 @@ object HelperDateConvert {
         val currentDateTime = Calendar.getInstance().time
         return currentDateTime.toReleaseDate()
     }
+
+    fun getMontAndYear():String{
+        val formatter = SimpleDateFormat("MMM-yyyy", Locale.getDefault())
+        val calendar = Calendar.getInstance().time
+        return formatter.format(calendar)
+    }
+
+    fun generateDates():List<Date>{
+        val calendar = Calendar.getInstance()
+        val dateList = mutableListOf<Date>()
+
+        repeat(8){
+            dateList.add(calendar.time)
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+        return dateList
+    }
 }

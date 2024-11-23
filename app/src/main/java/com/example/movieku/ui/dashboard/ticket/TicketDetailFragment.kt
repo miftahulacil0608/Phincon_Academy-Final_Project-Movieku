@@ -51,7 +51,6 @@ class TicketDetailFragment : Fragment() {
                         tvCinemaAndStudio.text = resources.getString(R.string.label_cinema_and_studio, it.cinema, it.studio)
                         tvDateWatch.text = it.dateWatch
                         tvTimeWatch.text = it.timeWatch
-                        Toast.makeText(requireActivity(), "${it.seatNumbers}", Toast.LENGTH_SHORT).show()
                         tvSeats.text = resources.getString(R.string.label_row_and_number_seats, it.seatRow, it.seatNumbers)
                         tvCost.text = resources.getString(R.string.label_price, it.price)
                         tvCodeTicket.text = it.codeTicket

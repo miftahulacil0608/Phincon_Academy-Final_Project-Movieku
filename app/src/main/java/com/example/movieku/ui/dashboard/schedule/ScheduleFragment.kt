@@ -2,37 +2,31 @@ package com.example.movieku.ui.dashboard.schedule
 
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.domain.model.movie.cinema.Cinema
-import com.example.domain.model.movie.order.OrderMovie
 import com.example.domain.model.movie.cinema.ScheduleCinema
+import com.example.domain.model.movie.order.OrderMovie
 import com.example.domain.model.movie.schedule.ScheduleDataClass
 import com.example.movieku.R
 import com.example.movieku.adapter.schedule.CinemaMovieAdapter
-import com.example.movieku.adapter.schedule.ScheduleMovieListener
+import com.example.movieku.adapter.schedule.DateSelectionAdapter
+import com.example.movieku.adapter.schedule.contract.DateSelectionListener
+import com.example.movieku.adapter.schedule.contract.ScheduleMovieListener
 import com.example.movieku.databinding.FragmentScheduleBinding
 import com.example.movieku.ui.dashboard.booking.OrderDetailsFragment
-import com.google.android.material.textview.MaterialTextView
-import com.michalsvec.singlerowcalendar.calendar.CalendarChangesObserver
-import com.michalsvec.singlerowcalendar.calendar.CalendarViewManager
-import com.michalsvec.singlerowcalendar.calendar.SingleRowCalendarAdapter
-import com.michalsvec.singlerowcalendar.selection.CalendarSelectionManager
-import com.michalsvec.singlerowcalendar.utils.DateUtils
+import com.example.movieku.utils.HelperDateConvert
 import java.util.Calendar
 import java.util.Date
 
-class ScheduleFragment : Fragment(), ScheduleMovieListener {
+class ScheduleFragment : Fragment(), ScheduleMovieListener, DateSelectionListener {
     private var _binding: FragmentScheduleBinding? = null
     private val binding get() = _binding!!
     private val scheduleDetails by lazy {
@@ -43,15 +37,16 @@ class ScheduleFragment : Fragment(), ScheduleMovieListener {
         }
     }
 
+    private var selectedDay = Calendar.getInstance().time
+
+
+    private val dateSelectionAdapter2 by lazy{
+        DateSelectionAdapter(listener = this@ScheduleFragment)
+    }
+
     private val cinemaMovieAdapter by lazy {
         CinemaMovieAdapter(listener = this@ScheduleFragment)
     }
-
-    private val currentDate by lazy {
-        Calendar.getInstance().time
-    }
-
-    private val scheduleViewModel by activityViewModels<ScheduleViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,7 +56,6 @@ class ScheduleFragment : Fragment(), ScheduleMovieListener {
         return binding.root
     }
 
-    //TODO update tanggal lalu logic untuk refresh date di recyclerview adapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerview()
@@ -86,22 +80,25 @@ class ScheduleFragment : Fragment(), ScheduleMovieListener {
             }
         }
 
-        dateSelection()
-
         binding.btnBack.setOnClickListener {
             findNavController().navigateUp()
         }
     }
 
     private fun initRecyclerview() {
-        binding.rvCinema.layoutManager =
-            LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        binding.rvDateSelection.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvCinema.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+
         binding.rvCinema.adapter = cinemaMovieAdapter
-        cinemaMovieAdapter.addNewListData(listCinema(currentDate))
+        binding.rvDateSelection.adapter = dateSelectionAdapter2
+
+        binding.tvMonthYear.text = HelperDateConvert.getMontAndYear()
+        dateSelectionAdapter2.addNewListData(HelperDateConvert.generateDates())
+
+        cinemaMovieAdapter.addNewListData(listCinema(selectedDay))
     }
 
     private fun listCinema(currentDate: Date): List<Cinema> {
-
         return listOf(
             Cinema(
                 1,
@@ -145,170 +142,9 @@ class ScheduleFragment : Fragment(), ScheduleMovieListener {
         )
     }
 
-    //For date horizontal
-    private fun dateSelection() {
-        try{
-            binding.tvMonthYear.text = resources.getString(
-                R.string.label_month_year_date_selection,
-                DateUtils.getMonthName(currentDate),
-                DateUtils.getYear(currentDate)
-            )
-
-            //setup calendarviewmanager
-            val myCalendarViewManager = object : CalendarViewManager {
-                override fun bindDataToCalendarView(
-                    holder: SingleRowCalendarAdapter.CalendarViewHolder,
-                    date: Date,
-                    position: Int,
-                    isSelected: Boolean
-                ) {
-                    val dividerBottom = holder.itemView.findViewById<View>(R.id.divider_bottom)
-                    val dayOfName = holder.itemView.findViewById<MaterialTextView>(R.id.dayName)
-                    val dayOfMonth = holder.itemView.findViewById<MaterialTextView>(R.id.dayOfMonth)
-
-                    //DateUtils From Library
-                    val dayOfNameText = DateUtils.getDay3LettersName(date)
-                    val dayOfMonthText = DateUtils.getDayNumber(date)
-
-                    dayOfName.text = dayOfNameText
-                    dayOfMonth.text = dayOfMonthText
-
-                    //get current date
-                    val currentDate = Calendar.getInstance().time
-                    val differentMillis = date.time - currentDate.time
-                    //milli seconds * seconds * minutes * hours
-                    val differentInDays = (differentMillis / (1000 * 60 * 60 * 24)).toInt()
-
-                    //logic color state
-                    if (differentInDays > 7) {
-                        dayOfName.setTextColor(
-                            ContextCompat.getColor(
-                                requireContext(),
-                                R.color.md_text_secondary
-                            )
-                        )
-                        dayOfMonth.setTextColor(
-                            ContextCompat.getColor(
-                                requireContext(),
-                                R.color.md_text_secondary
-                            )
-                        )
-                        dividerBottom.setBackgroundColor(
-                            ContextCompat.getColor(
-                                requireContext(),
-                                R.color.md_text_secondary
-                            )
-                        )
-                    } else {
-                        if (isSelected) {
-                            dayOfName.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.md_theme_onPrimary
-                                )
-                            )
-                            dayOfMonth.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.md_theme_onPrimary
-                                )
-                            )
-                            //load date again
-                            cinemaMovieAdapter.addNewListData(listCinema(date))
-                        } else {
-                            dayOfName.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.md_theme_primary
-                                )
-                            )
-                            dayOfMonth.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.md_theme_primary
-                                )
-                            )
-                        }
-                    }
-
-                }
-
-                override fun setCalendarViewResourceId(
-                    position: Int,
-                    date: Date,
-                    isSelected: Boolean
-                ): Int {
-                    return if (isSelected) {
-                        R.layout.selected_calendar_item
-                    } else {
-                        R.layout.unselected_calendar_item
-                    }
-                }
-
-            }
-
-            //setup calendarselectionmanager
-            val mySelectionManager = object : CalendarSelectionManager {
-                override fun canBeItemSelected(position: Int, date: Date): Boolean {
-                    val currentDate = Calendar.getInstance().time
-                    val differentMillis = date.time - currentDate.time
-                    val differentInDays = (differentMillis / (1000 * 60 * 60 * 24)).toInt()
-
-                    return differentInDays <= 7
-                }
-
-            }
-
-            val myCalendarChangesObserver = object : CalendarChangesObserver {
-                override fun whenWeekMonthYearChanged(
-                    weekNumber: String,
-                    monthNumber: String,
-                    monthName: String,
-                    year: String,
-                    date: Date
-                ) {
-                    super.whenWeekMonthYearChanged(weekNumber, monthNumber, monthName, year, date)
-                }
-
-                override fun whenSelectionChanged(isSelected: Boolean, position: Int, date: Date) {
-                    super.whenSelectionChanged(isSelected, position, date)
-                }
-
-                override fun whenCalendarScrolled(dx: Int, dy: Int) {
-                    super.whenCalendarScrolled(dx, dy)
-                }
-
-                override fun whenSelectionRestored() {
-                    super.whenSelectionRestored()
-                }
-
-                override fun whenSelectionRefreshed() {
-                    super.whenSelectionRefreshed()
-                }
-            }
-
-
-            binding.dateSelection.apply {
-                calendarViewManager = myCalendarViewManager
-                calendarChangesObserver = myCalendarChangesObserver
-                calendarSelectionManager = mySelectionManager
-                futureDaysCount = 30
-                includeCurrentDate = true
-                init()
-            }
-        }catch (e:Exception){
-            Toast.makeText(requireActivity(), "error kakean klik", Toast.LENGTH_SHORT).show()
-        }
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    companion object {
-        const val KEY_SCHEDULE_FRAGMENT = "KEY SCHEDULE FRAGMENT"
+    override fun addDaySelection(item: Date) {
+        selectedDay = item
+        cinemaMovieAdapter.addNewListData(listCinema(item))
     }
 
     override fun onItemScheduleClick(cinema: String, dateWatch: String,timeWatch: String, studio: String) {
@@ -337,5 +173,16 @@ class ScheduleFragment : Fragment(), ScheduleMovieListener {
             R.id.action_scheduleFragment_to_orderDetailsFragment,
             bundle
         )
+    }
+
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    companion object {
+        const val KEY_SCHEDULE_FRAGMENT = "KEY SCHEDULE FRAGMENT"
     }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Movieku</string>
+    <string name="app_name">Flixt</string>
     <string name="title_activity_main_features">MainFeaturesActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
@@ -12,8 +12,8 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <string name="ui_avatars_url">https://ui-avatars.com/api/?background=random&amp;length=1&amp;bold=true&amp;name=%s&amp;size=400&amp;background=1C1C3D&amp;color=FFFFFF</string>
 
-    <string name="your_web_client_id">106896436402-dv2otep226vee0f7ie7871eo43qc7ghg.apps.googleusercontent.com</string>
     <string name="label_release_and_genre">%1$s • %2$s</string>
     <string name="label_rating_count_vote">⭐ %1$.1f (%2$d)</string>
     <string name="label_title_movie">%s</string>
@@ -62,6 +62,11 @@
     <string name="label_row_and_number_seats">Row %1$s (%2$s)</string>
     <string name="label_cancel">Cancel</string>
     <string name="label_cinema_movie">Cinema Movie</string>
+    <string name="label_payment">Payment</string>
+    <string name="label_profile">Profile</string>
+    <string name="label_time">Time</string>
+    <string name="label_cost">Cost</string>
+    <string name="label_seats">Seats</string>
 
 
 </resources>
