@@ -42,8 +42,9 @@ class SearchMovieFragment : Fragment(), SearchMovieListener {
 
     private val searchMovieViewModel by viewModels<SearchMovieViewModel>()
 
-    private var movieQuery : String = ""
 
+    private var movieQuery : String = ""
+    private var isFirstVisit = true
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,6 +60,12 @@ class SearchMovieFragment : Fragment(), SearchMovieListener {
         binding.btnSearchView.requestFocus()
         showKeyboard()
 
+        if (isFirstVisit){
+            binding.swipeRefreshLayout.isEnabled = false
+            isFirstVisit = false
+        }else{
+            binding.swipeRefreshLayout.isEnabled = true
+        }
 
         //load data if movieQuery is not empty
         if (movieQuery.isNotEmpty()){

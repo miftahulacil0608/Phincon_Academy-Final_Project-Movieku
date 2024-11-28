@@ -1,8 +1,8 @@
 package com.example.data.model
 
 data class SettingData(
-    val isOnBoarding:Boolean,
-    val isUserAuthentication: Boolean,
-    val email:String,
-    val displayName:String,
+    val isOnBoarding: Boolean = false,
+    val isUserAuthentication: Boolean = false,
+    val email: String = "",
+    val displayName: String = "",
 )

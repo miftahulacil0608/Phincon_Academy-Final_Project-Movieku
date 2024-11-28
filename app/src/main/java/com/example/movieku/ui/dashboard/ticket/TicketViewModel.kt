@@ -21,10 +21,6 @@ class TicketViewModel @Inject constructor(
     private val _detailTicket = MutableStateFlow<Ticket?>(null)
     val detailTicket = _detailTicket.asStateFlow()
 
-    init {
-        getTickets()
-    }
-
     fun getTickets(){
         viewModelScope.launch {
             _ticket.value = ResultState.Loading

@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 
@@ -19,7 +20,8 @@ class SettingsDataStore(private val dataStore: DataStore<Preferences>) {
             it[IS_ON_BOARDING_KEY] = isStatus
         }
     }
-    suspend fun saveUserDataSignUp(fullName:String, email:String){
+
+    suspend fun saveUserDataSignUp(fullName: String, email: String) {
         dataStore.edit {
             it[KEY_USERNAME] = fullName
             it[KEY_EMAIL] = email
@@ -47,21 +49,28 @@ class SettingsDataStore(private val dataStore: DataStore<Preferences>) {
         }
     }
 
-    fun fetchSettings(): SettingData = runBlocking{
-        dataStore.data.first().let{
+    fun fetchSettings(): SettingData = runBlocking {
+        dataStore.data.firstOrNull()?.let {
             SettingData(
                 it[IS_ON_BOARDING_KEY] ?: false,
                 it[IS_USER_AUTHENTICATION_KEY] ?: false,
                 it[KEY_EMAIL] ?: "",
                 it[KEY_USERNAME] ?: ""
             )
-        }
+        } ?: SettingData()
     }
 
     companion object {
+        //const val KEY = stringPreferencesKey("KEY")
         private val IS_ON_BOARDING_KEY = booleanPreferencesKey("IS ON BOARDING KEY")
         private val IS_USER_AUTHENTICATION_KEY = booleanPreferencesKey("IS USER AUTHENTICATION KEY")
         private val KEY_EMAIL = stringPreferencesKey("KEY EMAIL")
         private val KEY_USERNAME = stringPreferencesKey("KEY USERNAME")
     }
 }
+
+object AAA {
+
+}
+
+class BBB()

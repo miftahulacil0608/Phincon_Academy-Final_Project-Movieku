@@ -51,7 +51,6 @@ object MapperToDomainData {
             nowPlayingMovieDto.totalResults
         )
     }
-
     //upcoming movie
     fun upComingMovieDtoToUpComingMovie(
         upComingMovieDto: UpComingMovieDto,

@@ -103,33 +103,34 @@ class ScheduleFragment : Fragment(), ScheduleMovieListener, DateSelectionListene
             Cinema(
                 1,
                 date = currentDate,
-                R.drawable.iv_cinema,
-                "Araya XXI",
-                "Malang",
+                R.drawable.ic_nsc,
+                "NSC Nganjuk",
+                "Candirejo, Kec. Loceret, Kabupaten Nganjuk",
                 scheduleCinema = listOf(
-                    ScheduleCinema("08:00", "Studio 1"),
+                    ScheduleCinema("10:00", "Studio 1"),
                     ScheduleCinema("12:00", "Studio 2"),
-                    ScheduleCinema("14:00", "Studio 3"),
-                    ScheduleCinema("20:00", "Studio 4")
+                    ScheduleCinema("15:00", "Studio 3"),
+                    ScheduleCinema("19:00", "Studio 4")
                 )
             ),
             Cinema(
                 2,
                 date = currentDate,
-                R.drawable.iv_cinema,
-                "CGV Araya",
-                "Dinoyo",
+                R.drawable.ic_nsc,
+                "NSC Jombang",
+                "Jl. KH. Wahid Hasyim Plaza Linggajati No.3C Lantai 2, Candi Mulyo, Jombang",
                 scheduleCinema = listOf(
                     ScheduleCinema("11:00", "Studio 1"),
-                    ScheduleCinema("12:00", "Studio 2"),
+                    ScheduleCinema("14:00", "Studio 2"),
+                    ScheduleCinema("17:00", "Studio 3"),
                 )
             ),
             Cinema(
                 3,
                 date = currentDate,
-                R.drawable.iv_cinema,
-                "Matos XXI",
-                "Kota Malang",
+                R.drawable.ic_nsc,
+                "NSC Madiun",
+                "Suncity Mall Madiun, Jl. S. Parman No.62, Oro-oro Ombo, Kartoharjo, Madiun City",
                 scheduleCinema = listOf(
                     ScheduleCinema("10:00", "Studio 1"),
                     ScheduleCinema("12:00", "Studio 2"),

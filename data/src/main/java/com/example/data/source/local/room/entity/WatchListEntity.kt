@@ -32,6 +32,4 @@ WatchListEntity(
     @ColumnInfo("code_language")
     val codeLanguage: String,
     @ColumnInfo("status")
-    val status: String,
-
-    )
+    val status: String, )

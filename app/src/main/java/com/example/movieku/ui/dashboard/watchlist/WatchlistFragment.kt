@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,8 +20,10 @@ import com.example.movieku.adapter.watchlist.WatchListAdapter
 import com.example.movieku.adapter.watchlist.WatchListListener
 import com.example.movieku.databinding.FragmentWatchlistBinding
 import com.example.movieku.ui.dashboard.detail.DetailMovieFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class WatchlistFragment : Fragment(), WatchListListener {
 
     private var _binding: FragmentWatchlistBinding? = null
@@ -30,7 +33,7 @@ class WatchlistFragment : Fragment(), WatchListListener {
         WatchListAdapter(listener = this@WatchlistFragment)
     }
 
-    private val watchListViewModel by activityViewModels<WatchlistViewModel>()
+    private val watchListViewModel by viewModels<WatchlistViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

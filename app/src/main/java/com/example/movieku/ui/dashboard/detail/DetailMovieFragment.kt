@@ -2,7 +2,6 @@ package com.example.movieku.ui.dashboard.detail
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,8 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,11 +26,13 @@ import com.example.movieku.ui.WatchTrailerActivity
 import com.example.movieku.ui.dashboard.schedule.ScheduleFragment
 import com.example.movieku.utils.ResultState
 import com.google.android.material.imageview.ShapeableImageView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class DetailMovieFragment : Fragment() {
 
-    private val detailMovieViewModel by activityViewModels<DetailMovieViewModel>()
+    private val detailMovieViewModel by viewModels<DetailMovieViewModel>()
     private var _binding: FragmentDetailMovieBinding? = null
     private val binding get() = _binding!!
     private val imagesMovieAdapter by lazy {
@@ -278,44 +280,6 @@ class DetailMovieFragment : Fragment() {
             binding.btnRetry.isVisible = true
         }
     }
-
-    private fun showUI(isVisible: Boolean) {
-        with(binding) {
-            btnFavorite.isVisible = isVisible
-            ivBackdrop.isVisible = isVisible
-
-            tvGenre.isVisible = isVisible
-            tvDuration.isVisible = isVisible
-
-            tvTitleMovie.isVisible = isVisible
-
-            tvRateAge.isVisible = isVisible
-            tvLabelLanguage.isVisible = isVisible
-            btnTrailer.isVisible = isVisible
-
-            tvLabelReview.isVisible = isVisible
-            ivStars.isVisible = isVisible
-            tvRatingCount.isVisible = isVisible
-            tvRatingVote.isVisible = isVisible
-            ratingIndicator.isVisible = isVisible
-
-            labelMovieGenre.isVisible = isVisible
-            labelAdultCategory.isVisible = isVisible
-            labelMovieLanguage.isVisible = isVisible
-
-            tvMovieGenre.isVisible = isVisible
-            tvAdultCategory.isVisible = isVisible
-            tvMovieLanguage.isVisible = isVisible
-            tvMovieDescription.isVisible = isVisible
-            rvFootage.isVisible = isVisible
-            tvLabelDirectors.isVisible = isVisible
-            rvDirectors.isVisible = isVisible
-            tvLabelActors.isVisible = isVisible
-            rvActors.isVisible = isVisible
-        }
-
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

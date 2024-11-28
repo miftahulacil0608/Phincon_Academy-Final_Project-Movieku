@@ -132,7 +132,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/iv_cinema"
+                android:src="@drawable/ic_nsc"
                 app:layout_constraintEnd_toStartOf="@id/tv_cinema_and_studio"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"

@@ -10,9 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -24,8 +26,10 @@ import com.example.movieku.databinding.FragmentOrderDetailsBinding
 import com.example.movieku.databinding.LoadingCustomBinding
 import com.example.movieku.ui.dashboard.payment.PaymentFragment
 import com.example.movieku.utils.ResultState
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class OrderDetailsFragment : Fragment() {
     private var _binding: FragmentOrderDetailsBinding? = null
     private val binding get() = _binding!!
@@ -38,7 +42,7 @@ class OrderDetailsFragment : Fragment() {
     private var totalTicket = 0
 
 
-    private val orderDetailsViewModel by activityViewModels<OrderDetailsViewModel>()
+    private val orderDetailsViewModel by viewModels<OrderDetailsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,7 +84,8 @@ class OrderDetailsFragment : Fragment() {
                 .into(ivPosterMovie)
             tvLabelTitleMovie.text = item.title
             tvRateAge.text = item.pgAge
-            tvLocationCinema.text = resources.getString(R.string.label_location_cinema, item.cinema, item.studio)
+            tvLocationCinema.text =
+                resources.getString(R.string.label_location_cinema, item.cinema, item.studio)
             tvDateWatch.text = item.dateWatch
             tvTimeWatch.text = item.timeWatch
             tvPrice.text = resources.getString(R.string.label_price, priceOneMovie)
@@ -119,10 +124,18 @@ class OrderDetailsFragment : Fragment() {
         binding.tvTotalPriceToPay.text = resources.getString(R.string.label_price, totalToPay)
         binding.tvTotalTicket.text = resources.getString(R.string.label_total_items, totalTicket)
         binding.btnPayment.isEnabled = totalTicket > 0
+        binding.btnPayment.setBackgroundColor(
+            if (binding.btnPayment.isEnabled) ContextCompat.getColor(
+                requireContext(),
+                R.color.md_theme_primary
+            ) else
+                ContextCompat.getColor(requireContext(), R.color.md_theme_secondary)
+        )
     }
 
     //bayar tiket
     private fun payTheTicketMovie(item: OrderMovie) {
+
         binding.btnPayment.setOnClickListener {
             //siapin datanya
             val itemRequestFromUser = listOf(
@@ -162,12 +175,13 @@ class OrderDetailsFragment : Fragment() {
                 resultOrder.collect { result ->
                     when (result) {
                         ResultState.Loading -> {
-                           dialog.show()
+                            dialog.show()
                         }
 
                         is ResultState.Success -> {
                             dialog.dismiss()
-                            val bundle = bundleOf(PaymentFragment.KEY_URL_PAYMENT_TO_PAYMENT_FRAGMENT to result.data.redirectUrl)
+                            val bundle =
+                                bundleOf(PaymentFragment.KEY_URL_PAYMENT_TO_PAYMENT_FRAGMENT to result.data.redirectUrl)
                             findNavController().navigate(
                                 R.id.action_orderDetailsFragment_to_paymentFragment,
                                 bundle
@@ -189,7 +203,7 @@ class OrderDetailsFragment : Fragment() {
     }
 
     //ticketing order
-    private fun randomTicket():String{
+    private fun randomTicket(): String {
         val nameApp = "FLIX"
         val numberList = (0..9).toList()
         val randomUniqueCode = (0..9).map { numberList.random() }.joinToString("")
@@ -198,15 +212,16 @@ class OrderDetailsFragment : Fragment() {
         return result
     }
 
-    private fun seatRow():String{
+    private fun seatRow(): String {
         val wordList = ('A'..'J').toList()
         return wordList.random().toString()
     }
-    private fun numberOfSeat(totalTicket:Int):List<Int>{
+
+    private fun numberOfSeat(totalTicket: Int): List<Int> {
         return (1..totalTicket).toList()
     }
 
-    private fun alertDialog():AlertDialog{
+    private fun alertDialog(): AlertDialog {
         val customAlertDialog = LoadingCustomBinding.inflate(layoutInflater)
         return AlertDialog.Builder(requireContext())
             .setView(customAlertDialog.root)

@@ -92,7 +92,8 @@ object MovieHelper {
     fun getDirector(listCrew:List<CrewMovieDtoItem>?):List<DirectorOrActorItem>{
         //use filter to filter item from resultCewMovieDto to DirectorOrActorItem
         val director = listCrew?.filter {
-            it.job.contains("director",true)
+            /*it.job.contains("director",true)*/
+            it.job == "Director"
         }?.map{
             DirectorOrActorItem(it.id, it.name, "https://image.tmdb.org/t/p/original/${it.profilePath}")
         }?: emptyList()
@@ -101,7 +102,7 @@ object MovieHelper {
 
     fun getActors(listActors:List<CastMovieDtoItem>?):List<DirectorOrActorItem>{
         val actors = listActors?.filter {
-            it.order in 1..5
+            it.order in 1..8
         }?.map {
             DirectorOrActorItem(it.id, it.name, "https://image.tmdb.org/t/p/original/${it.profilePath}")
         }?: emptyList()

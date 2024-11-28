@@ -1,6 +1,5 @@
 package com.example.data.source.remote.firebase
 
-import android.util.Log
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialResponse
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -9,10 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.auth.userProfileChangeRequest
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -20,6 +16,7 @@ import javax.inject.Inject
 class FireBaseRemoteDataSourceImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : FireBaseRemoteDataSourceRepository {
+
     override suspend fun signUpWithEmailAndPassword(
         fullName: String,
         email: String,
@@ -27,12 +24,13 @@ class FireBaseRemoteDataSourceImpl @Inject constructor(
     ): Result<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
-                val createAccount = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+                val createAccount =
+                    firebaseAuth.createUserWithEmailAndPassword(email, password).await()
                 if (createAccount.user != null) {
                     updateProfile(fullName)
                     Result.success(true)
                 } else {
-                    Result.failure(IllegalArgumentException("Unknow Error"))
+                    Result.success(false)
                 }
             } catch (e: Exception) {
                 Result.failure(e)
@@ -40,23 +38,25 @@ class FireBaseRemoteDataSourceImpl @Inject constructor(
         }
     }
 
+
     override suspend fun signInWithEmailAndPassword(
         email: String,
         password: String
     ): Result<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
-                val signInResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
-                if (signInResult.user != null) {
+                val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+                if (result.user != null) {
                     Result.success(true)
                 } else {
-                    Result.failure(IllegalArgumentException("Unknow Error"))
+                    Result.success(false)
                 }
             } catch (e: Exception) {
                 Result.failure(e)
             }
         }
     }
+
 
     override suspend fun signInWithGoogle(credentialResponse: GetCredentialResponse): Result<Boolean> {
         return withContext(Dispatchers.IO) {
@@ -76,7 +76,7 @@ class FireBaseRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override fun fetchFirebaseUser():FirebaseUser?{
+    override fun fetchFirebaseUser(): FirebaseUser? {
         return firebaseAuth.currentUser
     }
 
@@ -99,7 +99,7 @@ class FireBaseRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    private fun  updateProfile(fullName: String) {
+    private fun updateProfile(fullName: String) {
         val userProfileChainRequest = UserProfileChangeRequest.Builder()
             .setDisplayName(fullName)
             .build()

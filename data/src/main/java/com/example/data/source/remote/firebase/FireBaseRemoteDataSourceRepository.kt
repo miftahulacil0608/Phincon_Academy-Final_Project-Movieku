@@ -6,8 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface FireBaseRemoteDataSourceRepository {
     suspend fun signUpWithEmailAndPassword(fullName:String, email:String, password:String):Result<Boolean>
-    suspend fun signInWithEmailAndPassword(email:String, password: String):Result<Boolean>
+    suspend fun signInWithEmailAndPassword(email: String, password: String):Result<Boolean>
     suspend fun signInWithGoogle(credentialResponse: GetCredentialResponse):Result<Boolean>
      fun fetchFirebaseUser():FirebaseUser?
     fun signOut()
+
 }

@@ -11,8 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:background="@null"
         android:layout_marginTop="20dp"
+        android:background="@null"
         android:src="@drawable/ic_back_bullet"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -83,13 +83,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sf_pro_text_semibold"
-                tools:text="1"
                 android:textColor="@color/md_theme_primary"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_increment"
                 app:layout_constraintStart_toEndOf="@id/btn_decrement"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="1" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btn_increment"
@@ -189,13 +189,13 @@
         android:ellipsize="end"
         android:fontFamily="@font/sf_pro_text_bold"
         android:maxLines="1"
-        tools:text="@string/label_location_cinema"
         android:textColor="@color/md_text_primary"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_label_cinema"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_label_cinema"
-        app:layout_constraintTop_toTopOf="@id/tv_label_cinema" />
+        app:layout_constraintTop_toTopOf="@id/tv_label_cinema"
+        tools:text="@string/label_location_cinema" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_date_watch"
@@ -229,13 +229,13 @@
         android:ellipsize="end"
         android:fontFamily="@font/sf_pro_text_bold"
         android:maxLines="1"
-        tools:text="21 December 2024"
         android:textColor="@color/md_text_primary"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_label_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_location_cinema"
-        app:layout_constraintTop_toTopOf="@id/tv_label_date" />
+        app:layout_constraintTop_toTopOf="@id/tv_label_date"
+        tools:text="21 December 2024" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_time_watch"
@@ -269,13 +269,13 @@
         android:ellipsize="end"
         android:fontFamily="@font/sf_pro_text_bold"
         android:maxLines="1"
-        tools:text="20:15"
         android:textColor="@color/md_text_primary"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_label_time_watch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_date_watch"
-        app:layout_constraintTop_toTopOf="@id/tv_label_time_watch" />
+        app:layout_constraintTop_toTopOf="@id/tv_label_time_watch"
+        tools:text="20:15" />
 
     <View
         android:id="@+id/divider_second"
@@ -443,7 +443,6 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="25dp"
         android:clickable="true"
-        app:cardBackgroundColor="@color/md_theme_primary"
         app:cardCornerRadius="100dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -451,6 +450,7 @@
             android:id="@+id/btn_payment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/md_theme_primary"
             android:clickable="true"
             android:paddingVertical="11dp"
 
@@ -511,8 +511,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

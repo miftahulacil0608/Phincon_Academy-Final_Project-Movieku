@@ -27,7 +27,7 @@
     <string name="label_now_playing">Now Playing</string>
     <string name="label_search_any_film">Search any film</string>
     <string name="label_see_all">See All</string>
-    <string name="label_coming_soon_playing">Coming Soon Playing</string>
+    <string name="label_coming_soon_playing">Coming Soon</string>
     <string name="label_indicator">Indicator</string>
     <string name="label_icon_profile">Icon Profile</string>
     <string name="label_release_date">Release</string>
@@ -49,7 +49,7 @@
     <string name="label_date">Date:</string>
     <string name="label_cinema">Cinema:</string>
     <string name="label_month_year_date_selection">%1$s-%2$s</string>
-    <string name="label_watchlist">Wathclist</string>
+    <string name="label_watchlist">Watchlist</string>
     <string name="label_delete_confirmation">Delete Confirmation</string>
     <string name="label_message_confirmation_delete">Are you sure you want to delete this data? This action cannot be undone.</string>
     <string name="label_yes">Yes</string>
@@ -67,6 +67,18 @@
     <string name="label_time">Time</string>
     <string name="label_cost">Cost</string>
     <string name="label_seats">Seats</string>
+    <string name="label_password">Password</string>
+    <string name="label_email">Email</string>
+    <string name="label_or">or</string>
+    <string name="label_your_email">Your Email</string>
+    <string name="label_your_username">Your Username</string>
+    <string name="label_your_password">Your Password</string>
+    <string name="label_welcome_to_flixt">Welcome To Flixt</string>
+    <string name="label_let_s_sign_you_in">Let\'s Sign You In!</string>
+    <string name="label_login_to_your_account">Login to Your Account</string>
+    <string name="label_sign_up">Sign up</string>
+    <string name="label_sign_in">Sign in</string>
+    <string name="label_sign_out">Sign out</string>
 
 
 </resources>

@@ -36,9 +36,8 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        CoroutineScope(Dispatchers.Main).launch {
+        lifecycleScope.launch(Dispatchers.Main) {
             delay(3000L)
-
             splashScreenViewModel.isUserAuthentication.observe(this@SplashScreenActivity){
                 if (!it.isOnboarding){
                     startActivity(Intent(this@SplashScreenActivity, OnBoardingActivity::class.java))

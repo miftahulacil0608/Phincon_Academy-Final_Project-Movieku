@@ -55,6 +55,8 @@ class TicketFragment : Fragment(), TicketListener {
             ticketViewModel.getTickets()
         }
 
+        ticketViewModel.getTickets()
+
         viewLifecycleOwner.lifecycleScope.launch {
             ticketViewModel.tickets.collect {
                 when (it) {
@@ -135,9 +137,5 @@ class TicketFragment : Fragment(), TicketListener {
         findNavController().navigate(R.id.action_navigation_ticket_to_ticketDetailFragment).apply {
             ticketViewModel.detailTicket(item)
         }
-    }
-
-    companion object {
-        const val KEY_LOAD_DATA = "KEY LOAD DATA"
     }
 }

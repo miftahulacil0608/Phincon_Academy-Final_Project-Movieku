@@ -33,17 +33,17 @@ import kotlinx.coroutines.withContext
 class SignInFragment : Fragment() {
 
     private var _binding: FragmentSignInBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     private val authenticationViewModel by activityViewModels<AuthenticationViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
 
         _binding = FragmentSignInBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
 
     }
 
@@ -52,44 +52,51 @@ class SignInFragment : Fragment() {
 
         validateInputEmailAndPassword()
 
-        binding.btnSignIn.setOnClickListener {
-            val email = binding.tieEmail.text.toString()
-            val password = binding.tiePassword.text.toString()
+        lifecycleScope.launch {
             val loading = alertDialog()
             loading.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            viewLifecycleOwner.lifecycleScope.launch {
-                loading.show()
-                val resultSignIn = authenticationViewModel.signInWithEmailAndPassword(email,password)
-                when(resultSignIn){
+            authenticationViewModel.isSign.collect{
+                when(it){
                     ResultState.Loading -> {
+                        loading.show()
                     }
-                    is ResultState.Success ->{
+                    is ResultState.Success -> {
                         loading.dismiss()
-                        authenticationViewModel.saveUserAuthentication(resultSignIn.data)
-                        authenticationViewModel.setUserData()
-                        startActivity(Intent(requireActivity(), MainFeaturesActivity::class.java))
-                        requireActivity().finish()
+                        if (it.data){
+                            context?.let {context->
+                                startActivity(Intent(context, MainFeaturesActivity::class.java))
+                                activity?.finish()
+                                authenticationViewModel.clearLiveData()
+                            }
+                        }
                     }
                     is ResultState.Error -> {
                         loading.dismiss()
-                        Toast.makeText(requireActivity(), "Account not registered", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Account not registered", Toast.LENGTH_SHORT).show()
                     }
 
                 }
             }
         }
-        binding.btnRegister.setOnClickListener {
+
+        binding?.btnSignIn?.setOnClickListener {
+            val email = binding?.tieEmail?.text.toString()
+            val password = binding?.tiePassword?.text.toString()
+            authenticationViewModel.signInWithEmailAndPassword2(email, password)
+        }
+
+        binding?.btnRegister?.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
 
         //Sign in with google account
-        binding.btnGoogleSignIn.setOnClickListener {
-            viewLifecycleOwner.lifecycleScope.launch {
-                //nyalain efect bg warna gelap dikit2
+        binding?.btnGoogleSignIn?.setOnClickListener {
+            lifecycleScope.launch {
                 val credential = getCredentialRequest()
                 credential.onSuccess {
-                    isSignInWithGoogle(it)
+                    authenticationViewModel.signInWithGoogle(it)
                 }.onFailure {
+
                 }
             }
         }
@@ -121,7 +128,6 @@ class SignInFragment : Fragment() {
                 val resultRequestResponse = credentialManager.getCredential(requireContext(), request)
                 Result.success(resultRequestResponse)
             } catch (e: CancellationException) {
-
                 Result.failure(e)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -129,51 +135,31 @@ class SignInFragment : Fragment() {
         }
     }
 
-    private suspend fun isSignInWithGoogle(credential: GetCredentialResponse) {
-        when (val result = authenticationViewModel.signWithGoogle(credential)) {
-            ResultState.Loading -> {
-                // do nothing
-            }
-
-            is ResultState.Success -> {
-                authenticationViewModel.saveUserAuthentication(result.data)
-                authenticationViewModel.setUserData()
-                startActivity(Intent(requireActivity(), MainFeaturesActivity::class.java))
-                requireActivity().finish()
-            }
-
-            is ResultState.Error -> {
-                //muncul dialog error / salah
-                Toast.makeText(requireActivity(), "Not Valid", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
     private fun validateInputEmailAndPassword() {
         var emailvalid = false
         var passwordvalid = false
-        binding.tieEmail.addTextChangedListener {
+        binding?.tieEmail?.addTextChangedListener {
             val email = it.toString()
             emailvalid = HelperValidation.emailValidator(email)
-            HelperValidation.updateInputLayout(binding.tilEmail, emailvalid.not(), "Wrong format email", requireContext())
+            HelperValidation.updateInputLayout(binding?.tilEmail, emailvalid.not(), "Wrong format email", requireContext())
             updateSubmitState(emailvalid, passwordvalid)
         }
-        binding.tiePassword.addTextChangedListener {
+        binding?.tiePassword?.addTextChangedListener {
             val password = it.toString()
             passwordvalid= HelperValidation.passwordValidator(password)
-            HelperValidation.updateInputLayout(binding.tilPassword, passwordvalid.not(), "Wrong format password", requireContext())
+            HelperValidation.updateInputLayout(binding?.tilPassword, passwordvalid.not(), "Wrong format password", requireContext())
             updateSubmitState(emailvalid, passwordvalid)
         }
         updateSubmitState(emailvalid, passwordvalid)
     }
 
     private fun updateSubmitState(isEmail:Boolean, isPassword:Boolean){
-        binding.btnSignIn.isEnabled = isEmail && isPassword
+        binding?.btnSignIn?.isEnabled = isEmail && isPassword
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }

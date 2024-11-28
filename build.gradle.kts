@@ -13,10 +13,17 @@ plugins {
 
 
 dependencyGraphConfig{
-    projectName = null
+    projectName = "Flixt"
     outputFormat = OutputFormat.PNG
     dependencyBuilder {
-        null
+        with(it){
+            when(this.path){
+                ":app"->DependencyInfo("#ABCF99")
+                ":domain"->DependencyInfo("#FFDA95")
+                ":data"->DependencyInfo("#B3C7E7")
+                else -> null
+            }
+        }
     }
 }
 

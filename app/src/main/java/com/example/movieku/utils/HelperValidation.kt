@@ -17,9 +17,9 @@ object HelperValidation {
         return fullName.isNotEmpty() && fullName.length >= 3
     }
 
-    fun updateInputLayout(textInputLayout:TextInputLayout, isNotValid:Boolean,errorMessage:String, context: Context){
-        textInputLayout.isErrorEnabled = isNotValid
-        textInputLayout.error = if (isNotValid) errorMessage else null
+    fun updateInputLayout(textInputLayout:TextInputLayout?, isNotValid:Boolean,errorMessage:String, context: Context){
+        textInputLayout?.isErrorEnabled = isNotValid
+        textInputLayout?.error = if (isNotValid) errorMessage else null
     }
 
 }

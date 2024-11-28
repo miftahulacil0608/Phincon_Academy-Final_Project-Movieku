@@ -15,8 +15,6 @@ import javax.inject.Inject
 class SearchMovieViewModel @Inject constructor(private val movieUseCase: MovieUseCase) : ViewModel() {
     private val _searchMovieData = MutableStateFlow<ResultState<SearchMovie>>(ResultState.Loading)
     val searchMovieData = _searchMovieData.asStateFlow()
-
-
     fun searchMovie(movieName:String){
         viewModelScope.launch {
             _searchMovieData.value = ResultState.Loading

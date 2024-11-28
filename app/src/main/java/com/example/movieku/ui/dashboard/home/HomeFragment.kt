@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,9 +24,11 @@ import com.example.movieku.utils.HelperDateConvert
 import com.example.movieku.utils.ResultState
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(), NowPlayingMovieListener {
 
     private var _binding: FragmentHomeBinding? = null
@@ -41,14 +42,13 @@ class HomeFragment : Fragment(), NowPlayingMovieListener {
         UpcomingMovieAdapter(listener = this@HomeFragment)
     }
 
-    private val homeViewModel by activityViewModels<HomeViewModel>()
+    private val homeViewModel by viewModels<HomeViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }

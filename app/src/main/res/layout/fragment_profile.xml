@@ -82,7 +82,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="34dp"
-        android:text="Log Out"
+        android:text="@string/label_sign_out"
         android:textAlignment="center"
         android:textColor="@color/md_theme_primary_secondary"
         android:textSize="16sp"
