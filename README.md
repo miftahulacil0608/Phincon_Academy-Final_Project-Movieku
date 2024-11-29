@@ -40,6 +40,7 @@ Flixt is a mobile application for online movie ticket booking with a convenient,
 - *Domain Module*: Contains the core business logic of the application, including use cases and entities. This layer acts as a bridge between the data and presentation layers.
 - *App Module*: Manages the UI components, user interactions, and ViewModels that provide data to the views.
 - *DI Module*: Used to inject dependencies needed by other modules.
+
 ![Project Structure](https://github.com/user-attachments/assets/b74660f6-da88-4418-b270-fb7b50861dd0)
 
 ## Architecture Pattern
