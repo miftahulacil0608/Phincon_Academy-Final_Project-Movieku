@@ -1,9 +1,10 @@
 # Flixt
+Flixt is a mobile application for online movie ticket booking with a convenient, fast, and intuitive experience.
 ![image](https://github.com/user-attachments/assets/4290a6c5-2658-4cc0-bd91-67fa997ddc4d)
 
-Flixt is a mobile application for online movie ticket booking with a convenient, fast, and intuitive experience.
 ## Demo
-//video
+https://github.com/user-attachments/assets/1cebd792-b859-44c5-aa73-74e37e83ff90
+
 
 ## Table of Contents
 - [Flixt](#flixt)
